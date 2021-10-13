@@ -1,4 +1,4 @@
-package de.entsesselt.de.fileyournal.controller;
+package de.entsesselt.de.fileyournal;
 
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
