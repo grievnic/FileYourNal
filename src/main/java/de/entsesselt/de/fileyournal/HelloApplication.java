@@ -1,5 +1,6 @@
 package de.entsesselt.de.fileyournal;
 
+import de.entsesselt.de.fileyournal.model.Organizer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -10,13 +11,18 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
+import static de.entsesselt.de.fileyournal.model.Organizer.foToPdf;
+import static de.entsesselt.de.fileyournal.model.Organizer.write;
+
+
 public class HelloApplication extends Application {
 
     private Stage primaryStage;
     private BorderPane rootLayout;
+    private Organizer org;
 
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("FileYOURnal");
 
@@ -24,6 +30,12 @@ public class HelloApplication extends Application {
         showPageView();
         showLeftView();
         showRightView();
+
+        Organizer org = new Organizer();
+        write(org);
+
+        foToPdf();
+
     }
 
     /**
@@ -100,5 +112,6 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
+
     }
 }

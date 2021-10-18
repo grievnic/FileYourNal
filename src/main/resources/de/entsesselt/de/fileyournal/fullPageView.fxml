@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+
+<AnchorPane prefHeight="600.0" prefWidth="400.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.de.fileyournal.FullPageView">
+   <children>
+      <ImageView fitHeight="600.0" fitWidth="400.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="10.0">
+         <image>
+            <Image url="@assets/Full.png" />
+         </image>
+      </ImageView>
+      <Pane layoutX="24.0" layoutY="36.0" prefHeight="499.0" prefWidth="353.0" />
+   </children>
+</AnchorPane>
