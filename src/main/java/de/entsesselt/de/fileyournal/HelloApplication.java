@@ -4,15 +4,12 @@ import de.entsesselt.de.fileyournal.model.Organizer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.ScrollPane;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
 import java.io.IOException;
-
-import static de.entsesselt.de.fileyournal.model.Organizer.foToPdf;
-import static de.entsesselt.de.fileyournal.model.Organizer.write;
 
 
 public class HelloApplication extends Application {
@@ -20,23 +17,36 @@ public class HelloApplication extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private Organizer org;
+    private final Image IMAGE_FULL  = new Image("de/entsesselt/de/fileyournal/assets/Full.png");
+    private final Image IMAGE_HALFHALF  = new Image("de/entsesselt/de/fileyournal/assets/HalfHalf.png");
+    private final Image IMAGE_QUADQUAD  = new Image("de/entsesselt/de/fileyournal/assets/QuadQuad.png");
+    private final Image IMAGE_HALFQUAD  = new Image("de/entsesselt/de/fileyournal/assets/HalfQuad.png");
+    private final Image IMAGE_QUADHALF  = new Image("/de/entsesselt/de/fileyournal/assets/QuadHalf.png");
+
+    private Image[] listOfImages = {IMAGE_FULL, IMAGE_HALFHALF, IMAGE_QUADQUAD, IMAGE_HALFQUAD, IMAGE_QUADHALF};
 
     @Override
     public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("FileYOURnal");
 
+        // initiales Laden der GUI
         initRootLayout();
-        showPageView();
+        showStartView();
         showLeftView();
-        showRightView();
 
+        //Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
         Organizer org = new Organizer();
-        write(org);
+        org.readXML();
+        /*createOrganizer(org);*/
+        /*org.addPageTemplate("test");*/
+        System.out.println(org.addPageTemplate("QuadQuad"));
 
-        foToPdf();
+        org.foToPdf(); // Test zum Wandeln der Fo zu PDF aus oben erstellter Datei
 
     }
+
+
 
     /**
      * Initializes the root layout.
@@ -57,15 +67,35 @@ public class HelloApplication extends Application {
         }
     }
 
+    public void showStartView() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource("StartView.fxml"));
+            AnchorPane startView = (AnchorPane) loader.load();
+            // Give the controller access to the main app.
+            StartViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(startView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void showPageView() {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("PageView.fxml"));
-            AnchorPane pageView = (AnchorPane) loader.load();
+            AnchorPane startView = (AnchorPane) loader.load();
+            // Give the controller access to the main app.
+            PageViewController controller = loader.getController();
+            controller.setMainApp(this);
 
             // Set person overview into the center of root layout.
-            rootLayout.setCenter(pageView);
+            rootLayout.setCenter(startView);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -86,21 +116,21 @@ public class HelloApplication extends Application {
     }
 
     public void showRightView() {
-
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("rightView.fxml"));
-            ScrollPane pageView = (ScrollPane) loader.load();
-
+            AnchorPane templatesView = (AnchorPane) loader.load();
             // Set person overview into the center of root layout.
-            rootLayout.setRight(pageView);
+            rootLayout.setRight(templatesView);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    public void showRightTemplates() {
 
+                }
    /* @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("GuiView.fxml"));
@@ -110,8 +140,9 @@ public class HelloApplication extends Application {
         stage.show();
     }*/
 
+
     public static void main(String[] args) {
         launch();
-
     }
+
 }
