@@ -137,7 +137,7 @@ public class Organizer {
         blockContainerRechts.addContent(right);
     }*/
 
-    public void readXML() {
+    public void readFO() {
 
         try {
             // Create a DocumentBuilder
@@ -160,7 +160,7 @@ public class Organizer {
     private void writeFO(Document doc) {
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
-        try (FileOutputStream fos = new FileOutputStream(new File("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/organizer.fo"))) {
+        try (FileOutputStream fos = new FileOutputStream(new File(FILENAME))) {
             XMLOutputter op = new XMLOutputter(format);
             op.output(doc, fos);
         } catch (IOException e) {

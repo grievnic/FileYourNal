@@ -15,7 +15,7 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <ImageView fx:id="full" fitWidth="130.0" layoutX="29.0" layoutY="95.0" onMouseClicked="#startFullTemplate" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="full" fitWidth="130.0" layoutX="29.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@assets/Full.png" />
          </image>

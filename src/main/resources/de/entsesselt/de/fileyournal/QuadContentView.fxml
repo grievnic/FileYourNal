@@ -10,7 +10,7 @@
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.de.fileyournal.RightViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" stroke="BLACK" strokeType="INSIDE" width="360.0" />
-      <Label layoutX="117.0" layoutY="36.0" text="Seiten-Template">
+      <Label layoutX="99.0" layoutY="38.0" text="Viertelseiten-Content" textAlignment="CENTER" textFill="#47464a">
          <font>
             <Font size="18.0" />
          </font>

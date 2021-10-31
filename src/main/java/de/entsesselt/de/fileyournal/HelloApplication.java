@@ -4,7 +4,6 @@ import de.entsesselt.de.fileyournal.model.Organizer;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
@@ -17,13 +16,6 @@ public class HelloApplication extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
     private Organizer org;
-    private final Image IMAGE_FULL  = new Image("de/entsesselt/de/fileyournal/assets/Full.png");
-    private final Image IMAGE_HALFHALF  = new Image("de/entsesselt/de/fileyournal/assets/HalfHalf.png");
-    private final Image IMAGE_QUADQUAD  = new Image("de/entsesselt/de/fileyournal/assets/QuadQuad.png");
-    private final Image IMAGE_HALFQUAD  = new Image("de/entsesselt/de/fileyournal/assets/HalfQuad.png");
-    private final Image IMAGE_QUADHALF  = new Image("/de/entsesselt/de/fileyournal/assets/QuadHalf.png");
-
-    private Image[] listOfImages = {IMAGE_FULL, IMAGE_HALFHALF, IMAGE_QUADQUAD, IMAGE_HALFQUAD, IMAGE_QUADHALF};
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -37,7 +29,7 @@ public class HelloApplication extends Application {
 
         //Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
         Organizer org = new Organizer();
-        org.readXML();
+        org.readFO();
         /*createOrganizer(org);*/
         /*org.addPageTemplate("test");*/
         System.out.println(org.addPageTemplate("QuadQuad"));
@@ -89,6 +81,57 @@ public class HelloApplication extends Application {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("PageView.fxml"));
+            AnchorPane pageView = (AnchorPane) loader.load();
+            // Give the controller access to the main app.
+            PageViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(pageView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showFullPageView() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource("PageFullView.fxml"));
+            AnchorPane fullView = (AnchorPane) loader.load();
+            // Give the controller access to the main app.
+            PageFullViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(fullView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showQuadQuadPageView() {
+        try {
+            // Load QuadQuad Template-View
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource("PageQuadQuadView.fxml"));
+            AnchorPane quadView = (AnchorPane) loader.load();
+            // Give the controller access to the main app.
+            /*PageQuadQuadViewController controller = loader.getController();
+            controller.setMainApp(this);*/
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(quadView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showHalfHalfPageView() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource("HalfHalfPageView.fxml"));
             AnchorPane startView = (AnchorPane) loader.load();
             // Give the controller access to the main app.
             PageViewController controller = loader.getController();
@@ -123,14 +166,32 @@ public class HelloApplication extends Application {
             AnchorPane templatesView = (AnchorPane) loader.load();
             // Set person overview into the center of root layout.
             rootLayout.setRight(templatesView);
+            // Give the controller access to the main app.
+            RightViewController controller = loader.getController();
+            controller.setMainApp(this);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void showRightTemplates() {
+    public void changeRightView(String pageTemplate) {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource(pageTemplate));
+            AnchorPane templatesView = (AnchorPane) loader.load();
+            // Set person overview into the center of root layout.
+            rootLayout.setRight(templatesView);
+            // Give the controller access to the main app.
+            RightViewController controller = loader.getController();
+            controller.setMainApp(this);
 
-                }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
    /* @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("GuiView.fxml"));
