@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.FullContentViewController">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" stroke="BLACK" strokeType="INSIDE" width="360.0" />
+      <Label layoutX="58.0" layoutY="39.0" text="Content-Auswahl: &quot;ganze Seite&quot;" textAlignment="CENTER" textFill="#47464a">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Label>
+      <Button id="Dots" fx:id="Dots" contentDisplay="CENTER" layoutX="33.0" layoutY="102.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Dots">
+         <graphic>
+            <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/Content/ContentElements/fullPageContent/Dots.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="ColumnSystem" fx:id="ColumnSystem" contentDisplay="CENTER" layoutX="196.0" layoutY="102.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="ColumnSystem">
+         <graphic>
+            <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/Content/ContentElements/fullPageContent/ColumnSystem.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="TagesbetrachtungTL" fx:id="Dots1" contentDisplay="CENTER" layoutX="33.0" layoutY="316.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="TagesbetrachtungTL">
+         <graphic>
+            <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/Content/ContentElements/fullPageContent/TagesbetrachtungTL.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button id="Tagesbetrachtung" fx:id="ColumnSystem1" contentDisplay="CENTER" layoutX="196.0" layoutY="313.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Tagesbetrachtung">
+         <graphic>
+            <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/Content/ContentElements/fullPageContent/Tagesbetrachtung.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+      <Button fx:id="Dots11" contentDisplay="CENTER" layoutX="33.0" layoutY="530.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Blanko">
+         <graphic>
+            <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/Content/ContentElements/fullPageContent/Blanko.png" />
+               </image>
+            </ImageView>
+         </graphic>
+      </Button>
+   </children>
+</AnchorPane>
