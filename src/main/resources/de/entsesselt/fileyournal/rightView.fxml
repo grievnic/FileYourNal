@@ -20,17 +20,17 @@
             <Image url="@../../../assets/Full.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="halfhalf" fitWidth="130.0" layoutX="192.0" layoutY="95.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="halfhalf" fitWidth="130.0" layoutX="192.0" layoutY="95.0" onMouseClicked="#startHalfHalfTemplate" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/HalfHalf.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="quadhalf" fitWidth="130.0" layoutX="29.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="quadhalf" fitWidth="130.0" layoutX="29.0" layoutY="289.0" onMouseClicked="#startQuadHalfTemplate" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/QuadHalf.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="halfquad" fitWidth="130.0" layoutX="192.0" layoutY="289.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="halfquad" fitWidth="130.0" layoutX="192.0" layoutY="289.0" onMouseClicked="#startHalfQuadTemplate" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/HalfQuad.png" />
          </image>

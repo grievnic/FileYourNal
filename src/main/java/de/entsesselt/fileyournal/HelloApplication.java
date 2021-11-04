@@ -120,11 +120,11 @@ public class HelloApplication extends Application {
         try {
             // Load QuadQuad Template-View
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("PageQuadQuadView.fxml"));
+            loader.setLocation(HelloApplication.class.getResource("QuadPageView.fxml"));
             AnchorPane quadView = (AnchorPane) loader.load();
             // Give the controller access to the main app.
-            /*PageQuadQuadViewController controller = loader.getController();
-            controller.setMainApp(this);*/
+            FullPageViewController controller = loader.getController();
+            controller.setMainApp(this);
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(quadView);
@@ -140,8 +140,42 @@ public class HelloApplication extends Application {
             loader.setLocation(HelloApplication.class.getResource("HalfHalfPageView.fxml"));
             AnchorPane startView = (AnchorPane) loader.load();
             // Give the controller access to the main app.
-            /*PageViewController controller = loader.getController();
-            controller.setMainApp(this);*/
+            FullPageViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(startView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showQuadHalfPageView() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource("QuadHalfPageView.fxml"));
+            AnchorPane startView = (AnchorPane) loader.load();
+            // Give the controller access to the main app.
+            FullPageViewController controller = loader.getController();
+            controller.setMainApp(this);
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(startView);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void showHalfQuadPageView() {
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource("HalfQuadPageView.fxml"));
+            AnchorPane startView = (AnchorPane) loader.load();
+            // Give the controller access to the main app.
+            FullPageViewController controller = loader.getController();
+            controller.setMainApp(this);
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(startView);

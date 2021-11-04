@@ -31,6 +31,20 @@ public class RightViewController extends AbstractController {
         // TODO lade das FullPage-XML-Seiten-Template
     }
 
+    @FXML
+    protected void startQuadHalfTemplate() throws Exception {
+        mainApp.showQuadHalfPageView();
+        emptyRightView();
+        // TODO lade das FullPage-XML-Seiten-Template
+    }
+
+    @FXML
+    protected void startHalfQuadTemplate() throws Exception {
+        mainApp.showHalfQuadPageView();
+        emptyRightView();
+        // TODO lade das FullPage-XML-Seiten-Template
+    }
+
     // takes the template-Selection away
     public void emptyRightView(){
         mainApp.changeRightView("EmptyRightView.fxml");

@@ -32,6 +32,11 @@ public class FullContentViewController extends AbstractController{
     }
 
 
+    public void backToTemplate(){
+        mainApp.showRightView();
+    }
+
+
     /**
      * Is called by the main application to give a reference back to itself.
      *

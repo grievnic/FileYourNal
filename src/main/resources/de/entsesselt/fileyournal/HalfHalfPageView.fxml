@@ -13,9 +13,14 @@
             <Image url="@../../../assets/page.png" />
          </image>
       </ImageView>
-      <Button id="fullButton" fx:id="fullButton" contentDisplay="TOP" layoutX="130.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="687.5" prefWidth="475.0" text="volle Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="47.0">
+      <Button id="fullButton" fx:id="halfButton1" contentDisplay="TOP" layoutX="130.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="342.5" prefWidth="475.0" text="halbe Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="47.0">
          <font>
             <Font size="24.0" />
          </font></Button>
+      <Button id="fullButton" fx:id="halfButton2" contentDisplay="TOP" layoutX="130.0" layoutY="390.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="342.5" prefWidth="475.0" text="halbe Seite" textAlignment="CENTER" textFill="#47464a">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Button>
    </children>
 </AnchorPane>
