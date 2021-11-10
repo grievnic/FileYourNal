@@ -1,5 +1,6 @@
 package de.entsesselt.fileyournal;
 
+import de.entsesselt.fileyournal.model.Page;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -34,6 +35,9 @@ public class FullPageViewController extends AbstractController{
     String template = "full";
 
     String content1;
+    String content2;
+    String content3;
+    String content4;
 
     /*Button activeButton;*/
 
@@ -69,13 +73,7 @@ public class FullPageViewController extends AbstractController{
    }
 
    // three buttons under the PageOverview
-   @FXML
-   public void savePage () throws Exception {
-       System.out.println("Das Foto ist: " + content1);
-       /*Page fullPage = new Page(template,content1);
-       mainApp.addToOrganizer(fullPage.pageCreator());
-       nextPageButton.setDisable(false);*/
-   }
+
 
    @FXML
    public void nextPage(){
@@ -109,8 +107,6 @@ public class FullPageViewController extends AbstractController{
             imageView.setPreserveRatio(true);
             activeButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             sendContent();
-            System.out.println("Content 1 in FullPage ist: " + imagePath);
-
     }
 
     public void sendContent(){
@@ -118,16 +114,28 @@ public class FullPageViewController extends AbstractController{
        System.out.println("Die ButtonID lautet" + buttonId);
        if (buttonId.matches("^.*.1")){
            System.out.println("YEAH");
-           mainApp.setContent1(imagePath);
+           mainApp.setContent1(contentName);
         }else if (buttonId.matches("^.*.2")){
-            mainApp.setContent2(imagePath);
+            mainApp.setContent2(contentName);
         }else if (buttonId.matches("^.*.3")){
-           mainApp.setContent3(imagePath);
+           mainApp.setContent3(contentName);
         }else {
-           mainApp.setContent4(imagePath);
+           mainApp.setContent4(contentName);
         }
-       System.out.println("In sendButton:" + imagePath);
+       System.out.println("In sendButton:" + contentName);
         System.out.println("Content 1 in Main ist: " + mainApp.getContent1());
+    }
+
+    @FXML
+    public void savePage () throws Exception {
+       content1 = mainApp.getContent1();
+       content2 = mainApp.getContent2();
+       content3 = mainApp.getContent3();
+       content4 = mainApp.getContent4();
+        System.out.println("Das Foto ist: " + content1);
+        Page fullPage = new Page(template, content1, content2, content3, content4);
+        mainApp.addToOrganizer(fullPage.pageCreator());
+        nextPageButton.setDisable(false);
     }
 
     /**

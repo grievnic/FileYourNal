@@ -21,7 +21,7 @@ import java.io.*;
 
 public class Organizer {
 
-    private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/OrganizerTest.fo";
+    private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Organizer.fo";
     private final static File FILE = new File(FILENAME);
     private static Document currentOrganizer;
 
@@ -172,10 +172,20 @@ public class Organizer {
         Element root = currentOrganizer.getRootElement();
         Element pageSequence = root.getChild("page-sequence",fo);
         Element flow = pageSequence.getChild("flow", fo);
-        System.out.println(newPage.toString());
-        /*flow.addContent(newPage);*/
+        System.out.println("aus addPage: " + newPage);
+        flow.addContent(newPage);
     }
 
+    public static void writeXML(Element testElement){
+        Format format = Format.getPrettyFormat();
+        format.setIndent("    ");
+        try (FileOutputStream fos = new FileOutputStream(new File(FILENAME))) {
+            XMLOutputter op = new XMLOutputter(format);
+            op.output(testElement, fos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public void writeFO(){
         Format format = Format.getPrettyFormat();
@@ -216,7 +226,7 @@ public class Organizer {
 
             // Step 5: Setup input and output for XSLT transformation
             // Setup input stream
-            Source foIn = new StreamSource(new File("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Templates/Organizer.fo"));
+            Source foIn = new StreamSource(new File(FILENAME));
             // Resulting SAX events (the generated FO) must be piped through to FOP
             Result res = new SAXResult(fop.getDefaultHandler());
 
@@ -231,3 +241,5 @@ public class Organizer {
         }
     }
 }
+
+

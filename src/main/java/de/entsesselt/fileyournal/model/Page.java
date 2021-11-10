@@ -12,8 +12,8 @@ public class Page {
     private String content3 = "";
     private String content4 = "";
 
-    private final static String FULLPATH = "assets/Content/ContentElements/fullPageContent/";
-    private final static String HALFPATH = "assets/Content/ContentElements/halfPageContent/";
+    private final static String FULLPATH = "/Users/nicolegrieve/IdeaProjects/FileYournal/New/src/main/resources/assets/Content/ContentElements/fullPageContent/";
+    private final static String HALFPATH = "/assets/Content/ContentElements/halfPageContent/";
     private final static String FULLWIDTH = "190mm";
     private final static String FULLHIGHT = "275mm";
     private final static String HALFWIDTH = "95mm";
@@ -61,7 +61,7 @@ public class Page {
         if (templateType.equals("half")){ // wenn der TemplateTyp "halbe/halbe Seite" ist
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
-            newPage.setAttribute("page-break-before", "always");
+            newPage.setAttribute("page-break-before", "always"); //Seitenumbruch
             newPage.setAttribute("id","half");
             //currentPage.getRootElement().addContent(neueSeite); //TODO direkt Element ansprechen
 
@@ -99,7 +99,7 @@ public class Page {
 
             Element contentImage2 = new Element("external graphic, fo");
             contentImage2.setAttribute("alignment-adjust", "central");
-            contentImage2.setAttribute("scr",HALFPATH + content2 + ".png");
+            contentImage2.setAttribute("src",HALFPATH + content2 + ".png");
             contentImage2.setAttribute("content-width", FULLWIDTH);
             secondContent.addContent(contentImage2);
 
@@ -180,7 +180,7 @@ public class Page {
         // Content für die obere Hälfte+        ^   ^
             Element contentImage1 = new Element("external graphic, fo");
             contentImage1.setAttribute("alignment-adjust", "central");
-            contentImage1.setAttribute("scr",HALFPATH + content1 + ".png");
+            contentImage1.setAttribute("src",HALFPATH + content1 + ".png");
             contentImage1.setAttribute("content-width", FULLWIDTH);
             firstContent.addContent(contentImage1);
 
@@ -256,7 +256,7 @@ public class Page {
             // Content für die untere Hälfte
             Element contentImage3 = new Element("external graphic, fo");
             contentImage3.setAttribute("alignment-adjust", "central");
-            contentImage3.setAttribute("scr",HALFPATH + content3 + ".png");
+            contentImage3.setAttribute("src",HALFPATH + content3 + ".png");
             contentImage3.setAttribute("content-width", FULLWIDTH);
             firstContent.addContent(contentImage3);
 
@@ -281,7 +281,9 @@ public class Page {
             // erster und einziger Content
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
-            contentImage1.setAttribute("scr",FULLPATH + content1 + ".png");
+            contentImage1.setAttribute("src",FULLPATH + content1 + ".png");
+            /*contentImage1.setAttribute("src","/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Blocks/5ColumnSystem.png");
+*/
             contentImage1.setAttribute("content-width", FULLWIDTH);
             firstContent.addContent(contentImage1);
             System.out.println(newPage.toString());

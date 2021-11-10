@@ -30,7 +30,7 @@ public class HelloApplication extends Application {
     private String content3;
     private String content4;
     private String currentTemplate;
-    private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Organizer.fo";
+    private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/OrganizerTEST.fo";
     private final static File FILE = new File(FILENAME);
 
     @Override
@@ -45,6 +45,7 @@ public class HelloApplication extends Application {
 
         //Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
         Organizer org = new Organizer();
+        this.org = org;
         org.readFO();
         /*createOrganizer(org);*/
         /*org.addPageTemplate("test");*/
@@ -248,11 +249,16 @@ public class HelloApplication extends Application {
     public void nextPage(){
         showRightView();
         showPageView();
+        content1 = "";
+        content2 = "";
+        content3 = "";
+        content4 = "";
     }
 
     public void addToOrganizer (Element newPage) throws Exception {
         org.addPage(newPage);
-        org.writeFO();
+        System.out.println(newPage.toString());
+        org.writeFO();//
         org.foToPdf();
     }
    /* @Override
