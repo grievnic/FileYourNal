@@ -1,9 +1,11 @@
 package de.entsesselt.fileyournal.model;
 
+import org.apache.fop.apps.FOPException;
 import org.apache.fop.apps.Fop;
 import org.apache.fop.apps.FopFactory;
 import org.apache.fop.apps.MimeConstants;
 import org.jdom.Document;
+import org.jdom.Element;
 import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
@@ -19,12 +21,12 @@ import java.io.*;
 
 public class Organizer {
 
-    private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Organizer.fo";
+    private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/OrganizerTest.fo";
     private final static File FILE = new File(FILENAME);
-    private Document currentOrganizer;
+    private static Document currentOrganizer;
 
     private final static String NAMESPACE = "http://www.w3.org/1999/XSL/Format";
-    Namespace fo = Namespace.getNamespace("fo", NAMESPACE);
+    static Namespace fo = Namespace.getNamespace("fo", NAMESPACE);
 
     /*private Document createDoc(String rootElement) {
         Document doc = new Document();
@@ -137,6 +139,8 @@ public class Organizer {
         blockContainerRechts.addContent(right);
     }*/
 
+
+
     public void readFO() {
 
         try {
@@ -152,17 +156,33 @@ public class Organizer {
         }
     }
 
+    public static Document getCurrentOrganizer() {
+        return currentOrganizer;
+    }
+
+    // kann vermutlich bald weg
     public static String addPageTemplate(String templateType){
         String templateFilename = templateType + ".fo";
         return templateFilename;
     }
 
-    private void writeFO(Document doc) {
+    public static void addPage(Element newPage){
+        //TODO Seite (Template und Content) in den Organizer-Baum schreiben
+        //mit XPath das <fo:flow>-Element finden
+        Element root = currentOrganizer.getRootElement();
+        Element pageSequence = root.getChild("page-sequence",fo);
+        Element flow = pageSequence.getChild("flow", fo);
+        System.out.println(newPage.toString());
+        /*flow.addContent(newPage);*/
+    }
+
+
+    public void writeFO(){
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
         try (FileOutputStream fos = new FileOutputStream(new File(FILENAME))) {
             XMLOutputter op = new XMLOutputter(format);
-            op.output(doc, fos);
+            op.output(currentOrganizer, fos);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -203,7 +223,9 @@ public class Organizer {
             // Step 6: Start XSLT transformation and FOP processing
             transformer.transform(foIn, res);
 
-        } finally {
+        } catch (FOPException e) {
+            e.printStackTrace();}
+        finally {
             //Clean-up
             pdfOut.close();
         }

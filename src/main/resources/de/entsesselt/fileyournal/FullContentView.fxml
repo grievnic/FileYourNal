@@ -11,8 +11,9 @@
 
 <AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.FullContentViewController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="64.0" layoutY="40.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="362.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c1c1" height="70.0" layoutY="-21.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="362.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c1c1" height="70.0" stroke="#c6c1c1" strokeType="INSIDE" width="362.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="55.0" layoutY="50.0" stroke="#c6c1c1" strokeType="INSIDE" width="362.0" />
+      <Button fx:id="templateButton" layoutX="88.0" layoutY="12.0" mnemonicParsing="false" onAction="#backToTemplate" text="zurück zur Template-Übersicht" />
       <Label layoutX="59.0" layoutY="63.0" text="Content-Auswahl: &quot;ganze Seite&quot;" textAlignment="CENTER" textFill="#47464a">
          <font>
             <Font size="18.0" />
@@ -20,9 +21,9 @@
       </Label>
       <ScrollPane layoutY="100.0">
          <content>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="360.0">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="966.0" prefWidth="360.0">
                <children>
-                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="967.0" layoutY="33.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="360.0" />
+                  <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="967.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
                   <Button id="Dots" fx:id="Dots" contentDisplay="CENTER" layoutX="34.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Dots" textFill="#47464a">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
@@ -90,6 +91,5 @@
             </AnchorPane>
          </content>
       </ScrollPane>
-      <Button fx:id="templateButton" layoutX="88.0" layoutY="14.0" mnemonicParsing="false" onAction="#backToTemplate" text="zurück zur Template-Übersicht" />
    </children>
 </AnchorPane>

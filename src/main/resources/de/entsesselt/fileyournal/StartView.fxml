@@ -8,7 +8,7 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.StartViewController">
    <children>
-      <ImageView fx:id="planer" accessibleRole="BUTTON" depthTest="ENABLE" fitHeight="675.0" fitWidth="494.0" layoutX="132.0" layoutY="67.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="planer" accessibleRole="BUTTON" depthTest="ENABLE" fitHeight="810.0" fitWidth="572.0" layoutX="96.0" layoutY="1.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/Organizer.png" />
          </image>

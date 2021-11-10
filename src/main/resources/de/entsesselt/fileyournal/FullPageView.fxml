@@ -8,14 +8,17 @@
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.FullPageViewController">
    <children>
-      <ImageView fx:id="page" fitHeight="742.0" fitWidth="535.0" layoutX="107.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="page" fitHeight="704.9" fitWidth="508.25" layoutX="107.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/page.png" />
          </image>
       </ImageView>
-      <Button id="fullButton" fx:id="fullButton" contentDisplay="TOP" layoutX="130.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="687.5" prefWidth="475.0" text="volle Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="47.0">
+      <Button id="Button1" fx:id="Button1" contentDisplay="TOP" layoutX="129.0" layoutY="45.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="653.125" prefWidth="451.25" text="volle Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="45.0">
          <font>
             <Font size="24.0" />
          </font></Button>
+      <Button layoutX="298.0" layoutY="730.0" mnemonicParsing="false" onAction="#savePage" text="Seite übernehmen" />
+      <Button fx:id="nextPageButton" disable="true" layoutX="506.0" layoutY="730.0" mnemonicParsing="false" text="nächste Seite" />
+      <Button layoutX="112.0" layoutY="730.0" mnemonicParsing="false" text="Seite zurück" />
    </children>
 </AnchorPane>

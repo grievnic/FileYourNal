@@ -9,7 +9,13 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
+import org.jdom.Document;
+import org.jdom.Element;
+import org.jdom.output.Format;
+import org.jdom.output.XMLOutputter;
 
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 
 
@@ -23,6 +29,9 @@ public class HelloApplication extends Application {
     private String content2;
     private String content3;
     private String content4;
+    private String currentTemplate;
+    private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Organizer.fo";
+    private final static File FILE = new File(FILENAME);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -236,6 +245,16 @@ public class HelloApplication extends Application {
         }
     }
 
+    public void nextPage(){
+        showRightView();
+        showPageView();
+    }
+
+    public void addToOrganizer (Element newPage) throws Exception {
+        org.addPage(newPage);
+        org.writeFO();
+        org.foToPdf();
+    }
    /* @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("GuiView.fxml"));
@@ -244,6 +263,17 @@ public class HelloApplication extends Application {
         stage.setScene(scene);
         stage.show();
     }*/
+
+    public void writeFO(Document doc) {
+        Format format = Format.getPrettyFormat();
+        format.setIndent("    ");
+        try (FileOutputStream fos = new FileOutputStream(new File(FILENAME))) {
+            XMLOutputter op = new XMLOutputter(format);
+            op.output(doc, fos);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 
     public Button getActiveButton() {
         return activeButton;
@@ -257,8 +287,10 @@ public class HelloApplication extends Application {
         return content1;
     }
 
-    public void setContent1(String content1) {
-        this.content1 = content1;
+    public void setContent1(String inhalt1) {
+
+        this.content1 = inhalt1;
+        System.out.println("Aus der Set-Methode: " + content1);
     }
 
     public String getContent2() {
@@ -283,6 +315,14 @@ public class HelloApplication extends Application {
 
     public void setContent4(String content4) {
         this.content4 = content4;
+    }
+
+    public String getCurrentTemplate() {
+        return currentTemplate;
+    }
+
+    public void setCurrentTemplate(String currentTemplate) {
+        this.currentTemplate = currentTemplate;
     }
 
     public static void main(String[] args) {

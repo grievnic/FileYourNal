@@ -19,10 +19,9 @@ public class StartViewController extends AbstractController {
 
     @FXML
     protected void startNewPlanerClick() throws Exception {
-        mainApp.showRightView();
+        mainApp.nextPage();
         newPlaner.setVisible(false);
         planer.setVisible(false);
-        mainApp.showPageView();
     }
     /**
      * Is called by the main application to give a reference back to itself.

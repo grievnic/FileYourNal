@@ -9,33 +9,35 @@
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.RightViewController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" stroke="BLACK" strokeType="INSIDE" width="360.0" />
-      <Label layoutX="117.0" layoutY="36.0" text="Seiten-Template">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c1c1" height="70.0" stroke="#c6c1c1" strokeType="INSIDE" width="362.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="55.0" layoutY="50.0" stroke="#c6c1c1" strokeType="INSIDE" width="362.0" />
+      <Label layoutX="113.0" layoutY="66.0" text="Seiten-Templates" textFill="#4a4647">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ImageView fx:id="full" fitWidth="130.0" layoutX="29.0" layoutY="95.0" onMouseClicked="#startFullTemplate" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="full" fitWidth="130.0" layoutX="34.0" layoutY="139.0" onMouseClicked="#startFullTemplate" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/Full.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="halfhalf" fitWidth="130.0" layoutX="192.0" layoutY="95.0" onMouseClicked="#startHalfHalfTemplate" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="halfhalf" fitWidth="130.0" layoutX="197.0" layoutY="139.0" onMouseClicked="#startHalfHalfTemplate" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/HalfHalf.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="quadhalf" fitWidth="130.0" layoutX="29.0" layoutY="289.0" onMouseClicked="#startQuadHalfTemplate" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="quadhalf" fitWidth="130.0" layoutX="34.0" layoutY="333.0" onMouseClicked="#startQuadHalfTemplate" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/QuadHalf.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="halfquad" fitWidth="130.0" layoutX="192.0" layoutY="289.0" onMouseClicked="#startHalfQuadTemplate" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="halfquad" fitWidth="130.0" layoutX="197.0" layoutY="333.0" onMouseClicked="#startHalfQuadTemplate" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/HalfQuad.png" />
          </image>
       </ImageView>
-      <ImageView fx:id="quadquad" fitWidth="130.0" layoutX="29.0" layoutY="483.0" onMouseClicked="#startQuadQuadTemplate" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="quadquad" fitWidth="130.0" layoutX="34.0" layoutY="527.0" onMouseClicked="#startQuadQuadTemplate" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/QuadQuad.png" />
          </image>

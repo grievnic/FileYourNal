@@ -11,6 +11,7 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startQuadQuadTemplate() throws Exception {
         mainApp.showQuadQuadPageView();
+        mainApp.setCurrentTemplate("quadquad");
         emptyRightView();
         // TODO lade das QuadQuad-XML-Seiten-Template
     }
@@ -19,6 +20,7 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startFullTemplate() throws Exception {
         mainApp.showFullPageView();
+        mainApp.setCurrentTemplate("full");
         emptyRightView();
         // TODO lade das FullPage-XML-Seiten-Template
     }
@@ -27,6 +29,7 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startHalfHalfTemplate() throws Exception {
         mainApp.showHalfHalfPageView();
+        mainApp.setCurrentTemplate("halfhalf");
         emptyRightView();
         // TODO lade das FullPage-XML-Seiten-Template
     }
@@ -34,6 +37,7 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startQuadHalfTemplate() throws Exception {
         mainApp.showQuadHalfPageView();
+        mainApp.setCurrentTemplate("quadhalf");
         emptyRightView();
         // TODO lade das FullPage-XML-Seiten-Template
     }
@@ -41,6 +45,7 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startHalfQuadTemplate() throws Exception {
         mainApp.showHalfQuadPageView();
+        mainApp.setCurrentTemplate("halfquad");
         emptyRightView();
         // TODO lade das FullPage-XML-Seiten-Template
     }
