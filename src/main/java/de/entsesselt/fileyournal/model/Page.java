@@ -13,11 +13,11 @@ public class Page {
     private String content4 = "";
 
     private final static String FULLPATH = "/Users/nicolegrieve/IdeaProjects/FileYournal/New/src/main/resources/assets/Content/ContentElements/fullPageContent/";
-    private final static String HALFPATH = "/assets/Content/ContentElements/halfPageContent/";
+    private final static String HALFPATH = "/Users/nicolegrieve/IdeaProjects/FileYournal/New/src/main/resources/assets/Content/ContentElements/halfPageContent/";
     private final static String FULLWIDTH = "190mm";
     private final static String FULLHIGHT = "275mm";
     private final static String HALFWIDTH = "95mm";
-    private final static String HALFHIGHT = "137,5mm";
+    private final static String HALFHIGHT = "137.5mm";
     private final static String NOSPACE = "0mm";
     private Document currentPage;
     private String templateFilename;
@@ -25,6 +25,7 @@ public class Page {
     private final static String NAMESPACE = "http://www.w3.org/1999/XSL/Format";
     Namespace fo = Namespace.getNamespace("fo", NAMESPACE);
 
+    int pageNumber = 1;
 
     // FullPage-Contructor
     public Page(String typ, String content1) {
@@ -48,6 +49,7 @@ public class Page {
         this.content2 = content2;
         this.content3 = content3;
         this.content4 = content4;
+        pageNumber = pageNumber++;
     }
 
     // sollte mit einem  zu ladenden XML-Template gearbeitet werden
@@ -58,12 +60,12 @@ public class Page {
 
     // TODO umschreiben ohne getRootElement
     public Element pageCreator(){
+    // HALF
         if (templateType.equals("half")){ // wenn der TemplateTyp "halbe/halbe Seite" ist
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always"); //Seitenumbruch
-            newPage.setAttribute("id","half");
-            //currentPage.getRootElement().addContent(neueSeite); //TODO direkt Element ansprechen
+            newPage.setAttribute("id","half"+ pageNumber);
 
             // <fo:block-container> für die Positionierung der oberen Hälfte auf der Seite
             Element topContainer = new Element("block-container", fo);
@@ -78,10 +80,10 @@ public class Page {
             Element firstContent = new Element("block", fo);
             topContainer.addContent(firstContent);
 
-            Element contentImage1 = new Element("external graphic, fo");
+            Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
-            contentImage1.setAttribute("scr",HALFPATH + content1 + ".png");
-            contentImage1.setAttribute("content-width", FULLWIDTH);
+            contentImage1.setAttribute("src",HALFPATH + content1 + ".png");
+            contentImage1.setAttribute("content-width", HALFWIDTH);
             firstContent.addContent(contentImage1);
 
             // <fo:block-container> für die Positionierung der unteren Hälfte auf der Seite
@@ -97,17 +99,17 @@ public class Page {
             Element secondContent = new Element("block", fo);
             bottomContainer.addContent(secondContent);
 
-            Element contentImage2 = new Element("external graphic, fo");
+            Element contentImage2 = new Element("external-graphic", fo);
             contentImage2.setAttribute("alignment-adjust", "central");
             contentImage2.setAttribute("src",HALFPATH + content2 + ".png");
             contentImage2.setAttribute("content-width", FULLWIDTH);
             secondContent.addContent(contentImage2);
-
+    //QUAD
         }else if (templateType.equals("quad")){ // wenn der TemplateTyp 4/4 Seite ist
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always");
-            newPage.setAttribute("id","quad");
+            newPage.setAttribute("id","quad" + pageNumber);
             //currentPage.getRootElement().addContent(neueSeite);
 
             // <fo:block-container> für die Positionierung des linken Viertels der oberen Hälfte auf der Seite
@@ -121,6 +123,12 @@ public class Page {
             // <fo:block> für den Content
             Element firstContent = new Element("block", fo);
             firstContainer.addContent(firstContent);
+            // Inhalt für das Viertel oben links
+            Element contentImage1 = new Element("external-graphic", fo);
+            contentImage1.setAttribute("alignment-adjust", "central");
+            contentImage1.setAttribute("src",FULLPATH + content1 + ".png");
+            contentImage1.setAttribute("content-width", HALFWIDTH);
+            firstContent.addContent(contentImage1);
 
             // <fo:block-container> für die Positionierung des rechten Viertels der oberen Hälfte auf der Seite
             Element secondContainer = new Element("block-container", fo);
@@ -133,6 +141,12 @@ public class Page {
             // <fo:block> für den Content
             Element secondContent = new Element("block", fo);
             secondContainer.addContent(secondContent);
+            //
+            Element contentImage2 = new Element("external-graphic", fo);
+            contentImage2.setAttribute("alignment-adjust", "central");
+            contentImage2.setAttribute("src",FULLPATH + content2 + ".png");
+            contentImage2.setAttribute("content-width", HALFWIDTH);
+            secondContent.addContent(contentImage2);
 
             // <fo:block-container> für die Positionierung des linken Viertels der unteren Hälfte auf der Seite
             Element thirdContainer = new Element("block-container", fo);
@@ -143,8 +157,15 @@ public class Page {
             thirdContainer.setAttribute("width", HALFWIDTH);
             newPage.addContent(thirdContainer);
             // <fo:block> für den Content
+
             Element thirdContent = new Element("block", fo);
             thirdContainer.addContent(thirdContent);
+            //
+            Element contentImage3 = new Element("external-graphic", fo);
+            contentImage3.setAttribute("alignment-adjust", "central");
+            contentImage3.setAttribute("src",FULLPATH + content3 + ".png");
+            contentImage3.setAttribute("content-width", HALFWIDTH);
+            thirdContent.addContent(contentImage3);
 
             // <fo:block-container> für die Positionierung des rechten Viertels der unteren Hälfte auf der Seite
             Element forthContainer = new Element("block-container", fo);
@@ -157,12 +178,19 @@ public class Page {
             // <fo:block> für den Content
             Element forthContent = new Element("block", fo);
             forthContainer.addContent(forthContent);
+            // Inhalt für das rechte untere Viertel
+            Element contentImage4 = new Element("external-graphic", fo);
+            contentImage4.setAttribute("alignment-adjust", "central");
+            contentImage4.setAttribute("src",FULLPATH + content4 + ".png");
+            contentImage4.setAttribute("content-width", HALFWIDTH);
+            forthContent.addContent(contentImage4);
 
+    //HALFQUAD
         }else if (templateType.equals("halfQuad")){ // wenn oben 1/2 und unten 2/4
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always");
-            newPage.setAttribute("id","halfquad");
+            newPage.setAttribute("id","halfquad" + pageNumber);
             //currentPage.getRootElement().addContent(neueSeite);
 
             // <fo:block-container> für die Positionierung der oberen Hälfte auf der Seite
@@ -177,8 +205,8 @@ public class Page {
             // <fo:block> für den Content
             Element firstContent = new Element("block", fo);
             topContainer.addContent(firstContent);
-        // Content für die obere Hälfte+        ^   ^
-            Element contentImage1 = new Element("external graphic, fo");
+            // Content für die obere Hälfte
+            Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
             contentImage1.setAttribute("src",HALFPATH + content1 + ".png");
             contentImage1.setAttribute("content-width", FULLWIDTH);
@@ -195,8 +223,12 @@ public class Page {
             // <fo:block> für den Content
             Element secondContent = new Element("block", fo);
             leftContainer.addContent(secondContent);
-            // Content für das linke Viertel
-            //TODO
+            // Content für das untere linke Viertel
+            Element contentImage2 = new Element("external-graphic", fo);
+            contentImage2.setAttribute("alignment-adjust", "central");
+            contentImage2.setAttribute("src",FULLPATH + content2 + ".png");
+            contentImage2.setAttribute("content-width", HALFWIDTH);
+            secondContent.addContent(contentImage2);
 
             // <fo:block-container> für die Positionierung des rechten Viertels der unteren Hälfte auf der Seite
             Element rightContainer = new Element("block-container", fo);
@@ -209,14 +241,19 @@ public class Page {
             // <fo:block> für den Content
             Element thirdContent = new Element("block", fo);
             rightContainer.addContent(thirdContent);
-            // Content des rechten Viertels
-            //TODO
+            // Content für das untere rechte Viertel
+            Element contentImage3 = new Element("external-graphic", fo);
+            contentImage3.setAttribute("alignment-adjust", "central");
+            contentImage3.setAttribute("src",FULLPATH + content3 + ".png");
+            contentImage3.setAttribute("content-width", HALFWIDTH);
+            thirdContent.addContent(contentImage3);
 
+    //QUADHALF
         }else if (templateType.equals("quadHalf")){ // wenn oben 2/4 und unten 1/2
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always");
-            newPage.setAttribute("id","quadhalf");
+            newPage.setAttribute("id","quadhalf" + pageNumber);
 
             // <fo:block-container> für die Positionierung des linken Viertels der oberen Hälfte auf der Seite
             Element firstContainer = new Element("block-container", fo);
@@ -230,6 +267,12 @@ public class Page {
             Element firstContent = new Element("block", fo);
             firstContainer.addContent(firstContent);
 
+            Element contentImage1 = new Element("external-graphic", fo);
+            contentImage1.setAttribute("alignment-adjust", "central");
+            contentImage1.setAttribute("src",FULLPATH + content1 + ".png");
+            contentImage1.setAttribute("content-width", HALFWIDTH);
+            firstContent.addContent(contentImage1);
+
             // <fo:block-container> für die Positionierung des rechten Viertels der oberen Hälfte auf der Seite
             Element secondContainer = new Element("block-container", fo);
             secondContainer.setAttribute("absolute-position", "absolute");
@@ -241,6 +284,12 @@ public class Page {
             // <fo:block> für den Content
             Element secondContent = new Element("block", fo);
             secondContainer.addContent(secondContent);
+            // Content für das rechte obere Viertel
+            Element contentImage2 = new Element("external-graphic", fo);
+            contentImage2.setAttribute("alignment-adjust", "central");
+            contentImage2.setAttribute("src",FULLPATH + content2 + ".png");
+            contentImage2.setAttribute("content-width", HALFWIDTH);
+            secondContent.addContent(contentImage2);
 
             // <fo:block-container> für die Positionierung der unteren Hälfte auf der Seite
             Element bottomContainer = new Element("block-container", fo);
@@ -254,17 +303,18 @@ public class Page {
             Element thirdContent = new Element("block", fo);
             bottomContainer.addContent(thirdContent);
             // Content für die untere Hälfte
-            Element contentImage3 = new Element("external graphic, fo");
+            Element contentImage3 = new Element("external-graphic", fo);
             contentImage3.setAttribute("alignment-adjust", "central");
             contentImage3.setAttribute("src",HALFPATH + content3 + ".png");
             contentImage3.setAttribute("content-width", FULLWIDTH);
-            firstContent.addContent(contentImage3);
+            thirdContent.addContent(contentImage3);
 
+    //FULL
         }else { // templateType is "full", also ganze Seite
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always");
-            newPage.setAttribute("id","full");
+            newPage.setAttribute("id","fullpage" + pageNumber);
             //currentPage.getRootElement().addContent(neueSeite);
 
             // <fo:block-container> für die Positionierung innerhalb der Seite
@@ -287,6 +337,7 @@ public class Page {
             contentImage1.setAttribute("content-width", FULLWIDTH);
             firstContent.addContent(contentImage1);
             System.out.println(newPage.toString());
+            System.out.println("pageCreator BEGIN: " + content1 + content2 + content3 + content4);
         } return newPage;
 
     }

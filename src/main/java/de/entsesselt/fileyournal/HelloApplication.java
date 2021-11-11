@@ -25,11 +25,11 @@ public class HelloApplication extends Application {
     private BorderPane rootLayout;
     private Organizer org;
     private Button activeButton;
-    private String content1;
-    private String content2;
-    private String content3;
-    private String content4;
-    private String currentTemplate;
+    private String content1 = "";
+    private String content2 = "";
+    private String content3 = "";
+    private String content4 = "";
+    private String currentTemplate = "";
     private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/OrganizerTEST.fo";
     private final static File FILE = new File(FILENAME);
 
@@ -51,7 +51,7 @@ public class HelloApplication extends Application {
         /*org.addPageTemplate("test");*/
         System.out.println(org.addPageTemplate("QuadQuad"));
 
-        org.foToPdf(); // Test zum Wandeln der Fo zu PDF aus oben erstellter Datei
+       /* org.foToPdf(); // Test zum Wandeln der Fo zu PDF aus oben erstellter Datei*/
 
     }
 
@@ -327,8 +327,9 @@ public class HelloApplication extends Application {
         return currentTemplate;
     }
 
-    public void setCurrentTemplate(String currentTemplate) {
-        this.currentTemplate = currentTemplate;
+    public void setCurrentTemplate(String template) {
+        this.currentTemplate = template;
+        System.out.println("current Template is: " + currentTemplate);
     }
 
     public static void main(String[] args) {

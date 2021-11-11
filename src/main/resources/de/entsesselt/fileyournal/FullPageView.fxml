@@ -17,7 +17,7 @@
          <font>
             <Font size="24.0" />
          </font></Button>
-      <Button layoutX="298.0" layoutY="730.0" mnemonicParsing="false" onAction="#savePage" text="Seite übernehmen" />
+      <Button layoutX="266.0" layoutY="730.0" mnemonicParsing="false" onAction="#savePage" text="Seite übernehmen &amp; neue Seite" />
       <Button fx:id="nextPageButton" disable="true" layoutX="506.0" layoutY="730.0" mnemonicParsing="false" text="nächste Seite" />
       <Button layoutX="112.0" layoutY="730.0" mnemonicParsing="false" text="Seite zurück" />
    </children>

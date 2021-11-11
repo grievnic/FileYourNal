@@ -3,6 +3,7 @@ package de.entsesselt.fileyournal;
 import de.entsesselt.fileyournal.model.Page;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.image.ImageView;
@@ -32,7 +33,7 @@ public class FullPageViewController extends AbstractController{
     @FXML
     Button nextPageButton;
 
-    String template = "full";
+    String template;
 
     String content1;
     String content2;
@@ -111,9 +112,7 @@ public class FullPageViewController extends AbstractController{
 
     public void sendContent(){
        buttonId = activeButton.getId();
-       System.out.println("Die ButtonID lautet" + buttonId);
        if (buttonId.matches("^.*.1")){
-           System.out.println("YEAH");
            mainApp.setContent1(contentName);
         }else if (buttonId.matches("^.*.2")){
             mainApp.setContent2(contentName);
@@ -122,8 +121,6 @@ public class FullPageViewController extends AbstractController{
         }else {
            mainApp.setContent4(contentName);
         }
-       System.out.println("In sendButton:" + contentName);
-        System.out.println("Content 1 in Main ist: " + mainApp.getContent1());
     }
 
     @FXML
@@ -132,11 +129,30 @@ public class FullPageViewController extends AbstractController{
        content2 = mainApp.getContent2();
        content3 = mainApp.getContent3();
        content4 = mainApp.getContent4();
-        System.out.println("Das Foto ist: " + content1);
-        Page fullPage = new Page(template, content1, content2, content3, content4);
-        mainApp.addToOrganizer(fullPage.pageCreator());
-        nextPageButton.setDisable(false);
+       template = mainApp.getCurrentTemplate();
+        // create a alert
+        Alert a = new Alert(Alert.AlertType.NONE);
+        a.setAlertType(Alert.AlertType.ERROR);
+        a.setContentText("Es müssen alle Seitenelemente befüllt sein!");
+        //Are all Page-Elements filled with content?
+        if (template.equals("full") & content1.isEmpty()){
+            a.show();
+        }else if (template.equals("half") && content1.isEmpty() | content2.isEmpty()){
+            a.show();
+        }else if (template.equals("halfQuad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty() ){
+            a.show();
+        }else if (template.equals("quadHalf") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty()){
+            a.show();
+        }else if (template.equals("quad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty() | content4.isEmpty()){
+            a.show();
+        }else {
+            Page fullPage = new Page(template, content1, content2, content3, content4);
+            mainApp.addToOrganizer(fullPage.pageCreator());
+            mainApp.showPageView();
+            mainApp.showRightView();
+        }
     }
+    
 
     /**
      * Is called by the main application to give a reference back to itself.

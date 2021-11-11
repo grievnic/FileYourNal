@@ -13,27 +13,27 @@
             <Image url="@../../../assets/page.png" />
          </image>
       </ImageView>
-      <Button id="fullButton" fx:id="quadButton1" contentDisplay="TOP" layoutX="130.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="46.0">
+      <Button id="quadButton1" fx:id="quadButton1" contentDisplay="TOP" layoutX="130.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="46.0">
          <font>
             <Font size="24.0" />
          </font></Button>
-      <Button id="fullButton" fx:id="quadButton3" contentDisplay="TOP" layoutX="130.0" layoutY="372.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
+      <Button id="quadButton3" fx:id="quadButton3" contentDisplay="TOP" layoutX="130.0" layoutY="372.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button id="fullButton" fx:id="quadButton2" contentDisplay="TOP" layoutX="356.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
+      <Button id="quadButton2" fx:id="quadButton2" contentDisplay="TOP" layoutX="356.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button id="fullButton" fx:id="quadButton4" contentDisplay="TOP" layoutX="356.0" layoutY="372.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
+      <Button id="quadButton4" fx:id="quadButton4" contentDisplay="TOP" layoutX="356.0" layoutY="372.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
          <font>
             <Font size="24.0" />
          </font>
       </Button>
-      <Button layoutX="299.0" layoutY="730.0" mnemonicParsing="false" text="Seite übernehmen" />
-      <Button layoutX="507.0" layoutY="730.0" mnemonicParsing="false" text="nächste Seite" />
+      <Button layoutX="266.0" layoutY="730.0" mnemonicParsing="false" onAction="#savePage" text="Seite übernehmen &amp; neue Seite" />
+      <Button fx:id="nextPageButton" disable="true" layoutX="507.0" layoutY="730.0" mnemonicParsing="false" text="nächste Seite" />
       <Button layoutX="113.0" layoutY="730.0" mnemonicParsing="false" text="Seite zurück" />
    </children>
 </AnchorPane>

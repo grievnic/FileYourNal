@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 
 public class RightViewController extends AbstractController {
 
+    String template = "";
     // Reference to the main application.
     /*private HelloApplication mainApp;*/
 
@@ -11,7 +12,10 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startQuadQuadTemplate() throws Exception {
         mainApp.showQuadQuadPageView();
-        mainApp.setCurrentTemplate("quadquad");
+        template = "quad";
+        System.out.println("aus start-Quad-Methode: " + template + "und aus Main: " + mainApp.getCurrentTemplate());
+        sendTemplate();
+        System.out.println("aus start-Quad-Methode: " + template + "und aus Main: " + mainApp.getCurrentTemplate());
         emptyRightView();
         // TODO lade das QuadQuad-XML-Seiten-Template
     }
@@ -20,7 +24,8 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startFullTemplate() throws Exception {
         mainApp.showFullPageView();
-        mainApp.setCurrentTemplate("full");
+        template = "full";
+        sendTemplate();
         emptyRightView();
         // TODO lade das FullPage-XML-Seiten-Template
     }
@@ -29,7 +34,8 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startHalfHalfTemplate() throws Exception {
         mainApp.showHalfHalfPageView();
-        mainApp.setCurrentTemplate("halfhalf");
+        template = "half";
+        sendTemplate();
         emptyRightView();
         // TODO lade das FullPage-XML-Seiten-Template
     }
@@ -37,7 +43,8 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startQuadHalfTemplate() throws Exception {
         mainApp.showQuadHalfPageView();
-        mainApp.setCurrentTemplate("quadhalf");
+        template = "quadHalf";
+        sendTemplate();
         emptyRightView();
         // TODO lade das FullPage-XML-Seiten-Template
     }
@@ -45,9 +52,14 @@ public class RightViewController extends AbstractController {
     @FXML
     protected void startHalfQuadTemplate() throws Exception {
         mainApp.showHalfQuadPageView();
-        mainApp.setCurrentTemplate("halfquad");
+        template = "halfQuad";
+        sendTemplate();
         emptyRightView();
         // TODO lade das FullPage-XML-Seiten-Template
+    }
+
+    private void sendTemplate(){
+        mainApp.setCurrentTemplate(template);
     }
 
     // takes the template-Selection away
