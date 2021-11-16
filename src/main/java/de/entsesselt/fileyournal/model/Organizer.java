@@ -156,7 +156,7 @@ public class Organizer {
         }
     }
 
-    public static Document getCurrentOrganizer() {
+    public Document getCurrentOrganizer() {
         return currentOrganizer;
     }
 
@@ -240,4 +240,6 @@ public class Organizer {
             pdfOut.close();
         }
     }
+
+
 }

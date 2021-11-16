@@ -23,7 +23,7 @@
          </font>
       </Button>
       <Button layoutX="266.0" layoutY="730.0" mnemonicParsing="false" onAction="#savePage" text="Seite übernehmen &amp; neue Seite" />
-      <Button fx:id="nextPageButton" disable="true" layoutX="507.0" layoutY="730.0" mnemonicParsing="false" text="nächste Seite" />
-      <Button layoutX="113.0" layoutY="730.0" mnemonicParsing="false" text="Seite zurück" />
+      <Button fx:id="nextPageButton" layoutX="507.0" layoutY="730.0" mnemonicParsing="false" onAction="#nextPage" text="nächste Seite" />
+      <Button fx:id="previousButton" layoutX="113.0" layoutY="730.0" mnemonicParsing="false" onAction="#previousPage" text="Seite zurück" />
    </children>
 </AnchorPane>

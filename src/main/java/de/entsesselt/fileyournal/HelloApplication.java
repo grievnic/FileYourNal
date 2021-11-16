@@ -11,12 +11,14 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.jdom.Document;
 import org.jdom.Element;
-import org.jdom.output.Format;
-import org.jdom.output.XMLOutputter;
+import org.jdom.Namespace;
+import org.jdom.filter.ElementFilter;
+import org.jdom2.xpath.XPathFactory;
 
 import java.io.File;
-import java.io.FileOutputStream;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 
 public class HelloApplication extends Application {
@@ -30,8 +32,12 @@ public class HelloApplication extends Application {
     private String content3 = "";
     private String content4 = "";
     private String currentTemplate = "";
+    private Document doc;
+    private Element currentPage;
     private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/OrganizerTEST.fo";
     private final static File FILE = new File(FILENAME);
+    private final static String NAMESPACE = "http://www.w3.org/1999/XSL/Format";
+    Namespace fo = Namespace.getNamespace("fo", NAMESPACE);
 
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -46,6 +52,7 @@ public class HelloApplication extends Application {
         //Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
         Organizer org = new Organizer();
         this.org = org;
+
         org.readFO();
         /*createOrganizer(org);*/
         /*org.addPageTemplate("test");*/
@@ -74,7 +81,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showStartView() {
+    public void showStartView() { // shows the page-view with the organizer-picture
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -92,14 +99,14 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showPageView() {
+    public void showPageView() { // shows the empty page-view
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("PageView.fxml"));
             AnchorPane pageView = (AnchorPane) loader.load();
             // Give the controller access to the main app.
-            PageViewController controller = loader.getController();
+            FullPageViewController controller = loader.getController();
             controller.setMainApp(this);
 
             // Set person overview into the center of root layout.
@@ -109,7 +116,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showFullPageView() {
+    public void showFullPageView() { // shows the page-view that equals the fullpage-template
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -126,7 +133,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showQuadQuadPageView() {
+    public void showQuadQuadPageView() { // shows the page-view that equals the quad-template
         try {
             // Load QuadQuad Template-View
             FXMLLoader loader = new FXMLLoader();
@@ -143,7 +150,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showHalfHalfPageView() {
+    public void showHalfHalfPageView() { // shows the page-view that equals the half-template
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -160,7 +167,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showQuadHalfPageView() {
+    public void showQuadHalfPageView() { // shows the page-view that equals the quadHalf-template
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -177,7 +184,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showHalfQuadPageView() {
+    public void showHalfQuadPageView() { // shows the page-view that equals the halfQuad-template
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -194,7 +201,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showLeftView() {
+    public void showLeftView() { // to show the left side of the gui
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -208,7 +215,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showRightView() {
+    public void showRightView() { // to show the template-overview at the right side
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -226,7 +233,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void changeRightView(String pageTemplate) {
+    public void changeRightView(String pageTemplate) { // changes the according to the page template
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(pageTemplate));
             Node node = loader.load();
@@ -246,9 +253,10 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void nextPage(){
-        showRightView();
-        showPageView();
+    public void newPage(){ //to get a new empty pageview
+        showRightView(); // template overview
+        showPageView(); // empty page
+        //empty all content
         content1 = "";
         content2 = "";
         content3 = "";
@@ -257,10 +265,58 @@ public class HelloApplication extends Application {
 
     public void addToOrganizer (Element newPage) throws Exception {
         org.addPage(newPage);
-        System.out.println(newPage.toString());
-        org.writeFO();//
-        org.foToPdf();
+        currentPage = newPage;
+        org.writeFO(); // writes the XST-FO-Document in Organizer Class
+        org.foToPdf(); // creates the PDF-Document in Organizer Class
     }
+
+    public void goBack(){ // if user wants to scroll back to older pages
+        /*String pageTextPath = "root/page-sequence/flow/block";*/
+
+        String previousOne = "preceding-sibling::*";
+        /*XPathExpression<Object> expr;*/
+        XPathFactory xPathFactory = XPathFactory.instance();
+        /*XPathExpression<Object> xpathPage =  xPathFactory.compile(pageTextPath + "[id = ‘" + pageID + "‘]");*/
+
+        /*currentPage.evaluateFirst(org.getCurrentOrganizer());*/
+        currentPage = (Element) xPathFactory.compile(previousOne);
+        currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$","");
+        System.out.println("das currentTemplate lautet: " + currentTemplate);
+        getFoData();
+/*
+        String currentContent1 = currentPage.getChild("block-container").getChild("block").getChild("external-graphic").getAttributeValue("src");
+*/
+        /*List<Element>containerChildren = currentPage.getChildren();*/
+
+    }
+
+      public void nextPage(){//User klickt auf naechste Seite
+        XPathFactory xPathFactory = XPathFactory.instance();
+        String nextOne = "following-sibling::*";
+        currentPage = (Element) xPathFactory.compile(nextOne);
+        currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$","");
+        getFoData();
+      }
+
+
+      private void getFoData() { // filters all graphic paths from children/descendants and assigns to its content variable
+          List<Element> graphics = (List<Element>) currentPage.getDescendants(new ElementFilter("external-graphic")); // search for the element <fo:external-graphic>
+          List<String> paths = new ArrayList<String>();
+          for (Element content : graphics) {
+              /*content.getAttributeValue("src");*/
+              paths.add(content.getAttributeValue("src",fo)); //writes the source-paths into an array-list
+              content1 = paths.get(0);
+              if (!currentTemplate.equals("fullpage")){
+                  content2 = paths.get(1);
+              } else if (!currentTemplate.equals("half")){
+                  content3 = paths.get(2);
+              } else if (currentTemplate.equals("quad")) {
+                  content4 = paths.get(3);
+              }
+      }
+
+
+
    /* @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("GuiView.fxml"));
@@ -270,7 +326,7 @@ public class HelloApplication extends Application {
         stage.show();
     }*/
 
-    public void writeFO(Document doc) {
+    /*public void writeFO(Document doc) {
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
         try (FileOutputStream fos = new FileOutputStream(new File(FILENAME))) {
@@ -278,7 +334,7 @@ public class HelloApplication extends Application {
             op.output(doc, fos);
         } catch (IOException e) {
             e.printStackTrace();
-        }
+        }*/
     }
 
     public Button getActiveButton() {
@@ -330,6 +386,14 @@ public class HelloApplication extends Application {
     public void setCurrentTemplate(String template) {
         this.currentTemplate = template;
         System.out.println("current Template is: " + currentTemplate);
+    }
+
+    public void setCurrentPage(Element currentPage) {
+        this.currentPage = currentPage;
+    }
+
+    public Organizer getOrg() {
+        return org;
     }
 
     public static void main(String[] args) {

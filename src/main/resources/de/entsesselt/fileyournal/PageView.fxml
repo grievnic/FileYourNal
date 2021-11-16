@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.PageViewController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.FullPageViewController">
    <children>
       <ImageView fx:id="page" fitHeight="700.0" layoutX="107.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="28.0">
          <image>
@@ -19,8 +19,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="294.0" layoutY="730.0" mnemonicParsing="false" text="Seite übernehmen" />
-      <Button layoutX="502.0" layoutY="730.0" mnemonicParsing="false" text="nächste Seite" />
-      <Button layoutX="108.0" layoutY="730.0" mnemonicParsing="false" text="Seite zurück" />
+      <Button disable="true" layoutX="294.0" layoutY="730.0" mnemonicParsing="false" text="Seite übernehmen" />
+      <Button fx:id="nextPageButton" disable="true" layoutX="502.0" layoutY="730.0" mnemonicParsing="false" text="nächste Seite" />
+      <Button fx:id="previousButton" layoutX="108.0" layoutY="730.0" mnemonicParsing="false" onAction="#previousPage" text="Seite zurück" />
    </children>
 </AnchorPane>

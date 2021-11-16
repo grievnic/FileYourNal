@@ -1,16 +1,16 @@
 package de.entsesselt.fileyournal.model;
 
-import org.jdom.Document;
+
 import org.jdom.Element;
 import org.jdom.Namespace;
 
 public class Page {
 
-    private String templateType = "";
-    private String content1 = "";
-    private String content2 = "";
-    private String content3 = "";
-    private String content4 = "";
+    private String templateType;
+    private String content1;
+    private String content2;
+    private String content3;
+    private String content4;
 
     private final static String FULLPATH = "/Users/nicolegrieve/IdeaProjects/FileYournal/New/src/main/resources/assets/Content/ContentElements/fullPageContent/";
     private final static String HALFPATH = "/Users/nicolegrieve/IdeaProjects/FileYournal/New/src/main/resources/assets/Content/ContentElements/halfPageContent/";
@@ -19,13 +19,17 @@ public class Page {
     private final static String HALFWIDTH = "95mm";
     private final static String HALFHIGHT = "137.5mm";
     private final static String NOSPACE = "0mm";
-    private Document currentPage;
+
     private String templateFilename;
-    private Element newPage;
+    private String pageID;
+    private String anotherPageId;
     private final static String NAMESPACE = "http://www.w3.org/1999/XSL/Format";
     Namespace fo = Namespace.getNamespace("fo", NAMESPACE);
 
-    int pageNumber = 1;
+    private static int currentPageNumber = 1;
+
+    /*Organizer org = new Organizer();*/
+
 
     // FullPage-Contructor
     public Page(String typ, String content1) {
@@ -49,7 +53,7 @@ public class Page {
         this.content2 = content2;
         this.content3 = content3;
         this.content4 = content4;
-        pageNumber = pageNumber++;
+        currentPageNumber = ++currentPageNumber;
     }
 
     // sollte mit einem  zu ladenden XML-Template gearbeitet werden
@@ -58,14 +62,16 @@ public class Page {
     }*/
 
 
-    // TODO umschreiben ohne getRootElement
     public Element pageCreator(){
+        System.out.println("Page-Nummer: " + currentPageNumber);
+        Element newPage;
     // HALF
         if (templateType.equals("half")){ // wenn der TemplateTyp "halbe/halbe Seite" ist
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always"); //Seitenumbruch
-            newPage.setAttribute("id","half"+ pageNumber);
+            pageID = "half" + currentPageNumber;
+            newPage.setAttribute("id",pageID);
 
             // <fo:block-container> für die Positionierung der oberen Hälfte auf der Seite
             Element topContainer = new Element("block-container", fo);
@@ -109,7 +115,8 @@ public class Page {
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always");
-            newPage.setAttribute("id","quad" + pageNumber);
+            pageID = "quad" + currentPageNumber;
+            newPage.setAttribute("id",pageID);
             //currentPage.getRootElement().addContent(neueSeite);
 
             // <fo:block-container> für die Positionierung des linken Viertels der oberen Hälfte auf der Seite
@@ -190,7 +197,8 @@ public class Page {
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always");
-            newPage.setAttribute("id","halfquad" + pageNumber);
+            pageID = "halfquad" + currentPageNumber;
+            newPage.setAttribute("id",pageID);
             //currentPage.getRootElement().addContent(neueSeite);
 
             // <fo:block-container> für die Positionierung der oberen Hälfte auf der Seite
@@ -253,7 +261,8 @@ public class Page {
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always");
-            newPage.setAttribute("id","quadhalf" + pageNumber);
+            pageID = "quadhalf" + currentPageNumber;
+            newPage.setAttribute("id",pageID);
 
             // <fo:block-container> für die Positionierung des linken Viertels der oberen Hälfte auf der Seite
             Element firstContainer = new Element("block-container", fo);
@@ -314,7 +323,8 @@ public class Page {
             // <fo:block> inkl. Seitenumbruch für eine neue Seite
             newPage = new Element("block", fo);
             newPage.setAttribute("page-break-before", "always");
-            newPage.setAttribute("id","fullpage" + pageNumber);
+            pageID = "fullpage" + currentPageNumber;
+            newPage.setAttribute("id",pageID);
             //currentPage.getRootElement().addContent(neueSeite);
 
             // <fo:block-container> für die Positionierung innerhalb der Seite
@@ -336,11 +346,15 @@ public class Page {
 */
             contentImage1.setAttribute("content-width", FULLWIDTH);
             firstContent.addContent(contentImage1);
-            System.out.println(newPage.toString());
             System.out.println("pageCreator BEGIN: " + content1 + content2 + content3 + content4);
         } return newPage;
 
     }
+
+
+
+
+
      /*private void createPageTemplate(Document quad) {
         Element root = doc.getRootElement();
 
@@ -498,13 +512,17 @@ public class Page {
         this.content4 = content4;
     }
 
-    public Document getCurrentPage() {
+    public static int getCurrentPageNumber() {
+        return currentPageNumber;
+    }
+
+    /*public Document getCurrentPage() {
         return currentPage;
     }
 
     public void setCurrentPage(Document currentPage) {
         this.currentPage = currentPage;
-    }
+    }*/
 
     public String getTemplateFilename() {
         return templateFilename;

@@ -11,13 +11,16 @@ import javafx.scene.image.ImageView;
 public class FullPageViewController extends AbstractController{
 
     @FXML
-    Button Button1;
+    Button button1;
 
     @FXML
     Button halfButton1;
 
     @FXML
     Button halfButton2;
+
+    @FXML
+    Button halfButton3;
 
     @FXML
     Button quadButton1;
@@ -27,6 +30,12 @@ public class FullPageViewController extends AbstractController{
 
     @FXML
     Button quadButton3;
+
+    @FXML
+    Button quadButton4;
+
+    @FXML
+    Button previousButton;
 
 
 
@@ -39,8 +48,6 @@ public class FullPageViewController extends AbstractController{
     String content2;
     String content3;
     String content4;
-
-    /*Button activeButton;*/
 
     String contentName;
 
@@ -55,7 +62,6 @@ public class FullPageViewController extends AbstractController{
 
     private final static String FULLPATH = "assets/Content/ContentElements/fullPageContent/";
     private final static String HALFPATH = "assets/Content/ContentElements/halfPageContent/";
-    private final static String FILENAME = "resources/assets/Content/ContentElements/fullPageContent/Dots.png";
 
 
     // Reference to the main application.
@@ -73,14 +79,6 @@ public class FullPageViewController extends AbstractController{
         }
    }
 
-   // three buttons under the PageOverview
-
-
-   @FXML
-   public void nextPage(){
-    mainApp.nextPage();
-   }
-
     protected void showFullTemplates() throws Exception {
         mainApp.changeRightView("FullContentView.fxml");
     }
@@ -89,48 +87,23 @@ public class FullPageViewController extends AbstractController{
         mainApp.changeRightView("HalfContentView.fxml");
     }
 
+   // three buttons under PageOverview
+
+   @FXML
+   public void previousPage(){ mainApp.goBack();}
+
     @FXML
-    public void addContent(String contentName) throws Exception{
-        this.contentName = contentName;
-        ImageView imageView;
-        activeButton = mainApp.getActiveButton();
-        if (activeButton.getText().equals("halbe Seite")) {
-            imagePath = HALFPATH + contentName + ".png";
-            /*imageView = new ImageView(HALFPATH + contentName + ".png"); // Path to halfpage-Content*/
-        } else {
-            imagePath = FULLPATH + contentName + ".png";
-            /*imageView = new ImageView(FULLPATH + contentName + ".png"); // Path to fullpage-Content*/
-        }
-
-            imageView = new ImageView(imagePath);
-            activeButton.setGraphic(imageView);
-            imageView.setFitHeight(activeButton.getHeight());
-            imageView.setPreserveRatio(true);
-            activeButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-            sendContent();
+    public void nextPage(){
+       mainApp.nextPage();
     }
-
-    public void sendContent(){
-       buttonId = activeButton.getId();
-       if (buttonId.matches("^.*.1")){
-           mainApp.setContent1(contentName);
-        }else if (buttonId.matches("^.*.2")){
-            mainApp.setContent2(contentName);
-        }else if (buttonId.matches("^.*.3")){
-           mainApp.setContent3(contentName);
-        }else {
-           mainApp.setContent4(contentName);
-        }
-    }
-
     @FXML
     public void savePage () throws Exception {
-       content1 = mainApp.getContent1();
-       content2 = mainApp.getContent2();
-       content3 = mainApp.getContent3();
-       content4 = mainApp.getContent4();
-       template = mainApp.getCurrentTemplate();
-        // create a alert
+        content1 = mainApp.getContent1();
+        content2 = mainApp.getContent2();
+        content3 = mainApp.getContent3();
+        content4 = mainApp.getContent4();
+        template = mainApp.getCurrentTemplate();
+        // alert
         Alert a = new Alert(Alert.AlertType.NONE);
         a.setAlertType(Alert.AlertType.ERROR);
         a.setContentText("Es müssen alle Seitenelemente befüllt sein!");
@@ -145,14 +118,128 @@ public class FullPageViewController extends AbstractController{
             a.show();
         }else if (template.equals("quad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty() | content4.isEmpty()){
             a.show();
-        }else {
+        }else { // creates a new JDOM-Page-Element and writes it into the XSL-FO tree
             Page fullPage = new Page(template, content1, content2, content3, content4);
             mainApp.addToOrganizer(fullPage.pageCreator());
-            mainApp.showPageView();
-            mainApp.showRightView();
+            mainApp.newPage(); // shows a empty page and shows the template-overview at the right side
+            }
+        }
+
+
+    @FXML
+    public void loadPage(){
+        ImageView imageView1 = new ImageView(mainApp.getContent1());
+        ImageView imageView2 = new ImageView(mainApp.getContent2());
+        ImageView imageView3 = new ImageView(mainApp.getContent3());
+        ImageView imageView4 = new ImageView(mainApp.getContent4());
+       if (mainApp.getCurrentTemplate().equals("fullpage")){
+           button1.setGraphic(imageView1);
+           imageView1.setFitHeight(button1.getHeight());
+           imageView1.setPreserveRatio(true);
+           button1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+       } else if (mainApp.getCurrentTemplate().equals("half")){
+           // sets the content in the top half
+           halfButton1.setGraphic(imageView1);
+           imageView1.setFitHeight(halfButton1.getHeight());
+           imageView1.setPreserveRatio(true);
+           halfButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+           // sets the content in the bottom half
+           halfButton2.setGraphic(imageView2);
+           imageView2.setFitHeight(halfButton2.getHeight());
+           imageView2.setPreserveRatio(true);
+           halfButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+       } else if (mainApp.getCurrentTemplate().equals("quad")){
+           // sets the content in the left top quarter
+           quadButton1.setGraphic(imageView1);
+           imageView1.setFitHeight(quadButton1.getHeight());
+           imageView1.setPreserveRatio(true);
+           quadButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+           // sets the content in the right top quarter
+           quadButton2.setGraphic(imageView2);
+           imageView2.setFitHeight(quadButton2.getHeight());
+           imageView2.setPreserveRatio(true);
+           quadButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+           // sets the content in the left bottom quarter
+           quadButton3.setGraphic(imageView2);
+           imageView3.setFitHeight(quadButton3.getHeight());
+           imageView3.setPreserveRatio(true);
+           quadButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+           // sets the content in the right bottom quarter
+           quadButton4.setGraphic(imageView4);
+           imageView4.setFitHeight(quadButton4.getHeight());
+           imageView4.setPreserveRatio(true);
+           quadButton4.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+       } else if (mainApp.getCurrentTemplate().equals("halfQuad")){
+           // sets the content in the top half
+           halfButton1.setGraphic(imageView1);
+           imageView1.setFitHeight(halfButton1.getHeight());
+           imageView1.setPreserveRatio(true);
+           halfButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+           // sets the content in the left bottom quarter
+           quadButton2.setGraphic(imageView2);
+           imageView2.setFitHeight(quadButton2.getHeight());
+           imageView2.setPreserveRatio(true);
+           quadButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+           // sets the content in the right bottom quarter
+           quadButton3.setGraphic(imageView2);
+           imageView3.setFitHeight(quadButton3.getHeight());
+           imageView3.setPreserveRatio(true);
+           quadButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+       } else {
+           // sets the content in the left top quarter
+           quadButton1.setGraphic(imageView1);
+           imageView1.setFitHeight(quadButton1.getHeight());
+           imageView1.setPreserveRatio(true);
+           quadButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+           // sets the content in the right top quarter
+           quadButton2.setGraphic(imageView2);
+           imageView2.setFitHeight(quadButton2.getHeight());
+           imageView2.setPreserveRatio(true);
+           quadButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+           // sets the content in the bottom half
+           halfButton3.setGraphic(imageView3);
+           imageView3.setFitHeight(halfButton3.getHeight());
+           imageView3.setPreserveRatio(true);
+           halfButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+       }
+    }
+
+    @FXML
+    public void addContent(String contentName) throws Exception{
+        this.contentName = contentName;
+        ImageView imageView;
+        activeButton = mainApp.getActiveButton();
+        if (activeButton.getText().equals("halbe Seite")) { //identifies format of the page area : landscape
+            imagePath = HALFPATH + contentName + ".png";
+            /*imageView = new ImageView(HALFPATH + contentName + ".png"); // Path to halfpage-Content*/
+        } else {
+            imagePath = FULLPATH + contentName + ".png"; //format of the page area : portrait
+            /*imageView = new ImageView(FULLPATH + contentName + ".png"); // Path to fullpage-Content*/
+        }
+            imageView = new ImageView(imagePath);
+            activeButton.setGraphic(imageView);
+            imageView.setFitHeight(activeButton.getHeight());
+            imageView.setPreserveRatio(true);
+            activeButton.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            sendContent();
+    }
+
+    // Assignment of the content linked to the buttons
+    public void sendContent(){
+       buttonId = activeButton.getId();
+       if (buttonId.matches("^.*.1")){ // if button has identifier 1
+           mainApp.setContent1(contentName); // ... its content is Content1
+        }else if (buttonId.matches("^.*.2")){
+            mainApp.setContent2(contentName);
+        }else if (buttonId.matches("^.*.3")){
+           mainApp.setContent3(contentName);
+        }else {
+           mainApp.setContent4(contentName);
         }
     }
-    
+
+
+
 
     /**
      * Is called by the main application to give a reference back to itself.
