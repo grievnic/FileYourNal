@@ -1,6 +1,7 @@
 package de.entsesselt.fileyournal.model;
 
 
+import de.entsesselt.fileyournal.HelloApplication;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
@@ -26,10 +27,12 @@ public class Page {
     private final static String NAMESPACE = "http://www.w3.org/1999/XSL/Format";
     Namespace fo = Namespace.getNamespace("fo", NAMESPACE);
 
-    private static int currentPageNumber = 1;
+    private static int currentPageNumber = 0;
 
     /*Organizer org = new Organizer();*/
 
+    // Reference to the main application.
+     private HelloApplication mainApp;
 
     // FullPage-Contructor
     public Page(String typ, String content1) {
@@ -54,6 +57,7 @@ public class Page {
         this.content3 = content3;
         this.content4 = content4;
         currentPageNumber = ++currentPageNumber;
+        /*mainApp.setPageID(String.valueOf(currentPageNumber))*/;
     }
 
     // sollte mit einem  zu ladenden XML-Template gearbeitet werden
@@ -348,7 +352,6 @@ public class Page {
             firstContent.addContent(contentImage1);
             System.out.println("pageCreator BEGIN: " + content1 + content2 + content3 + content4);
         } return newPage;
-
     }
 
 
@@ -516,9 +519,15 @@ public class Page {
         return currentPageNumber;
     }
 
+    /*public static int getCurrentPageNumber() {
+        return currentPageNumber;
+    }*/
+
     /*public Document getCurrentPage() {
         return currentPage;
     }
+
+
 
     public void setCurrentPage(Document currentPage) {
         this.currentPage = currentPage;

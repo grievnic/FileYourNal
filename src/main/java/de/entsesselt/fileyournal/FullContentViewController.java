@@ -24,10 +24,11 @@ public class FullContentViewController extends AbstractController{
     //shows the Full-Page-View in the Center of the GUI
     @FXML
     public void loadContent(String contentName) throws Exception {
-        FullPageViewController full = new FullPageViewController();
-        full.setMainApp(mainApp);
+        FullPageViewController control = mainApp.getPageViewController();
+
+        /*control.setMainApp(mainApp);*/
         System.out.println("in loadContent " + contentName);
-        full.addContent(contentName);
+        control.addContent(contentName);
         System.out.println("in loadContent nach addContent-Aufruf  " + contentName);
     }
 

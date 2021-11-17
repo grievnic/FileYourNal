@@ -9,7 +9,6 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
-import org.jdom.Document;
 import org.jdom.Element;
 import org.jdom.Namespace;
 import org.jdom.filter.ElementFilter;
@@ -18,7 +17,10 @@ import org.jdom2.xpath.XPathFactory;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+/*import org.jdom.Document;*/
 
 
 public class HelloApplication extends Application {
@@ -32,7 +34,8 @@ public class HelloApplication extends Application {
     private String content3 = "";
     private String content4 = "";
     private String currentTemplate = "";
-    private Document doc;
+    private FullPageViewController pageViewController;
+
     private Element currentPage;
     private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/OrganizerTEST.fo";
     private final static File FILE = new File(FILENAME);
@@ -117,85 +120,106 @@ public class HelloApplication extends Application {
     }
 
     public void showFullPageView() { // shows the page-view that equals the fullpage-template
+        currentTemplate = "fullpage";
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("FullPageView.fxml"));
             AnchorPane fullView = (AnchorPane) loader.load();
             // Give the controller access to the main app.
-            FullPageViewController controller = loader.getController();
-            controller.setMainApp(this);
+            pageViewController = loader.getController();
+            pageViewController.setMainApp(this);
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(fullView);
+            changeRightView("EmptyRightView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void showQuadQuadPageView() { // shows the page-view that equals the quad-template
+    public void showTest() {
+        currentTemplate = "quad";
+        try {
+            // Load QuadQuad Template-View
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource("QuadPageView.fxml"));
+            AnchorPane quadView = (AnchorPane) loader.load();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+        public void showQuadQuadPageView() { // shows the page-view that equals the quad-template
+        currentTemplate = "quad";
         try {
             // Load QuadQuad Template-View
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("QuadPageView.fxml"));
             AnchorPane quadView = (AnchorPane) loader.load();
             // Give the controller access to the main app.
-            FullPageViewController controller = loader.getController();
-            controller.setMainApp(this);
+            pageViewController = loader.getController();
+            pageViewController.setMainApp(this);
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(quadView);
+            changeRightView("EmptyRightView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void showHalfHalfPageView() { // shows the page-view that equals the half-template
+        currentTemplate = "half";
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("HalfHalfPageView.fxml"));
             AnchorPane startView = (AnchorPane) loader.load();
             // Give the controller access to the main app.
-            FullPageViewController controller = loader.getController();
-            controller.setMainApp(this);
+            pageViewController = loader.getController();
+            pageViewController.setMainApp(this);
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(startView);
+            changeRightView("EmptyRightView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void showQuadHalfPageView() { // shows the page-view that equals the quadHalf-template
+        currentTemplate = "quadHalf";
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("QuadHalfPageView.fxml"));
             AnchorPane startView = (AnchorPane) loader.load();
             // Give the controller access to the main app.
-            FullPageViewController controller = loader.getController();
-            controller.setMainApp(this);
+            pageViewController = loader.getController();
+            pageViewController.setMainApp(this);
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(startView);
+            changeRightView("EmptyRightView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public void showHalfQuadPageView() { // shows the page-view that equals the halfQuad-template
+        currentTemplate = "halfQuad";
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("HalfQuadPageView.fxml"));
             AnchorPane startView = (AnchorPane) loader.load();
             // Give the controller access to the main app.
-            FullPageViewController controller = loader.getController();
-            controller.setMainApp(this);
+            pageViewController = loader.getController();
+            pageViewController.setMainApp(this);
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(startView);
+            changeRightView("EmptyRightView.fxml");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -270,19 +294,46 @@ public class HelloApplication extends Application {
         org.foToPdf(); // creates the PDF-Document in Organizer Class
     }
 
-    public void goBack(){ // if user wants to scroll back to older pages
+    public void goBack() throws Exception{ // if user wants to scroll back to older pages
+
+        //myElement is the <Element> element in your example
+//List implementation:
+        Element parent = (Element) currentPage.getParent();
+        List children = parent.getChildren();
+        int myIndex = children.indexOf(currentPage);
+        if (currentPage == children.get(children.size() - 1)){
+            currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
+            getFoData();
+        } else if(myIndex > 0 && myIndex < children.size()) { //get prevSibling
+            Element prevElement = (Element)children.get(myIndex - 1);
+            System.out.println("Current page is: " + currentPage.getAttributeValue("id"));
+            System.out.println("PrevElement page is: " + prevElement.getAttributeValue("id"));
+            currentPage = prevElement;
+            System.out.println("neue Current page is: " + currentPage.getAttributeValue("id"));
+            currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
+            System.out.println(currentTemplate);
+            getFoData();
+        }
+
         /*String pageTextPath = "root/page-sequence/flow/block";*/
-
-        String previousOne = "preceding-sibling::*";
-        /*XPathExpression<Object> expr;*/
+       /* Element stellvertreter;
+        List<Object> liste;
+        System.out.println("aus goBack: Die ID lautet: " + currentPage.getAttributeValue("id"));
+        String previousOne = "preceding-sibling::*[1]";
+        XPathExpression<Object> expr;
         XPathFactory xPathFactory = XPathFactory.instance();
-        /*XPathExpression<Object> xpathPage =  xPathFactory.compile(pageTextPath + "[id = ‘" + pageID + "‘]");*/
-
-        /*currentPage.evaluateFirst(org.getCurrentOrganizer());*/
-        currentPage = (Element) xPathFactory.compile(previousOne);
-        currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$","");
-        System.out.println("das currentTemplate lautet: " + currentTemplate);
-        getFoData();
+        *//*XPathExpression<Object> xpathPage =  xPathFactory.compile(pageTextPath + "[id = ‘" + pageID + "‘]");*//*
+        expr = xPathFactory.compile("/*");
+        *//*stellvertreter= (Element) expr.evaluateFirst(currentPage);*//*
+        liste = expr.evaluate(org.getCurrentOrganizer());
+        System.out.println("Liste: " + liste.size());
+        System.out.println(previousOne);*/
+       /* if (stellvertreter != null) {
+            currentPage = stellvertreter;
+            currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
+            System.out.println("das currentTemplate lautet: " + currentTemplate);
+            getFoData();
+        } else { System.out.println("schade");}*/
 /*
         String currentContent1 = currentPage.getChild("block-container").getChild("block").getChild("external-graphic").getAttributeValue("src");
 */
@@ -290,7 +341,7 @@ public class HelloApplication extends Application {
 
     }
 
-      public void nextPage(){//User klickt auf naechste Seite
+      public void nextPage()throws Exception{//User klickt auf naechste Seite
         XPathFactory xPathFactory = XPathFactory.instance();
         String nextOne = "following-sibling::*";
         currentPage = (Element) xPathFactory.compile(nextOne);
@@ -299,20 +350,37 @@ public class HelloApplication extends Application {
       }
 
 
-      private void getFoData() { // filters all graphic paths from children/descendants and assigns to its content variable
-          List<Element> graphics = (List<Element>) currentPage.getDescendants(new ElementFilter("external-graphic")); // search for the element <fo:external-graphic>
-          List<String> paths = new ArrayList<String>();
-          for (Element content : graphics) {
-              /*content.getAttributeValue("src");*/
-              paths.add(content.getAttributeValue("src",fo)); //writes the source-paths into an array-list
-              content1 = paths.get(0);
-              if (!currentTemplate.equals("fullpage")){
-                  content2 = paths.get(1);
-              } else if (!currentTemplate.equals("half")){
-                  content3 = paths.get(2);
+      private void getFoData() throws Exception { // filters all graphic paths from children/descendants and assigns to its content variable
+
+         /* Element parent = (Element) currentPage.getParent();
+          List children = parent.getChildren();*/
+
+          Iterator<Element> graphics= currentPage.getDescendants(new ElementFilter("external-graphic"));// search for the element <fo:external-graphic>
+          ArrayList<String> paths = new ArrayList<>();
+          graphics.forEachRemaining((content) -> paths.add(content.getAttributeValue("src")));
+
+
+              /*content.getAttributeValue("src");
+              paths.add(content.getAttributeValue("src",fo)); *///writes the source-paths into an array-list
+
+              if (currentTemplate.equals("fullpage")){
+                  content1 = paths.get(0).replaceFirst("^.*/", "");
+              } else if (currentTemplate.equals("half")){
+                  content1 = paths.get(0).replaceFirst("^.*/", "");
+                  content2 = paths.get(1).replaceFirst("^.*/", "");
               } else if (currentTemplate.equals("quad")) {
-                  content4 = paths.get(3);
+                  content1 = paths.get(0).replaceFirst("^.*/", "");
+                  content2 = paths.get(1).replaceFirst("^.*/", "");
+                  content3 = paths.get(2).replaceFirst("^.*/", "");
+                  content4 = paths.get(3).replaceFirst("^.*/", "");
+              } else {
+                  content1 = paths.get(0).replaceFirst("^.*/", "");
+                  content2 = paths.get(1).replaceFirst("^.*/", "");
+                  content3 = paths.get(2).replaceFirst("^.*/", "");
               }
+              System.out.println("Der Content ist: " + content1 + ", " + content2 + ", " +content3 + ", " + content4);
+              System.out.println("Current Template ist: " + currentTemplate);
+              pageViewController.loadPage(currentTemplate, content1, content2, content3, content4);
       }
 
 
@@ -335,7 +403,7 @@ public class HelloApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }*/
-    }
+
 
     public Button getActiveButton() {
         return activeButton;
@@ -392,9 +460,15 @@ public class HelloApplication extends Application {
         this.currentPage = currentPage;
     }
 
+    public FullPageViewController getPageViewController() {
+        return pageViewController;
+    }
+
     public Organizer getOrg() {
         return org;
     }
+
+
 
     public static void main(String[] args) {
         launch();

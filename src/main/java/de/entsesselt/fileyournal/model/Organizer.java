@@ -24,6 +24,7 @@ public class Organizer {
     private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Organizer.fo";
     private final static File FILE = new File(FILENAME);
     private static Document currentOrganizer;
+    private Element newPage;
 
     private final static String NAMESPACE = "http://www.w3.org/1999/XSL/Format";
     static Namespace fo = Namespace.getNamespace("fo", NAMESPACE);
@@ -142,7 +143,6 @@ public class Organizer {
 
 
     public void readFO() {
-
         try {
             // Create a DocumentBuilder
             SAXBuilder saxBuilder = new SAXBuilder();
@@ -241,5 +241,8 @@ public class Organizer {
         }
     }
 
+    public Element getNewPage() {
+        return newPage;
+    }
 
 }
