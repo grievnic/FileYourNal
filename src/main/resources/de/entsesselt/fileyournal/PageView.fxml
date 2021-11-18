@@ -19,8 +19,8 @@
             <Font size="18.0" />
          </font>
       </Label>
-      <Button disable="true" layoutX="294.0" layoutY="730.0" mnemonicParsing="false" text="Seite übernehmen" />
+      <Button fx:id="modifyClick" disable="true" layoutX="294.0" layoutY="730.0" mnemonicParsing="false" text="Seite übernehmen" />
       <Button fx:id="nextPageButton" disable="true" layoutX="502.0" layoutY="730.0" mnemonicParsing="false" text="nächste Seite" />
-      <Button fx:id="previousButton" layoutX="108.0" layoutY="730.0" mnemonicParsing="false" onAction="#previousPage" text="Seite zurück" />
+      <Button fx:id="previousPageButton" layoutX="108.0" layoutY="730.0" mnemonicParsing="false" onAction="#previousPage" text="Seite zurück" />
    </children>
 </AnchorPane>

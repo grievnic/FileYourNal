@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.shape.Rectangle?>
+
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.PageFullViewController">
+   <children>
+      <ImageView fx:id="page" fitHeight="700.0" layoutX="103.0" layoutY="28.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="28.0">
+         <image>
+            <Image url="@../../../assets/page.png" />
+         </image>
+      </ImageView>
+      <Pane fx:id="full" layoutX="181.0" layoutY="124.0" minHeight="-Infinity" minWidth="-Infinity" onMouseClicked="#showFullTemplates" prefHeight="506.0" prefWidth="350.0" AnchorPane.leftAnchor="172.0" AnchorPane.topAnchor="119.0">
+         <children>
+            <ImageView fx:id="fullPage" fitHeight="506.0" fitWidth="350.0" onMouseClicked="#showFullTemplates" pickOnBounds="true" preserveRatio="true" />
+            <Rectangle fx:id="fullGrey" arcHeight="5.0" arcWidth="5.0" fill="#c6c1c1" height="506.0" onMouseClicked="#showFullTemplates" stroke="#edbcb7" strokeType="INSIDE" strokeWidth="0.0" width="350.0" />
+         </children>
+      </Pane>
+   </children>
+</AnchorPane>

@@ -42,7 +42,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="TagesbetrachtungTL" fx:id="Dots1" contentDisplay="CENTER" layoutX="34.0" layoutY="167.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="TagesbetrachtungTL" textFill="#47464a">
+                  <Button id="TagesbetrachtungTL" fx:id="TagesbetrachtungTL" contentDisplay="CENTER" layoutX="34.0" layoutY="167.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="TagesbetrachtungTL" textFill="#47464a">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -51,7 +51,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="Tagesbetrachtung" fx:id="ColumnSystem1" contentDisplay="CENTER" layoutX="197.0" layoutY="164.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="Tagesbetrachtung" textFill="#47464a">
+                  <Button id="Tagesbetrachtung" fx:id="Tagesbetrachtung" contentDisplay="CENTER" layoutX="197.0" layoutY="164.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="Tagesbetrachtung" textFill="#47464a">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -60,7 +60,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="Dots11" contentDisplay="CENTER" layoutX="34.0" layoutY="286.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="Blanko" textFill="#47464a">
+                  <Button fx:id="Blanko" contentDisplay="CENTER" layoutX="34.0" layoutY="286.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="Blanko" textFill="#47464a">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -69,7 +69,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="Stressprotokoll" fx:id="Dots111" contentDisplay="CENTER" layoutX="197.0" layoutY="286.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="Stressprotokoll" textFill="#47464a">
+                  <Button id="Stressprotokoll" fx:id="Stressprotokoll" contentDisplay="CENTER" layoutX="197.0" layoutY="286.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="Stressprotokoll" textFill="#47464a">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -78,7 +78,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="Ikigai" fx:id="Dots112" alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" layoutY="408.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="Ikigai" textFill="#47464a">
+                  <Button id="Ikigai" fx:id="Ikigai" alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" layoutY="408.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="Ikigai" textFill="#47464a">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>

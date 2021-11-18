@@ -93,7 +93,7 @@ public class Page {
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
             contentImage1.setAttribute("src",HALFPATH + content1 + ".png");
-            contentImage1.setAttribute("content-width", HALFWIDTH);
+            contentImage1.setAttribute("content-width", FULLWIDTH);
             firstContent.addContent(contentImage1);
 
             // <fo:block-container> für die Positionierung der unteren Hälfte auf der Seite

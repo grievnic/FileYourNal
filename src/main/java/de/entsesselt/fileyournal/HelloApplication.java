@@ -2,6 +2,7 @@ package de.entsesselt.fileyournal;
 
 import de.entsesselt.fileyournal.model.Organizer;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
@@ -35,6 +36,13 @@ public class HelloApplication extends Application {
     private String content4 = "";
     private String currentTemplate = "";
     private FullPageViewController pageViewController;
+    private String fileName;
+
+
+    @FXML
+    private AnchorPane pagePane;
+
+
 
     private Element currentPage;
     private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/OrganizerTEST.fo";
@@ -52,14 +60,13 @@ public class HelloApplication extends Application {
         showStartView();
         showLeftView();
 
-        //Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
+        /*startNewOrganizer();*/
+        /*//Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
         Organizer org = new Organizer();
         this.org = org;
-
-        org.readFO();
+        org.readFO("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/PageTemplateDinA4.fo");*/
         /*createOrganizer(org);*/
         /*org.addPageTemplate("test");*/
-        System.out.println(org.addPageTemplate("QuadQuad"));
 
        /* org.foToPdf(); // Test zum Wandeln der Fo zu PDF aus oben erstellter Datei*/
 
@@ -102,30 +109,60 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void showPageView() { // shows the empty page-view
+    @FXML
+    public void showEditView() { // shows the empty page-view
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("PageView.fxml"));
-            AnchorPane pageView = (AnchorPane) loader.load();
+            loader.setLocation(HelloApplication.class.getResource("NewPageView.fxml"));
+            pagePane = (AnchorPane) loader.load();
+            /*AnchorPane fullPane = (AnchorPane) loader.load();*/
             // Give the controller access to the main app.
-            FullPageViewController controller = loader.getController();
-            controller.setMainApp(this);
+            pageViewController = loader.getController();
+            pageViewController.setMainApp(this);
 
             // Set person overview into the center of root layout.
-            rootLayout.setCenter(pageView);
+            rootLayout.setCenter(pagePane);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void showFullPageView() { // shows the page-view that equals the fullpage-template
+    @FXML
+    public void showPlanerView() { // shows the empty page-view
+        try {
+            // Load person overview.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(HelloApplication.class.getResource("PlanerView.fxml"));
+            pagePane = (AnchorPane) loader.load();
+            /*AnchorPane fullPane = (AnchorPane) loader.load();*/
+            // Give the controller access to the main app.
+            pageViewController = loader.getController();
+            pageViewController.setMainApp(this);
+
+            // Set person overview into the center of root layout.
+            rootLayout.setCenter(pagePane);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void startNewOrganizer(){
+        //Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
+        Organizer org = new Organizer(fileName);
+        this.org = org;
+        org.readFO("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/PageTemplateDinA4.fo");
+    }
+    /*public void showFullPageView() { // shows the page-view that equals the fullpage-template
         currentTemplate = "fullpage";
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("FullPageView.fxml"));
-            AnchorPane fullView = (AnchorPane) loader.load();
+            fullView = (AnchorPane) loader.load();
+            fullPane.setVisible(true);
             // Give the controller access to the main app.
             pageViewController = loader.getController();
             pageViewController.setMainApp(this);
@@ -136,20 +173,76 @@ public class HelloApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public void showTest() {
-        currentTemplate = "quad";
+   /* public void showPageType(String view) {
         try {
-            // Load QuadQuad Template-View
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("QuadPageView.fxml"));
-            AnchorPane quadView = (AnchorPane) loader.load();
+            loader.setLocation(HelloApplication.class.getResource(view));
+            *//*FXMLLoader loader = new FXMLLoader(getClass().getResource(view));*//*
+            AnchorPane anchorPane = (AnchorPane) loader.load();
+
+            rootLayout.setCenter(anchorPane);
+
+            AbstractController controller;
+            controller = loader.getController();
+            controller.setMainApp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }*/
+
+    @FXML
+    public void showPageTemplate(String template) {
+        currentTemplate = template;
+        if (currentTemplate.equals("fullpage")) {
+            pageViewController.setFullVisible();
+        } else if (currentTemplate.equals("half")) {
+            pageViewController.setHalfVisible();
+        } else if (currentTemplate.equals("quad")) {
+            pageViewController.setQuadVisible();
+        } else if (currentTemplate.equals("quadHalf")) {
+            pageViewController.setQuadHalfVisible();
+        } else {
+            pageViewController.setHalfQuadVisible();
+        }
+        changeRightView("EmptyRightView.fxml");
+
     }
-        public void showQuadQuadPageView() { // shows the page-view that equals the quad-template
+
+   /* @FXML
+    public void showHalfPage(String template) {
+        currentTemplate = template;
+        pageViewController.setHalfVisible();
+    }
+*/
+
+   /* @FXML
+    public void showHalfPage(String template){
+        currentTemplate = template;
+        halfPane.setVisible(true);
+    }*/
+
+    /*@FXML
+    public void showHalfQuadPage(String template){
+        currentTemplate = template;
+        halfQuadPane.setVisible(true);
+    }
+
+    @FXML
+    public void showQuadHalfPage(String template){
+        currentTemplate = template;
+        quadHalfPane.setVisible(true);
+    }
+
+    @FXML
+    public void showQuadPage(String template){
+        currentTemplate = template;
+        quadPane.setVisible(true);
+    }*/
+
+
+        /*public void showQuadQuadPageView() { // shows the page-view that equals the quad-template
         currentTemplate = "quad";
         try {
             // Load QuadQuad Template-View
@@ -166,9 +259,9 @@ public class HelloApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public void showHalfHalfPageView() { // shows the page-view that equals the half-template
+    /*public void showHalfHalfPageView() { // shows the page-view that equals the half-template
         currentTemplate = "half";
         try {
             // Load person overview.
@@ -185,9 +278,9 @@ public class HelloApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public void showQuadHalfPageView() { // shows the page-view that equals the quadHalf-template
+   /* public void showQuadHalfPageView() { // shows the page-view that equals the quadHalf-template
         currentTemplate = "quadHalf";
         try {
             // Load person overview.
@@ -204,9 +297,9 @@ public class HelloApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
-    public void showHalfQuadPageView() { // shows the page-view that equals the halfQuad-template
+    /*public void showHalfQuadPageView() { // shows the page-view that equals the halfQuad-template
         currentTemplate = "halfQuad";
         try {
             // Load person overview.
@@ -223,7 +316,7 @@ public class HelloApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void showLeftView() { // to show the left side of the gui
         try {
@@ -277,9 +370,14 @@ public class HelloApplication extends Application {
         }
     }
 
+    public void nameIt(){
+        showEditView();
+    }
+
     public void newPage(){ //to get a new empty pageview
         showRightView(); // template overview
-        showPageView(); // empty page
+        showEditView();
+        pageViewController.namePaneUnvisible();
         //empty all content
         content1 = "";
         content2 = "";
@@ -294,18 +392,18 @@ public class HelloApplication extends Application {
         org.foToPdf(); // creates the PDF-Document in Organizer Class
     }
 
-    public void goBack() throws Exception{ // if user wants to scroll back to older pages
-
+    public void goBack() throws Exception { // if user wants to scroll back to older pages
+    if (currentPage == null) return;
         //myElement is the <Element> element in your example
 //List implementation:
         Element parent = (Element) currentPage.getParent();
         List children = parent.getChildren();
         int myIndex = children.indexOf(currentPage);
-        if (currentPage == children.get(children.size() - 1)){
+        /*if (currentPage == children.get(children.size() - 1)) {
             currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
             getFoData();
-        } else if(myIndex > 0 && myIndex < children.size()) { //get prevSibling
-            Element prevElement = (Element)children.get(myIndex - 1);
+        } else*/ if (myIndex > 0 && myIndex < children.size()) { //get prevSibling
+            Element prevElement = (Element) children.get(myIndex - 1);
             System.out.println("Current page is: " + currentPage.getAttributeValue("id"));
             System.out.println("PrevElement page is: " + prevElement.getAttributeValue("id"));
             currentPage = prevElement;
@@ -314,7 +412,7 @@ public class HelloApplication extends Application {
             System.out.println(currentTemplate);
             getFoData();
         }
-
+    }
         /*String pageTextPath = "root/page-sequence/flow/block";*/
        /* Element stellvertreter;
         List<Object> liste;
@@ -339,7 +437,7 @@ public class HelloApplication extends Application {
 */
         /*List<Element>containerChildren = currentPage.getChildren();*/
 
-    }
+   /* }*/
 
       public void nextPage()throws Exception{//User klickt auf naechste Seite
         XPathFactory xPathFactory = XPathFactory.instance();
@@ -358,7 +456,6 @@ public class HelloApplication extends Application {
           Iterator<Element> graphics= currentPage.getDescendants(new ElementFilter("external-graphic"));// search for the element <fo:external-graphic>
           ArrayList<String> paths = new ArrayList<>();
           graphics.forEachRemaining((content) -> paths.add(content.getAttributeValue("src")));
-
 
               /*content.getAttributeValue("src");
               paths.add(content.getAttributeValue("src",fo)); *///writes the source-paths into an array-list
@@ -383,6 +480,9 @@ public class HelloApplication extends Application {
               pageViewController.loadPage(currentTemplate, content1, content2, content3, content4);
       }
 
+      public void FoToPdf(){
+
+      }
 
 
    /* @Override
@@ -417,9 +517,9 @@ public class HelloApplication extends Application {
         return content1;
     }
 
-    public void setContent1(String inhalt1) {
+    public void setContent1(String content1) {
 
-        this.content1 = inhalt1;
+        this.content1 = content1;
         System.out.println("Aus der Set-Methode: " + content1);
     }
 
@@ -468,7 +568,13 @@ public class HelloApplication extends Application {
         return org;
     }
 
+    public String getFileName() {
+        return fileName;
+    }
 
+    public void setFileName(String fileName) {
+        this.fileName = fileName;
+    }
 
     public static void main(String[] args) {
         launch();

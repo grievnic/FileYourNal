@@ -17,7 +17,6 @@ public class FullContentViewController extends AbstractController{
     public void selectContent(ActionEvent event) throws Exception {
         /*selectedTemplate = (Button) event.getSource();*/
         contentName = ((Button) event.getSource()).getText();
-        System.out.println("in selectContent " + contentName);
         loadContent(contentName);
 
     }
@@ -25,11 +24,7 @@ public class FullContentViewController extends AbstractController{
     @FXML
     public void loadContent(String contentName) throws Exception {
         FullPageViewController control = mainApp.getPageViewController();
-
-        /*control.setMainApp(mainApp);*/
-        System.out.println("in loadContent " + contentName);
         control.addContent(contentName);
-        System.out.println("in loadContent nach addContent-Aufruf  " + contentName);
     }
 
 

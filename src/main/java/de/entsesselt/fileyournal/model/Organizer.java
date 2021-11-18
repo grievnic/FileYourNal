@@ -22,12 +22,15 @@ import java.io.*;
 public class Organizer {
 
     private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Organizer.fo";
+    private final static String FILEPATH = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/";
+    private static String organizername = "Organizer";
     private final static File FILE = new File(FILENAME);
     private static Document currentOrganizer;
     private Element newPage;
 
     private final static String NAMESPACE = "http://www.w3.org/1999/XSL/Format";
     static Namespace fo = Namespace.getNamespace("fo", NAMESPACE);
+
 
     /*private Document createDoc(String rootElement) {
         Document doc = new Document();
@@ -140,15 +143,17 @@ public class Organizer {
         blockContainerRechts.addContent(right);
     }*/
 
+    public Organizer(String name){
+        organizername = name;
+    }
 
-
-    public void readFO() {
+    public void readFO(String foPath) {
         try {
             // Create a DocumentBuilder
             SAXBuilder saxBuilder = new SAXBuilder();
             // Create a Document from a file or stream
             File inputFile = new File("input.txt");
-            currentOrganizer = saxBuilder.build("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/PageTemplateDinA4.fo");
+            currentOrganizer = saxBuilder.build(foPath);
             System.out.println("Root element :" + currentOrganizer.getRootElement().getName());
             System.out.println("----------------------------");
         } catch (Exception e) {
@@ -176,21 +181,21 @@ public class Organizer {
         flow.addContent(newPage);
     }
 
-    public static void writeXML(Element testElement){
+   /* public static void writeXML(Element testElement){
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
-        try (FileOutputStream fos = new FileOutputStream(new File(FILENAME))) {
+        try (FileOutputStream fos = new FileOutputStream(new File(FILEPATH + organizername))) {
             XMLOutputter op = new XMLOutputter(format);
             op.output(testElement, fos);
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
+    }*/
 
     public void writeFO(){
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
-        try (FileOutputStream fos = new FileOutputStream(new File(FILENAME))) {
+        try (FileOutputStream fos = new FileOutputStream(new File(FILEPATH + organizername + ".fo"))) {
             XMLOutputter op = new XMLOutputter(format);
             op.output(currentOrganizer, fos);
         } catch (IOException e) {
@@ -214,7 +219,7 @@ public class Organizer {
 
 // Step 2: Set up output stream.
 // Note: Using BufferedOutputStream for performance reasons (helpful with FileOutputStreams).
-        OutputStream pdfOut = new BufferedOutputStream(new FileOutputStream(new File("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/meinePDF.pdf")));
+        OutputStream pdfOut = new BufferedOutputStream(new FileOutputStream(new File(FILEPATH + organizername +".pdf")));
 
         try {
             // Step 3: Construct fop with desired output format

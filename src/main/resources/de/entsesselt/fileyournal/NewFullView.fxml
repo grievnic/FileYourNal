@@ -22,7 +22,7 @@
       <Button fx:id="takeButton" layoutX="261.0" layoutY="739.0" mnemonicParsing="false" onAction="#savePage" text="Seite übernehmen &amp; neue Seite" />
       <Button fx:id="nextPageButton1" layoutX="515.0" layoutY="740.0" mnemonicParsing="false" onAction="#nextPage" text="nächste Seite" />
       <Button fx:id="previousButton1" layoutX="108.0" layoutY="740.0" mnemonicParsing="false" onAction="#previousPage" text="Seite zurück" />
-      <AnchorPane fx:id="fullPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
+      <AnchorPane fx:id="fullPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0">
          <children>
             <ImageView fx:id="page11" fitHeight="712.0" fitWidth="513.0" layoutX="107.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
                <image>

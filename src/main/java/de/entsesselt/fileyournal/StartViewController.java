@@ -19,7 +19,7 @@ public class StartViewController extends AbstractController {
 
     @FXML
     protected void startNewPlanerClick() throws Exception {
-        mainApp.newPage();
+        mainApp.nameIt();
         newPlaner.setVisible(false);
         planer.setVisible(false);
     }

@@ -50,7 +50,7 @@
             </Button>
          </children>
       </AnchorPane>
-      <AnchorPane fx:id="halfQuadPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
+      <AnchorPane fx:id="halfQuadPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0">
          <children>
             <Button id="halfButton1" fx:id="halfButton11" contentDisplay="TOP" layoutX="130.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="451.25" text="halbe Seite" textAlignment="CENTER" textFill="#47464a">
                <font>
