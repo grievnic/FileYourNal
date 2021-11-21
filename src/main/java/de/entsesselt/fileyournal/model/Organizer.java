@@ -231,7 +231,7 @@ public class Organizer {
 
             // Step 5: Setup input and output for XSLT transformation
             // Setup input stream
-            Source foIn = new StreamSource(new File(FILENAME));
+            Source foIn = new StreamSource(new File(FILEPATH + organizername + ".fo"));
             // Resulting SAX events (the generated FO) must be piped through to FOP
             Result res = new SAXResult(fop.getDefaultHandler());
 

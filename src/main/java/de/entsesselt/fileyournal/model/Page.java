@@ -15,11 +15,17 @@ public class Page {
 
     private final static String FULLPATH = "/Users/nicolegrieve/IdeaProjects/FileYournal/New/src/main/resources/assets/Content/ContentElements/fullPageContent/";
     private final static String HALFPATH = "/Users/nicolegrieve/IdeaProjects/FileYournal/New/src/main/resources/assets/Content/ContentElements/halfPageContent/";
-    private final static String FULLWIDTH = "190mm";
-    private final static String FULLHIGHT = "275mm";
+    private final static String FULLWIDTH = "190";
+    private final static String FULLHEIGHT = "275mm";
     private final static String HALFWIDTH = "95mm";
-    private final static String HALFHIGHT = "137.5mm";
+    private final static String HALFHEIGHT = "137.5mm";
+    /*private final static String FULLWIDTH = "183mm";
+    private final static String FULLHEIGHT = "265mm";
+    private final static String HALFWIDTH = "91.5mm";
+    private final static String HALFHEIGHT = "132.5mm";*/
     private final static String NOSPACE = "0mm";
+    private final static String BOTTOM = "10mm";
+
 
     private String templateFilename;
     private String pageID;
@@ -82,7 +88,7 @@ public class Page {
             topContainer.setAttribute("absolute-position", "absolute");
             topContainer.setAttribute("top", NOSPACE);
             topContainer.setAttribute("left", NOSPACE);
-            topContainer.setAttribute("height", HALFHIGHT);
+            topContainer.setAttribute("height", HALFHEIGHT);
             topContainer.setAttribute("width", FULLWIDTH);
             newPage.addContent(topContainer);
 
@@ -93,15 +99,15 @@ public class Page {
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
             contentImage1.setAttribute("src",HALFPATH + content1 + ".png");
-            contentImage1.setAttribute("content-width", FULLWIDTH);
+            contentImage1.setAttribute("content-height", HALFHEIGHT);
             firstContent.addContent(contentImage1);
 
             // <fo:block-container> für die Positionierung der unteren Hälfte auf der Seite
             Element bottomContainer = new Element("block-container", fo);
             bottomContainer.setAttribute("absolute-position", "absolute");
-            bottomContainer.setAttribute("bottom", NOSPACE);
+            bottomContainer.setAttribute("bottom", BOTTOM);
             bottomContainer.setAttribute("left", NOSPACE);
-            bottomContainer.setAttribute("height", HALFHIGHT);
+            bottomContainer.setAttribute("height", HALFHEIGHT);
             bottomContainer.setAttribute("width", FULLWIDTH);
             newPage.addContent(bottomContainer);
 
@@ -112,7 +118,7 @@ public class Page {
             Element contentImage2 = new Element("external-graphic", fo);
             contentImage2.setAttribute("alignment-adjust", "central");
             contentImage2.setAttribute("src",HALFPATH + content2 + ".png");
-            contentImage2.setAttribute("content-width", FULLWIDTH);
+            contentImage2.setAttribute("content-height", HALFHEIGHT);
             secondContent.addContent(contentImage2);
     //QUAD
         }else if (templateType.equals("quad")){ // wenn der TemplateTyp 4/4 Seite ist
@@ -128,7 +134,7 @@ public class Page {
             firstContainer.setAttribute("absolute-position", "absolute");
             firstContainer.setAttribute("top", NOSPACE);
             firstContainer.setAttribute("left", NOSPACE);
-            firstContainer.setAttribute("height", HALFHIGHT);
+            firstContainer.setAttribute("height", HALFHEIGHT);
             firstContainer.setAttribute("width", HALFWIDTH);
             newPage.addContent(firstContainer);
             // <fo:block> für den Content
@@ -138,7 +144,7 @@ public class Page {
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
             contentImage1.setAttribute("src",FULLPATH + content1 + ".png");
-            contentImage1.setAttribute("content-width", HALFWIDTH);
+            contentImage1.setAttribute("content-height", HALFHEIGHT);
             firstContent.addContent(contentImage1);
 
             // <fo:block-container> für die Positionierung des rechten Viertels der oberen Hälfte auf der Seite
@@ -146,7 +152,7 @@ public class Page {
             secondContainer.setAttribute("absolute-position", "absolute");
             secondContainer.setAttribute("top", NOSPACE);
             secondContainer.setAttribute("right", NOSPACE);
-            secondContainer.setAttribute("height", HALFHIGHT);
+            secondContainer.setAttribute("height", HALFHEIGHT);
             secondContainer.setAttribute("width", HALFWIDTH);
             newPage.addContent(secondContainer);
             // <fo:block> für den Content
@@ -156,15 +162,15 @@ public class Page {
             Element contentImage2 = new Element("external-graphic", fo);
             contentImage2.setAttribute("alignment-adjust", "central");
             contentImage2.setAttribute("src",FULLPATH + content2 + ".png");
-            contentImage2.setAttribute("content-width", HALFWIDTH);
+            contentImage2.setAttribute("content-height", HALFHEIGHT);
             secondContent.addContent(contentImage2);
 
             // <fo:block-container> für die Positionierung des linken Viertels der unteren Hälfte auf der Seite
             Element thirdContainer = new Element("block-container", fo);
             thirdContainer.setAttribute("absolute-position", "absolute");
-            thirdContainer.setAttribute("bottom", NOSPACE);
+            thirdContainer.setAttribute("bottom", BOTTOM);
             thirdContainer.setAttribute("left", NOSPACE);
-            thirdContainer.setAttribute("height", HALFHIGHT);
+            thirdContainer.setAttribute("height", HALFHEIGHT);
             thirdContainer.setAttribute("width", HALFWIDTH);
             newPage.addContent(thirdContainer);
             // <fo:block> für den Content
@@ -175,15 +181,15 @@ public class Page {
             Element contentImage3 = new Element("external-graphic", fo);
             contentImage3.setAttribute("alignment-adjust", "central");
             contentImage3.setAttribute("src",FULLPATH + content3 + ".png");
-            contentImage3.setAttribute("content-width", HALFWIDTH);
+            contentImage3.setAttribute("content-height", HALFHEIGHT);
             thirdContent.addContent(contentImage3);
 
             // <fo:block-container> für die Positionierung des rechten Viertels der unteren Hälfte auf der Seite
             Element forthContainer = new Element("block-container", fo);
             forthContainer.setAttribute("absolute-position", "absolute");
-            forthContainer.setAttribute("bottom", NOSPACE);
+            forthContainer.setAttribute("bottom", BOTTOM);
             forthContainer.setAttribute("right", NOSPACE);
-            forthContainer.setAttribute("height", HALFHIGHT);
+            forthContainer.setAttribute("height", HALFHEIGHT);
             forthContainer.setAttribute("width", HALFWIDTH);
             newPage.addContent(forthContainer);
             // <fo:block> für den Content
@@ -193,7 +199,7 @@ public class Page {
             Element contentImage4 = new Element("external-graphic", fo);
             contentImage4.setAttribute("alignment-adjust", "central");
             contentImage4.setAttribute("src",FULLPATH + content4 + ".png");
-            contentImage4.setAttribute("content-width", HALFWIDTH);
+            contentImage4.setAttribute("content-height", HALFHEIGHT);
             forthContent.addContent(contentImage4);
 
     //HALFQUAD
@@ -210,7 +216,7 @@ public class Page {
             topContainer.setAttribute("absolute-position", "absolute");
             topContainer.setAttribute("top", NOSPACE);
             topContainer.setAttribute("left", NOSPACE);
-            topContainer.setAttribute("height", HALFHIGHT);
+            topContainer.setAttribute("height", HALFHEIGHT);
             topContainer.setAttribute("width", FULLWIDTH);
             newPage.addContent(topContainer);
 
@@ -221,15 +227,15 @@ public class Page {
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
             contentImage1.setAttribute("src",HALFPATH + content1 + ".png");
-            contentImage1.setAttribute("content-width", FULLWIDTH);
+            contentImage1.setAttribute("content-height", HALFHEIGHT);
             firstContent.addContent(contentImage1);
 
             // <fo:block-container> für die Positionierung des linken Viertels der unteren Hälfte auf der Seite
             Element leftContainer = new Element("block-container", fo);
             leftContainer.setAttribute("absolute-position", "absolute");
-            leftContainer.setAttribute("bottom", NOSPACE);
+            leftContainer.setAttribute("bottom", BOTTOM);
             leftContainer.setAttribute("left", NOSPACE);
-            leftContainer.setAttribute("height", HALFHIGHT);
+            leftContainer.setAttribute("height", HALFHEIGHT);
             leftContainer.setAttribute("width", HALFWIDTH);
             newPage.addContent(leftContainer);
             // <fo:block> für den Content
@@ -239,15 +245,15 @@ public class Page {
             Element contentImage2 = new Element("external-graphic", fo);
             contentImage2.setAttribute("alignment-adjust", "central");
             contentImage2.setAttribute("src",FULLPATH + content2 + ".png");
-            contentImage2.setAttribute("content-width", HALFWIDTH);
+            contentImage2.setAttribute("content-height", HALFHEIGHT);
             secondContent.addContent(contentImage2);
 
             // <fo:block-container> für die Positionierung des rechten Viertels der unteren Hälfte auf der Seite
             Element rightContainer = new Element("block-container", fo);
             rightContainer.setAttribute("absolute-position", "absolute");
-            rightContainer.setAttribute("bottom", NOSPACE);
+            rightContainer.setAttribute("bottom", BOTTOM);
             rightContainer.setAttribute("right", NOSPACE);
-            rightContainer.setAttribute("height", HALFHIGHT);
+            rightContainer.setAttribute("height", HALFHEIGHT);
             rightContainer.setAttribute("width", HALFWIDTH);
             newPage.addContent(rightContainer);
             // <fo:block> für den Content
@@ -257,7 +263,7 @@ public class Page {
             Element contentImage3 = new Element("external-graphic", fo);
             contentImage3.setAttribute("alignment-adjust", "central");
             contentImage3.setAttribute("src",FULLPATH + content3 + ".png");
-            contentImage3.setAttribute("content-width", HALFWIDTH);
+            contentImage3.setAttribute("content-height", HALFHEIGHT);
             thirdContent.addContent(contentImage3);
 
     //QUADHALF
@@ -273,7 +279,7 @@ public class Page {
             firstContainer.setAttribute("absolute-position", "absolute");
             firstContainer.setAttribute("top", NOSPACE);
             firstContainer.setAttribute("left", NOSPACE);
-            firstContainer.setAttribute("height", HALFHIGHT);
+            firstContainer.setAttribute("height", HALFHEIGHT);
             firstContainer.setAttribute("width", HALFWIDTH);
             newPage.addContent(firstContainer);
             // <fo:block> für den Content
@@ -283,7 +289,7 @@ public class Page {
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
             contentImage1.setAttribute("src",FULLPATH + content1 + ".png");
-            contentImage1.setAttribute("content-width", HALFWIDTH);
+            contentImage1.setAttribute("content-height", HALFHEIGHT);
             firstContent.addContent(contentImage1);
 
             // <fo:block-container> für die Positionierung des rechten Viertels der oberen Hälfte auf der Seite
@@ -291,7 +297,7 @@ public class Page {
             secondContainer.setAttribute("absolute-position", "absolute");
             secondContainer.setAttribute("top", NOSPACE);
             secondContainer.setAttribute("right", NOSPACE);
-            secondContainer.setAttribute("height", HALFHIGHT);
+            secondContainer.setAttribute("height", HALFHEIGHT);
             secondContainer.setAttribute("width", HALFWIDTH);
             newPage.addContent(secondContainer);
             // <fo:block> für den Content
@@ -301,15 +307,15 @@ public class Page {
             Element contentImage2 = new Element("external-graphic", fo);
             contentImage2.setAttribute("alignment-adjust", "central");
             contentImage2.setAttribute("src",FULLPATH + content2 + ".png");
-            contentImage2.setAttribute("content-width", HALFWIDTH);
+            contentImage2.setAttribute("content-height", HALFHEIGHT);
             secondContent.addContent(contentImage2);
 
             // <fo:block-container> für die Positionierung der unteren Hälfte auf der Seite
             Element bottomContainer = new Element("block-container", fo);
             bottomContainer.setAttribute("absolute-position", "absolute");
-            bottomContainer.setAttribute("bottom", NOSPACE);
+            bottomContainer.setAttribute("bottom", BOTTOM);
             bottomContainer.setAttribute("left", NOSPACE);
-            bottomContainer.setAttribute("height", HALFHIGHT);
+            bottomContainer.setAttribute("height", HALFHEIGHT);
             bottomContainer.setAttribute("width", FULLWIDTH);
             newPage.addContent(bottomContainer);
             // <fo:block> für den Content
@@ -319,7 +325,7 @@ public class Page {
             Element contentImage3 = new Element("external-graphic", fo);
             contentImage3.setAttribute("alignment-adjust", "central");
             contentImage3.setAttribute("src",HALFPATH + content3 + ".png");
-            contentImage3.setAttribute("content-width", FULLWIDTH);
+            contentImage3.setAttribute("content-height", HALFHEIGHT);
             thirdContent.addContent(contentImage3);
 
     //FULL
@@ -336,19 +342,19 @@ public class Page {
             container.setAttribute("absolute-position", "absolute");
             container.setAttribute("top", NOSPACE);
             container.setAttribute("left", NOSPACE);
-            container.setAttribute("height", FULLHIGHT);
-            container.setAttribute("width", FULLWIDTH);
+            container.setAttribute("height", FULLHEIGHT);
+            /*container.setAttribute("width", FULLWIDTH);*/
             newPage.addContent(container);
             // <fo:block> für den Content
             Element firstContent = new Element("block", fo);
             container.addContent(firstContent);
             // erster und einziger Content
             Element contentImage1 = new Element("external-graphic", fo);
-            contentImage1.setAttribute("alignment-adjust", "central");
+            /*contentImage1.setAttribute("alignment-adjust", "central");*/
             contentImage1.setAttribute("src",FULLPATH + content1 + ".png");
             /*contentImage1.setAttribute("src","/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Blocks/5ColumnSystem.png");
 */
-            contentImage1.setAttribute("content-width", FULLWIDTH);
+            contentImage1.setAttribute("content-height", FULLHEIGHT);
             firstContent.addContent(contentImage1);
             System.out.println("pageCreator BEGIN: " + content1 + content2 + content3 + content4);
         } return newPage;

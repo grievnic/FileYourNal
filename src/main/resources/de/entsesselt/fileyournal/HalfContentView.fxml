@@ -21,14 +21,14 @@
       </Label>
       <ScrollPane layoutY="100.0">
          <content>
-            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1000.0" prefWidth="360.0">
+            <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="360.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="1000.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
                   <Button id="Dots" fx:id="Dots" contentDisplay="CENTER" layoutX="34.0" layoutY="42.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="Dots" textFill="#47464a">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/Content/Vorschaubilder/HalfPage/Dots.png" />
+                              <Image url="@../../../assets/Content/ContentElements/halfPageContent/Dots.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -37,7 +37,7 @@
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/Content/Vorschaubilder/HalfPage/ColumnSystem.png" />
+                              <Image url="@../../../assets/Content/ContentElements/halfPageContent/ColumnSystem.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -46,7 +46,7 @@
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/Content/Vorschaubilder/HalfPage/TagesbetrachtungTL.png" />
+                              <Image url="@../../../assets/Content/ContentElements/halfPageContent/TagesbetrachtungTL.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -55,7 +55,7 @@
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/Content/Vorschaubilder/HalfPage/Tagesbetrachtung.png" />
+                              <Image url="@../../../assets/Content/ContentElements/halfPageContent/Tagesbetrachtung.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -64,7 +64,7 @@
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/Content/Vorschaubilder/HalfPage/Blanko.png" />
+                              <Image url="@../../../assets/Content/ContentElements/halfPageContent/Blanko.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -73,7 +73,7 @@
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/Content/Vorschaubilder/HalfPage/Stressprotokoll.png" />
+                              <Image url="@../../../assets/Content/ContentElements/halfPageContent/Stressprotokoll.png" />
                            </image>
                         </ImageView>
                      </graphic>
@@ -82,7 +82,16 @@
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
-                              <Image url="@../../../assets/Content/Vorschaubilder/HalfPage/Ikigai.png" />
+                              <Image url="@../../../assets/Content/ContentElements/halfPageContent/Ikigai.png" />
+                           </image>
+                        </ImageView>
+                     </graphic>
+                  </Button>
+                  <Button id="Ikigai" fx:id="test" alignment="CENTER" contentDisplay="CENTER" layoutX="197.0" layoutY="408.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="92.0" prefWidth="130.0" text="test" textFill="#47464a">
+                     <graphic>
+                        <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../../assets/Content/ContentElements/halfPageContent/test.png" />
                            </image>
                         </ImageView>
                      </graphic>
