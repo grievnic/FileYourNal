@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.LeftViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" layoutX="-4.0" layoutY="10.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="170.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
@@ -14,6 +14,6 @@
          <image>
             <Image url="@../../../assets/File.png" />
          </image></ImageView>
-      <Button fx:id="exitEditor" layoutX="133.0" layoutY="730.0" mnemonicParsing="false" text="Editor verlassen" />
+      <Button fx:id="exitEditor" layoutX="128.0" layoutY="645.0" mnemonicParsing="false" onAction="#exitEditor" text="Editor verlassen" />
    </children>
 </AnchorPane>

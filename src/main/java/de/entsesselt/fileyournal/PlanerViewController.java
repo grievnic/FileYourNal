@@ -7,6 +7,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
@@ -21,56 +22,61 @@ public class PlanerViewController extends AbstractController{
     Button prevPageButton;
 
     @FXML
+    Label pageLabel;
+
+    @FXML
     Button modifyClick;
 
     @FXML
-    Button button1;
+    Button planerButton1;
 
     @FXML
-    Button halfButton1;
+    Button planerHalfButton1;
 
     @FXML
-    Button halfButton2;
+    Button planerHalfButton2;
+
+
 
     @FXML
-    Button halfButton3;
+    Button planerQuadButton1;
 
     @FXML
-    Button quadButton1;
+    Button planerQuadButton2;
 
     @FXML
-    Button quadButton2;
+    Button planerQuadButton3;
 
     @FXML
-    Button quadButton3;
+    Button planerQuadButton4;
 
     @FXML
-    Button quadButton4;
+    Button planerHalfQuadButton1;
 
     @FXML
-    Button halfQuadButton1;
+    Button planerHalfQuadButton2;
 
     @FXML
-    Button halfQuadButton2;
+    Button planerHalfQuadButton3;
 
     @FXML
-    Button halfQuadButton3;
+    Button planerQuadHalfButton1;
 
     @FXML
-    Button quadHalfButton1;
+    Button planerQuadHalfButton2;
 
     @FXML
-    Button quadHalfButton2;
-
-    @FXML
-    Button quadHalfButton3;
+    Button planerQuadHalfButton3;
 
     @FXML
     Button previousButton;
 
     @FXML
-    Label label;
+    ImageView full1;
 
+  /*  @FXML
+    Label label;
+*/
     @FXML
     Button takeButton;
 
@@ -131,37 +137,37 @@ public class PlanerViewController extends AbstractController{
     @FXML
     public void setFullVisible(){
         fullPane.setVisible(true);
-        label.setVisible(false);
-        takeButton.setDisable(false);
+        /*label.setVisible(false);
+        takeButton.setDisable(false);*/
 
     }
 
     @FXML
     public void setHalfVisible(){
         halfPane.setVisible(true);
-        label.setVisible(false);
-        takeButton.setDisable(false);
+        /*label.setVisible(false);
+        takeButton.setDisable(false);*/
     }
 
     @FXML
     public void setQuadVisible(){
         quadPane.setVisible(true);
-        label.setVisible(false);
-        takeButton.setDisable(false);
+        /*label.setVisible(false);
+        takeButton.setDisable(false);*/
     }
 
     @FXML
     public void setQuadHalfVisible(){
         quadHalfPane.setVisible(true);
-        label.setVisible(false);
-        takeButton.setDisable(false);
+        /*label.setVisible(false);
+        takeButton.setDisable(false);*/
     }
 
     @FXML
     public void setHalfQuadVisible(){
         halfQuadPane.setVisible(true);
-        label.setVisible(false);
-        takeButton.setDisable(false);
+        /*label.setVisible(false);
+        takeButton.setDisable(false);*/
     }
 
     protected void showFullTemplates() throws Exception {
@@ -175,7 +181,7 @@ public class PlanerViewController extends AbstractController{
     // three buttons under PageOverview
 
     @FXML
-    public void previousPage() throws Exception { mainApp.goBack();}
+    public void previousPage() throws Exception { mainApp.prevPage();}
 
     @FXML
     public void nextPage()throws Exception{
@@ -208,111 +214,124 @@ public class PlanerViewController extends AbstractController{
             mainApp.addToOrganizer(fullPage.pageCreator());
             mainApp.newPage(); // shows a empty page and shows the template-overview at the right side
         }
+
     }
 
+    @FXML
+    public void setPrevButton(Boolean bool){
+        prevPageButton.setDisable(bool);
+    }
 
     @FXML
-    public void loadPage(String template, String  content1, String content2, String content3, String content4) throws Exception {
+    public void setNextButton(Boolean bool){
+        nextPageButton.setDisable(bool);
+    }
+
+    @FXML
+    public void loadPage(String template, String  content1, String content2, String content3, String content4, int pageindex) throws Exception {
         this.content1 = (content1);
         this.content2 = (content2);
         this.content3 = (content3);
         this.content4 = (content4);
-        System.out.println("aus Controller load Page: " + content1 + content2 + content3 + content4);
-
+        pageLabel.setText(String.valueOf(pageindex + 1));
+        System.out.println("aus PlanerController loadPage(): " + content1 + content2 + content3 + content4);
         if (template.equals("fullpage")){
-            mainApp.showPageTemplate("fullpage");
+            mainApp.showPageTemplate("planerViewController", "fullpage");
             String imagePath = FULLPATH + content1;
             System.out.println(imagePath);
-
-            ImageView imageView1 = new ImageView(imagePath);
-            button1.setGraphic(imageView1);
-            System.out.println("fullpage erkannt");
-            imageView1.setFitHeight(button1.getHeight());
+            Image image1 = new Image(imagePath);
+            full1.setImage(image1);
+            /*planerButton1.setVisible(false);*/
+            /*ImageView imageView1 = new ImageView(imagePath);
+            *//*planerButton1.setGraphic(imageView1);*//*
+            imageView1.setFitHeight(planerButton1.getHeight());
+            System.out.println("PlanerButton1: "+ planerButton1.getHeight());
             imageView1.setPreserveRatio(true);
-            button1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);*/
+            System.out.println("fullPage wird abgebildet");
         } else if (mainApp.getCurrentTemplate().equals("half")){
-            mainApp.showPageTemplate("half");
-            System.out.println("half erkannt"+ halfButton1.getText());
+            mainApp.showPageTemplate("planerViewController","half");
+            System.out.println("half erkannt"+ planerHalfButton1.getText());
             ImageView imageView1 = new ImageView(HALFPATH + content1);
             ImageView imageView2 = new ImageView(HALFPATH + content2);
             // sets the content in the top half
-            halfButton1.setGraphic(imageView1);
-            imageView1.setFitHeight(halfButton1.getHeight());
+            planerHalfButton1.setGraphic(imageView1);
+            imageView1.setFitHeight(planerHalfButton1.getHeight());
             imageView1.setPreserveRatio(true);
-            halfButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerHalfButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             // sets the content in the bottom half
-            halfButton2.setGraphic(imageView2);
-            imageView2.setFitHeight(halfButton2.getHeight());
+            planerHalfButton2.setGraphic(imageView2);
+            imageView2.setFitHeight(planerHalfButton2.getHeight());
             imageView2.setPreserveRatio(true);
-            halfButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerHalfButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         } else if (mainApp.getCurrentTemplate().equals("quad")){
-            mainApp.showPageTemplate("quad");
-            System.out.println("quad erkannt" + quadButton1.getText());
+            mainApp.showPageTemplate("planerViewController", "quad");
+            System.out.println("quad erkannt" + planerQuadButton1.getText());
             ImageView imageView1 = new ImageView(FULLPATH + content1);
             ImageView imageView2 = new ImageView(FULLPATH + content2);
             ImageView imageView3 = new ImageView(FULLPATH + content3);
             ImageView imageView4 = new ImageView(FULLPATH + content4);
             // sets the content in the left top quarter
-            quadButton1.setGraphic(imageView1);
-            imageView1.setFitHeight(quadButton1.getHeight());
+            planerQuadButton1.setGraphic(imageView1);
+            imageView1.setFitHeight(planerQuadButton1.getHeight());
             imageView1.setPreserveRatio(true);
-            quadButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerQuadButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             // sets the content in the right top quarter
-            quadButton2.setGraphic(imageView2);
-            imageView2.setFitHeight(quadButton2.getHeight());
+            planerQuadButton2.setGraphic(imageView2);
+            imageView2.setFitHeight(planerQuadButton2.getHeight());
             imageView2.setPreserveRatio(true);
-            quadButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerQuadButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             // sets the content in the left bottom quarter
-            quadButton3.setGraphic(imageView2);
-            imageView3.setFitHeight(quadButton3.getHeight());
+            planerQuadButton3.setGraphic(imageView2);
+            imageView3.setFitHeight(planerQuadButton3.getHeight());
             imageView3.setPreserveRatio(true);
-            quadButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerQuadButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             // sets the content in the right bottom quarter
-            quadButton4.setGraphic(imageView4);
-            imageView4.setFitHeight(quadButton4.getHeight());
+            planerQuadButton4.setGraphic(imageView4);
+            imageView4.setFitHeight(planerQuadButton4.getHeight());
             imageView4.setPreserveRatio(true);
-            quadButton4.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerQuadButton4.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         } else if (mainApp.getCurrentTemplate().equals("halfquad")){
-            mainApp.showPageTemplate("halfQuad");
+            mainApp.showPageTemplate("planerViewController", "halfQuad");
             ImageView imageView1 = new ImageView(HALFPATH + content1);
             ImageView imageView2 = new ImageView(FULLPATH + content2);
             ImageView imageView3 = new ImageView(FULLPATH + content3);
             // sets the content in the top half
-            halfQuadButton1.setGraphic(imageView1);
-            imageView1.setFitHeight(halfQuadButton1.getHeight());
+            planerHalfQuadButton1.setGraphic(imageView1);
+            imageView1.setFitHeight(planerHalfQuadButton1.getHeight());
             imageView1.setPreserveRatio(true);
-            halfQuadButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerHalfQuadButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             // sets the content in the left bottom quarter
-            halfQuadButton2.setGraphic(imageView2);
-            imageView2.setFitHeight(halfQuadButton2.getHeight());
+            planerHalfQuadButton2.setGraphic(imageView2);
+            imageView2.setFitHeight(planerHalfQuadButton2.getHeight());
             imageView2.setPreserveRatio(true);
-            halfQuadButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerHalfQuadButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             // sets the content in the right bottom quarter
-            halfQuadButton3.setGraphic(imageView3);
-            imageView3.setFitHeight(halfQuadButton3.getHeight());
+            planerHalfQuadButton3.setGraphic(imageView3);
+            imageView3.setFitHeight(planerHalfQuadButton3.getHeight());
             imageView3.setPreserveRatio(true);
-            halfQuadButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerHalfQuadButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         } else {
-            mainApp.showPageTemplate("quadHalf");
+            mainApp.showPageTemplate("planerViewController", "quadHalf");
             System.out.println("quadhalf erkannt");
             ImageView imageView1 = new ImageView(FULLPATH + content1);
             ImageView imageView2 = new ImageView(FULLPATH + content2);
             ImageView imageView3 = new ImageView(HALFPATH + content3);
             // sets the content in the left top quarter
-            quadHalfButton1.setGraphic(imageView1);
-            imageView1.setFitHeight(quadHalfButton1.getHeight());
+            planerQuadHalfButton1.setGraphic(imageView1);
+            imageView1.setFitHeight(planerQuadHalfButton1.getHeight());
             imageView1.setPreserveRatio(true);
-            quadHalfButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerQuadHalfButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             // sets the content in the right top quarter
-            quadHalfButton2.setGraphic(imageView2);
-            imageView2.setFitHeight(quadHalfButton2.getHeight());
+            planerQuadHalfButton2.setGraphic(imageView2);
+            imageView2.setFitHeight(planerQuadHalfButton2.getHeight());
             imageView2.setPreserveRatio(true);
-            quadHalfButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerQuadHalfButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
             // sets the content in the bottom half
-            quadHalfButton3.setGraphic(imageView3);
-            imageView3.setFitHeight(quadHalfButton3.getHeight());
+            planerQuadHalfButton3.setGraphic(imageView3);
+            imageView3.setFitHeight(planerQuadHalfButton3.getHeight());
             imageView3.setPreserveRatio(true);
-            quadHalfButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
+            planerQuadHalfButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
         }
     }
 

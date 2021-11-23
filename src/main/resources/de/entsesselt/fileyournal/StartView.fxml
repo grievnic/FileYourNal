@@ -13,7 +13,12 @@
             <Image url="@../../../assets/Organizer.png" />
          </image>
       </ImageView>
-      <Button fx:id="newPlaner" layoutX="315.0" layoutY="364.0" mnemonicParsing="false" onAction="#startNewPlanerClick" prefHeight="49.0" prefWidth="142.0" text="Planer erstellen">
+      <Button fx:id="newPlaner" layoutX="291.0" layoutY="344.0" mnemonicParsing="false" onAction="#startNewPlanerClick" prefHeight="49.0" prefWidth="203.0" text="neuen Planer erstellen">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <Button fx:id="loadPlaner" layoutX="291.0" layoutY="414.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="203.0" text="Planer laden">
          <font>
             <Font size="18.0" />
          </font>

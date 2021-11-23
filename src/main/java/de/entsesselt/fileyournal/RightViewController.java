@@ -11,7 +11,7 @@ public class RightViewController extends AbstractController {
     //shows the QuadQuad-Page-View in the Center of the GUI and takes the template-Selection away
     @FXML
     protected void startQuadQuadTemplate() throws Exception {
-        mainApp.showPageTemplate("quad");
+        mainApp.showPageTemplate("pageViewController", "quad");
         template = "quad";
         sendTemplate();
         emptyRightView();
@@ -20,7 +20,7 @@ public class RightViewController extends AbstractController {
     //shows the Full-Page-View in the Center of the GUI and takes the template-Selection away
     @FXML
     protected void startFullTemplate() throws Exception {
-        mainApp.showPageTemplate("fullpage");
+        mainApp.showPageTemplate("pageViewController", "fullpage");
         template = "full";
         sendTemplate();
         emptyRightView();
@@ -29,7 +29,7 @@ public class RightViewController extends AbstractController {
     //shows the Half-Page-View in the Center of the GUI and takes the template-Selection away
     @FXML
     protected void startHalfHalfTemplate() throws Exception {
-        mainApp.showPageTemplate("half");
+        mainApp.showPageTemplate("pageViewController", "half");
         template = "half";
         sendTemplate();
         emptyRightView();
@@ -37,7 +37,7 @@ public class RightViewController extends AbstractController {
 
     @FXML
     protected void startQuadHalfTemplate() throws Exception {
-        mainApp.showPageTemplate("quadHalf");
+        mainApp.showPageTemplate("pageViewController", "quadHalf");
         template = "quadHalf";
         sendTemplate();
         emptyRightView();
@@ -45,7 +45,7 @@ public class RightViewController extends AbstractController {
 
     @FXML
     protected void startHalfQuadTemplate() throws Exception {
-        mainApp.showPageTemplate("halfQuad");
+        mainApp.showPageTemplate("pageViewController", "halfQuad");
         template = "halfQuad";
         sendTemplate();
         emptyRightView();

@@ -23,6 +23,7 @@ public class StartViewController extends AbstractController {
         newPlaner.setVisible(false);
         planer.setVisible(false);
     }
+
     /**
      * Is called by the main application to give a reference back to itself.
      *
