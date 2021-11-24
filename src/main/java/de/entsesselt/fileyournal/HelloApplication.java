@@ -36,7 +36,10 @@ public class HelloApplication extends Application {
     private String currentTemplate = "";
     private FullPageViewController pageViewController;
     private PlanerViewController planerViewController;
+    private LeftViewController leftViewController;
     private String fileName;
+    private String filePath;
+
 
 
     @FXML
@@ -59,16 +62,6 @@ public class HelloApplication extends Application {
         initRootLayout();
         showStartView();
         showLeftView();
-
-        /*startNewOrganizer();*/
-        /*//Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
-        Organizer org = new Organizer();
-        this.org = org;
-        org.readFO("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/PageTemplateDinA4.fo");*/
-        /*createOrganizer(org);*/
-        /*org.addPageTemplate("test");*/
-
-       /* org.foToPdf(); // Test zum Wandeln der Fo zu PDF aus oben erstellter Datei*/
 
     }
 
@@ -104,6 +97,7 @@ public class HelloApplication extends Application {
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(startView);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -149,52 +143,18 @@ public class HelloApplication extends Application {
 
     }
 
-    public void startNewOrganizer(){
+    public void startNewOrganizer(String fileName, String foFilePath){
         //Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
         Organizer org = new Organizer(fileName);
         this.org = org;
-        org.readFO("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/PageTemplateDinA4.fo");
+        org.readFO(foFilePath);
     }
-    /*public void showFullPageView() { // shows the page-view that equals the fullpage-template
-        currentTemplate = "fullpage";
-        try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("FullPageView.fxml"));
-            fullView = (AnchorPane) loader.load();
-            fullPane.setVisible(true);
-            // Give the controller access to the main app.
-            pageViewController = loader.getController();
-            pageViewController.setMainApp(this);
 
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(fullView);
-            changeRightView("EmptyRightView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-   /* public void showPageType(String view) {
-        try {
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource(view));
-            *//*FXMLLoader loader = new FXMLLoader(getClass().getResource(view));*//*
-            AnchorPane anchorPane = (AnchorPane) loader.load();
-
-            rootLayout.setCenter(anchorPane);
-
-            AbstractController controller;
-            controller = loader.getController();
-            controller.setMainApp(this);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     @FXML
     public void showPageTemplate(String controller, String template) {
         currentTemplate = template;
+
         System.out.println("CurrentTemplate ist : " + currentTemplate);
         if (controller.equals("pageViewController")){
             System.out.println("Bin im pageView-Zweig");
@@ -210,129 +170,28 @@ public class HelloApplication extends Application {
                 pageViewController.setHalfQuadVisible();
             }
             } else {
+
+            planerViewController.setFullVisible(false);
+            planerViewController.setHalfVisible(false);
+            planerViewController.setQuadVisible(false);
+            planerViewController.setHalfQuadVisible(false);
+            planerViewController.setQuadHalfVisible(false);
+
             if (currentTemplate.equals("fullpage")) {
                 System.out.println("Bin im PlanerView-Zweig!");
-                planerViewController.setFullVisible();
+                planerViewController.setFullVisible(true);
             } else if (currentTemplate.equals("half")) {
-                planerViewController.setHalfVisible();
+                planerViewController.setHalfVisible(true);
             } else if (currentTemplate.equals("quad")) {
-                planerViewController.setQuadVisible();
+                planerViewController.setQuadVisible(true);
             } else if (currentTemplate.equals("quadHalf")) {
-                planerViewController.setQuadHalfVisible();
+                planerViewController.setQuadHalfVisible(true);
             } else {
-                planerViewController.setHalfQuadVisible();
+                planerViewController.setHalfQuadVisible(true);
             }
             changeRightView("EmptyRightView.fxml");
         }
     }
-
-   /* @FXML
-    public void showHalfPage(String template) {
-        currentTemplate = template;
-        pageViewController.setHalfVisible();
-    }
-*/
-
-   /* @FXML
-    public void showHalfPage(String template){
-        currentTemplate = template;
-        halfPane.setVisible(true);
-    }*/
-
-    /*@FXML
-    public void showHalfQuadPage(String template){
-        currentTemplate = template;
-        halfQuadPane.setVisible(true);
-    }
-
-    @FXML
-    public void showQuadHalfPage(String template){
-        currentTemplate = template;
-        quadHalfPane.setVisible(true);
-    }
-
-    @FXML
-    public void showQuadPage(String template){
-        currentTemplate = template;
-        quadPane.setVisible(true);
-    }*/
-
-
-        /*public void showQuadQuadPageView() { // shows the page-view that equals the quad-template
-        currentTemplate = "quad";
-        try {
-            // Load QuadQuad Template-View
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("QuadPageView.fxml"));
-            AnchorPane quadView = (AnchorPane) loader.load();
-            // Give the controller access to the main app.
-            pageViewController = loader.getController();
-            pageViewController.setMainApp(this);
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(quadView);
-            changeRightView("EmptyRightView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    /*public void showHalfHalfPageView() { // shows the page-view that equals the half-template
-        currentTemplate = "half";
-        try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("HalfHalfPageView.fxml"));
-            AnchorPane startView = (AnchorPane) loader.load();
-            // Give the controller access to the main app.
-            pageViewController = loader.getController();
-            pageViewController.setMainApp(this);
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(startView);
-            changeRightView("EmptyRightView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-   /* public void showQuadHalfPageView() { // shows the page-view that equals the quadHalf-template
-        currentTemplate = "quadHalf";
-        try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("QuadHalfPageView.fxml"));
-            AnchorPane startView = (AnchorPane) loader.load();
-            // Give the controller access to the main app.
-            pageViewController = loader.getController();
-            pageViewController.setMainApp(this);
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(startView);
-            changeRightView("EmptyRightView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
-
-    /*public void showHalfQuadPageView() { // shows the page-view that equals the halfQuad-template
-        currentTemplate = "halfQuad";
-        try {
-            // Load person overview.
-            FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("HalfQuadPageView.fxml"));
-            AnchorPane startView = (AnchorPane) loader.load();
-            // Give the controller access to the main app.
-            pageViewController = loader.getController();
-            pageViewController.setMainApp(this);
-
-            // Set person overview into the center of root layout.
-            rootLayout.setCenter(startView);
-            changeRightView("EmptyRightView.fxml");
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
 
     public void showLeftView() { // to show the left side of the gui
         try {
@@ -345,8 +204,8 @@ public class HelloApplication extends Application {
             rootLayout.setLeft(pageView);
 
             if (loader.getController() instanceof AbstractController) {
-                AbstractController leftController = loader.getController();
-                leftController.setMainApp(this);
+                leftViewController = loader.getController();
+                leftViewController.setMainApp(this);
             }
 
         } catch (IOException e) {
@@ -397,6 +256,10 @@ public class HelloApplication extends Application {
         showEditView();
     }
 
+   /* public void showEditControl(Boolean bool){
+        leftViewController.setControlPaneVisible(bool);
+    }*/
+
     public void newPage(){ //to get a new empty pageview
         showRightView(); // template overview
         showEditView();
@@ -411,8 +274,8 @@ public class HelloApplication extends Application {
     public void addToOrganizer (Element newPage) throws Exception {
         org.addPage(newPage);
         currentPage = newPage;
-        org.writeFO(); // writes the XST-FO-Document in Organizer Class
-        org.foToPdf(); // creates the PDF-Document in Organizer Class
+        org.writeFO(filePath); // writes the XST-FO-Document in Organizer Class
+        org.foToPdf(filePath); // creates the PDF-Document in Organizer Class
     }
 
     public void goToFirstPage() throws Exception { // if user wants to scroll back to older pages
@@ -428,7 +291,7 @@ public class HelloApplication extends Application {
         } else*//* if (myIndex > 0 && myIndex < children.size())*/ { //get prevSibling
             Element firstElement = (Element) children.get(0);
             currentPage = firstElement;
-            currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
+            currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", ""); // delete pagecounter to get only template-name
             System.out.println(currentTemplate);
             int maxIndex = children.size() - 1;
             int pageindex = children.indexOf(currentPage);
@@ -437,52 +300,17 @@ public class HelloApplication extends Application {
         }
     }
 
-   /* public void leafThroughOrganizer() throws Exception { // if user wants to scroll back to older pages
-        if (currentPage == null) return;
-        //myElement is the <Element> element in your example
-//List implementation:
-        Element parent = (Element) currentPage.getParent();
-        List children = parent.getChildren();
-        int myIndex = children.indexOf(currentPage);
-        *//*if (currentPage == children.get(children.size() - 1)) {
-            currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
-            getFoData();
-        } else*//* if (myIndex > 0 && myIndex < children.size()) { //get prevSibling
-            Element prevElement = (Element) children.get(myIndex - 1);
-            System.out.println("Current page is: " + currentPage.getAttributeValue("id"));
-            System.out.println("PrevElement page is: " + prevElement.getAttributeValue("id"));
-            currentPage = prevElement;
-            System.out.println("neue Current page is: " + currentPage.getAttributeValue("id"));
-            currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
-            System.out.println(currentTemplate);
-            getFoData();
-        }
-    }*/
-        /*String pageTextPath = "root/page-sequence/flow/block";*/
-       /* Element stellvertreter;
-        List<Object> liste;
-        System.out.println("aus goBack: Die ID lautet: " + currentPage.getAttributeValue("id"));
-        String previousOne = "preceding-sibling::*[1]";
-        XPathExpression<Object> expr;
-        XPathFactory xPathFactory = XPathFactory.instance();
-        *//*XPathExpression<Object> xpathPage =  xPathFactory.compile(pageTextPath + "[id = ‘" + pageID + "‘]");*//*
-        expr = xPathFactory.compile("/*");
-        *//*stellvertreter= (Element) expr.evaluateFirst(currentPage);*//*
-        liste = expr.evaluate(org.getCurrentOrganizer());
-        System.out.println("Liste: " + liste.size());
-        System.out.println(previousOne);*/
-       /* if (stellvertreter != null) {
-            currentPage = stellvertreter;
-            currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
-            System.out.println("das currentTemplate lautet: " + currentTemplate);
-            getFoData();
-        } else { System.out.println("schade");}*/
-/*
-        String currentContent1 = currentPage.getChild("block-container").getChild("block").getChild("external-graphic").getAttributeValue("src");
-*/
-        /*List<Element>containerChildren = currentPage.getChildren();*/
-
-   /* }*/
+    public void loadedOrganizer() throws Exception{
+        List children = org.fetchPageParent().getChildren();
+        Element firstElement = (Element) children.get(0);
+        currentPage = firstElement;
+        currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
+        System.out.println(currentTemplate);
+        int maxIndex = children.size() - 1;
+        int pageindex = children.indexOf(currentPage);
+        System.out.println("Seite " + pageindex + 1);
+        getFoData(currentTemplate, pageindex, maxIndex);
+    }
 
       public void nextPage()throws Exception { //User klickt auf nächste Seite
           Element parent = (Element) currentPage.getParent();
@@ -556,28 +384,7 @@ public class HelloApplication extends Application {
       }
 
       public void FoToPdf(){
-
       }
-
-
-   /* @Override
-    public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("GuiView.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 1920, 1200);
-        stage.setTitle("Hello!");
-        stage.setScene(scene);
-        stage.show();
-    }*/
-
-    /*public void writeFO(Document doc) {
-        Format format = Format.getPrettyFormat();
-        format.setIndent("    ");
-        try (FileOutputStream fos = new FileOutputStream(new File(FILENAME))) {
-            XMLOutputter op = new XMLOutputter(format);
-            op.output(doc, fos);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }*/
 
 
     public Button getActiveButton() {
@@ -649,6 +456,14 @@ public class HelloApplication extends Application {
 
     public void setFileName(String fileName) {
         this.fileName = fileName;
+    }
+
+    public void setFilePath(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getFilePath() {
+        return filePath;
     }
 
     public static void main(String[] args) {

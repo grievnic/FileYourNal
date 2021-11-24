@@ -18,6 +18,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
+import java.util.List;
 
 public class Organizer {
 
@@ -164,16 +165,9 @@ public class Organizer {
     public Document getCurrentOrganizer() {
         return currentOrganizer;
     }
-
-    // kann vermutlich bald weg
-    public static String addPageTemplate(String templateType){
-        String templateFilename = templateType + ".fo";
-        return templateFilename;
-    }
+    
 
     public static void addPage(Element newPage){
-        //TODO Seite (Template und Content) in den Organizer-Baum schreiben
-        //mit XPath das <fo:flow>-Element finden
         Element root = currentOrganizer.getRootElement();
         Element pageSequence = root.getChild("page-sequence",fo);
         Element flow = pageSequence.getChild("flow", fo);
@@ -181,21 +175,24 @@ public class Organizer {
         flow.addContent(newPage);
     }
 
-   /* public static void writeXML(Element testElement){
-        Format format = Format.getPrettyFormat();
-        format.setIndent("    ");
-        try (FileOutputStream fos = new FileOutputStream(new File(FILEPATH + organizername))) {
-            XMLOutputter op = new XMLOutputter(format);
-            op.output(testElement, fos);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }*/
+    public static Element fetchPageParent(){
+        Element root = currentOrganizer.getRootElement();
+        Element pageSequence = root.getChild("page-sequence",fo);
+        Element flow = pageSequence.getChild("flow", fo);
+        List pages = flow.getChildren();
+        Element firstElement = (Element) pages.get(0);
+        String firstTemplate = firstElement.getAttributeValue("id").replaceFirst(".$", "");
+        int maxIndex = pages.size() - 1;
+        int pageindex = pages.indexOf(firstElement);
+        System.out.println("Seite " + pageindex + 1);
+        return flow;
+    } 
+  
 
-    public void writeFO(){
+    public void writeFO(String filePath){
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
-        try (FileOutputStream fos = new FileOutputStream(new File(FILEPATH + organizername + ".fo"))) {
+        try (FileOutputStream fos = new FileOutputStream(new File(filePath))) {
             XMLOutputter op = new XMLOutputter(format);
             op.output(currentOrganizer, fos);
         } catch (IOException e) {
@@ -211,7 +208,9 @@ public class Organizer {
 
 
 
-    public void foToPdf() throws Exception {
+    public void foToPdf(String filePath) throws Exception {
+        String pdfPath = filePath.substring(0,filePath.lastIndexOf("."));
+
         /*org.writeFO(currentOrganizer);*/
         // Step 1: Construct a FopFactory
 // (reuse if you plan to render multiple documents!)
@@ -219,7 +218,7 @@ public class Organizer {
 
 // Step 2: Set up output stream.
 // Note: Using BufferedOutputStream for performance reasons (helpful with FileOutputStreams).
-        OutputStream pdfOut = new BufferedOutputStream(new FileOutputStream(new File(FILEPATH + organizername +".pdf")));
+        OutputStream pdfOut = new BufferedOutputStream(new FileOutputStream(new File(pdfPath +".pdf")));
 
         try {
             // Step 3: Construct fop with desired output format
@@ -231,7 +230,7 @@ public class Organizer {
 
             // Step 5: Setup input and output for XSLT transformation
             // Setup input stream
-            Source foIn = new StreamSource(new File(FILEPATH + organizername + ".fo"));
+            Source foIn = new StreamSource(new File(filePath));
             // Resulting SAX events (the generated FO) must be piped through to FOP
             Result res = new SAXResult(fop.getDefaultHandler());
 

@@ -30,7 +30,12 @@
                   <Font name="System Bold" size="14.0" />
                </font>
             </Label>
-            <Button fx:id="saveName" layoutX="128.0" layoutY="148.0" mnemonicParsing="false" onAction="#nameYourOrganizer" text="Namen speichern" />
+            <Label fx:id="pathWarn" layoutX="26.0" layoutY="124.0" text="Bitte einen Speicherort für Deinen Organizer festlegen!" textFill="#a10023" visible="false">
+               <font>
+                  <Font name="System Bold" size="14.0" />
+               </font>
+            </Label>
+            <Button fx:id="saveName" layoutX="84.0" layoutY="142.0" mnemonicParsing="false" onAction="#nameYourOrganizer" text="speichern &amp; Speicherort festlegen" />
             <Label fx:id="nameLabel" layoutX="47.0" layoutY="41.0" text="Gib Deinem Organizer einen Namen:" textFill="#47464a">
                <font>
                   <Font size="18.0" />
@@ -38,7 +43,7 @@
             </Label>
             <TextField fx:id="nameField" layoutX="104.0" layoutY="77.0" promptText="name" />
          </children></AnchorPane>
-      <Button fx:id="takeButton" disable="true" layoutX="260.0" layoutY="742.0" mnemonicParsing="false" onAction="#savePage" text="Seite übernehmen &amp; neue Seite" />
+      <Button fx:id="takeButton" disable="true" layoutX="278.0" layoutY="742.0" mnemonicParsing="false" onAction="#savePage" text="Seitenentwurf speichern" />
       <AnchorPane fx:id="fullPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
             <ImageView fx:id="page11" fitHeight="712.0" fitWidth="513.0" layoutX="107.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
@@ -55,7 +60,7 @@
       </AnchorPane>
       <AnchorPane fx:id="halfPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
-            <Button id="halfButton1" fx:id="halfButton1" contentDisplay="TOP" layoutX="130.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="451.25" text="halbe Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="46.0">
+            <Button id="halfButton1" fx:id="halfButton1" contentDisplay="TOP" layoutX="130.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="451.25" text="halbe Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="45.0">
                <font>
                   <Font size="24.0" />
                </font>
@@ -107,17 +112,17 @@
       </AnchorPane>
       <AnchorPane fx:id="quadPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
-            <Button id="quadButton1" fx:id="quadButton11" contentDisplay="TOP" layoutX="130.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="46.0">
+            <Button id="quadButton1" fx:id="quadButton1" contentDisplay="TOP" layoutX="130.0" layoutY="45.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="45.0">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button id="quadButton3" fx:id="quadButton31" contentDisplay="TOP" layoutX="130.0" layoutY="372.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
+            <Button id="quadButton3" fx:id="quadButton3" contentDisplay="TOP" layoutX="130.0" layoutY="372.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
                <font>
                   <Font size="24.0" />
                </font>
             </Button>
-            <Button id="quadButton2" fx:id="quadButton22" contentDisplay="TOP" layoutX="356.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
+            <Button id="quadButton2" fx:id="quadButton2" contentDisplay="TOP" layoutX="356.0" layoutY="45.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
                <font>
                   <Font size="24.0" />
                </font>

@@ -18,7 +18,7 @@
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="loadPlaner" layoutX="291.0" layoutY="414.0" mnemonicParsing="false" prefHeight="49.0" prefWidth="203.0" text="Planer laden">
+      <Button fx:id="loadPlaner" layoutX="291.0" layoutY="414.0" mnemonicParsing="false" onAction="#loadFoFromFile" prefHeight="49.0" prefWidth="203.0" text="Planer laden">
          <font>
             <Font size="18.0" />
          </font>

@@ -6,7 +6,6 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Font?>
 
 <AnchorPane fx:id="planerPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.PlanerViewController">
    <children>
@@ -17,92 +16,39 @@
          </image>
       </ImageView>
       <Button fx:id="nextPageButton" layoutX="538.0" layoutY="742.0" mnemonicParsing="false" onAction="#nextPage" text="Seite vor" />
-      <Button fx:id="modifyPageClick" layoutX="322.0" layoutY="742.0" mnemonicParsing="false" onAction="#modifyPage" text="Seite ändern" />
+      <Button fx:id="modifyPageClick" layoutX="295.0" layoutY="742.0" mnemonicParsing="false" onAction="#modifyPage" text="Änderung vornehmen" />
       <Button fx:id="prevPageButton" disable="true" layoutX="122.0" layoutY="742.0" mnemonicParsing="false" onAction="#previousPage" text="Seite zurück" />
       <AnchorPane fx:id="fullPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
-            <ImageView fx:id="full1" fitHeight="653.125" fitWidth="451.25" layoutX="129.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" AnchorPane.topAnchor="45.0" />
-            <Button id="planerButton1" fx:id="planerButton1" contentDisplay="TOP" layoutX="129.0" layoutY="45.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="653.125" prefWidth="451.25" text="volle Seite" textAlignment="CENTER" textFill="#47464a" visible="false" AnchorPane.topAnchor="45.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
+            <ImageView fx:id="full1" fitHeight="653.125" fitWidth="451.25" layoutX="129.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="halfPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
-            <Button id="planerHalfButton1" fx:id="planerHalfButton1" contentDisplay="TOP" layoutX="130.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="325.375" prefWidth="451.25" text="halbe Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="46.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button id="planerHalfButton2" fx:id="planerHalfButton2" contentDisplay="TOP" layoutX="130.0" layoutY="372.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="325.375" prefWidth="451.25" text="halbe Seite" textAlignment="CENTER" textFill="#47464a">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
+            <ImageView fx:id="half1" fitHeight="325.375" fitWidth="451.25" layoutX="130.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="half2" fitHeight="325.375" fitWidth="451.25" layoutX="130.0" layoutY="372.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="halfQuadPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
-            <Button id="planerHalfQuadButton1" fx:id="planerHalfQuadButton1" contentDisplay="TOP" layoutX="130.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="325.375" prefWidth="451.25" text="halbe Seite" textAlignment="CENTER" textFill="#47464a">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button id="planerHalfQuadButton2" fx:id="planerHalfQuadButton2" contentDisplay="TOP" layoutX="130.0" layoutY="373.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button id="planerHalfQuadButton3" fx:id="planerHalfQuadButton3" contentDisplay="TOP" layoutX="356.0" layoutY="373.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
+            <ImageView fx:id="halfQuad1" fitHeight="325.375" fitWidth="451.25" layoutX="130.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="halfQuad2" fitHeight="325.375" fitWidth="225.15" layoutX="130.0" layoutY="373.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="halfQuad3" fitHeight="325.375" fitWidth="225.15" layoutX="356.0" layoutY="373.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="quadHalfPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
-            <Button id="planerQuadHalfButton1" fx:id="planerQuadHalfButton1" contentDisplay="TOP" layoutX="130.0" layoutY="45.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="45.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button id="planerQuadHalfButton2" fx:id="planerQuadHalfButton2" contentDisplay="TOP" layoutX="356.0" layoutY="45.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button id="planerQuadHalfButton3" fx:id="planerQuadHalfButton3" contentDisplay="TOP" layoutX="130.0" layoutY="371.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="451.25" text="halbe Seite" textAlignment="CENTER" textFill="#47464a">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
+            <ImageView fx:id="quadHalf3" fitHeight="325.375" fitWidth="451.25" layoutX="130.0" layoutY="371.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="quadHalf1" fitHeight="325.375" fitWidth="225.15" layoutX="130.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="quadHalf2" fitHeight="325.375" fitWidth="225.15" layoutX="356.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="quadPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
-            <Button id="planerQuadButton2" fx:id="planerQuadButton1" contentDisplay="TOP" layoutX="130.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a" AnchorPane.topAnchor="46.0">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button id="planerQuadButton2" fx:id="planerQuadButton2" contentDisplay="TOP" layoutX="130.0" layoutY="372.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button id="planerQuadButton3" fx:id="planerQuadButton3" contentDisplay="TOP" layoutX="356.0" layoutY="46.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
-            <Button id="planerQuadButton4" fx:id="planerQuadButton4" contentDisplay="TOP" layoutX="356.0" layoutY="372.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectArea" prefHeight="325.375" prefWidth="225.15" text="viertel Seite" textAlignment="CENTER" textFill="#47464a">
-               <font>
-                  <Font size="24.0" />
-               </font>
-            </Button>
+            <ImageView fx:id="quad1" fitHeight="325.375" fitWidth="225.15" layoutX="130.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="quad2" fitHeight="325.375" fitWidth="225.15" layoutX="356.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="quad3" fitHeight="325.375" fitWidth="225.15" layoutX="130.0" layoutY="372.0" pickOnBounds="true" preserveRatio="true" />
+            <ImageView fx:id="quad4" fitHeight="325.375" fitWidth="225.15" layoutX="356.0" layoutY="372.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
       <Label fx:id="pageLabel" layoutX="357.0" layoutY="699.0" />

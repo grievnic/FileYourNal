@@ -6,6 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.DirectoryChooser;
+
+import java.io.File;
+import java.util.Optional;
 
 public class FullPageViewController extends AbstractController{
 
@@ -109,10 +113,14 @@ public class FullPageViewController extends AbstractController{
     private Label nameWarn;
 
     @FXML
+    private Label pathWarn;
+
+    @FXML
     private AnchorPane namePane;
 
     private final static String FULLPATH = "assets/Content/ContentElements/fullPageContent/";
     private final static String HALFPATH = "assets/Content/ContentElements/halfPageContent/";
+    private final static String FO_TEMPLATE = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/PageTemplateDinA4.fo";
 
 
     // Reference to the main application.
@@ -131,15 +139,29 @@ public class FullPageViewController extends AbstractController{
    }
 
    @FXML
-   public void nameYourOrganizer(){
+   public void nameYourOrganizer(ActionEvent event){
        if (nameField.getText().isEmpty()){
            nameWarn.setVisible(true);
+
        } else {
            String fileName = nameField.getText();
            mainApp.setFileName(fileName);
-           namePane.setVisible(false);
-           mainApp.startNewOrganizer();
-           mainApp.newPage();
+
+
+           DirectoryChooser dc = new DirectoryChooser();
+           File file = dc.showDialog(null);
+           if (file != null) {
+               file = new File(file.getAbsolutePath()+ "/" + fileName + ".fo");}
+           String filePath = file.getPath();
+           System.out.println(filePath);
+           if (filePath != null) {
+               namePane.setVisible(false);
+               mainApp.startNewOrganizer(fileName, FO_TEMPLATE);
+               mainApp.setFilePath(filePath);
+               mainApp.newPage();
+           } else {
+               pathWarn.setVisible(true);
+           }
        }
    }
 
@@ -193,8 +215,6 @@ public class FullPageViewController extends AbstractController{
 
    // three buttons under PageOverview
 
-  /* @FXML
-   public void previousPage() throws Exception { mainApp.goBack();}*/
 
     @FXML
     public void nextPage()throws Exception{
@@ -227,17 +247,47 @@ public class FullPageViewController extends AbstractController{
             Page fullPage = new Page(template, content1, content2, content3, content4);
             mainApp.addToOrganizer(fullPage.pageCreator());
             mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
+            System.out.println("Das Template lautet nach dem Speichern: " + template + " !");
             }
         }
 
     @FXML
     protected void exitEditor() throws Exception {
-        mainApp.showPlanerView();
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setTitle("Ungesichterter Entwurf!");
+        a.setContentText("Dein letzter Seitenentwurf ist noch nicht gespeichert, trotzdem zum fertigen Organizer gehen?");
+        ButtonType buttonTypeOne = new ButtonType("Speichern & weiter");
+        ButtonType buttonTypeTwo = new ButtonType("Entwurf verwerfen & weiter");
+
+        if (mainApp.getContent1().equals("")) {
+            mainApp.showPlanerView();//
+            mainApp.goToFirstPage();
+        } else {
+            Optional<ButtonType> result = a.showAndWait();
+            if (result.get() == buttonTypeOne) {
+                savePage();
+                mainApp.showPlanerView();//
+                mainApp.goToFirstPage();
+            } else if (result.get() == buttonTypeTwo) {
+                mainApp.showPlanerView();//
+                mainApp.goToFirstPage();
+            }
+        }
     }
 
     @FXML
     protected void backToStart() throws Exception{
-       mainApp.showStartView();
+        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
+        a.setTitle("Ungesichterter Entwurf!");
+        a.setContentText("Dein letzter Seitenentwurf ist noch nicht gespeichert, trotzdem zum Programmstart gehen?");
+        if (mainApp.getContent1().equals("")) {
+            mainApp.showStartView();
+        } else {
+            Optional<ButtonType> result = a.showAndWait();
+            if (result.get() == ButtonType.OK) {
+                mainApp.showStartView();
+            }
+        }
     }
 
     @FXML

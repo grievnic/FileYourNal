@@ -1,19 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.effect.DropShadow?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
 
 <AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.LeftViewController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" layoutX="-4.0" layoutY="10.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="170.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
       <ImageView fitHeight="125.0" fitWidth="300.0" layoutX="30.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/File.png" />
          </image></ImageView>
-      <Button fx:id="exitEditor" layoutX="128.0" layoutY="645.0" mnemonicParsing="false" onAction="#exitEditor" text="Editor verlassen" />
+      <AnchorPane fx:id="ControlPane" layoutX="14.0" layoutY="472.0" prefHeight="242.0" prefWidth="332.0" visible="false">
+         <children>
+            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="200.0" layoutX="16.0" layoutY="21.0" stroke="#c6c1c1" strokeType="INSIDE" visible="false" width="300.0">
+               <effect>
+                  <DropShadow blurType="TWO_PASS_BOX" height="12.16" radius="5.58" width="12.16">
+                     <color>
+                        <Color opacity="0.6759061813354492" />
+                     </color>
+                  </DropShadow>
+               </effect>
+            </Rectangle>
+            <Button fx:id="exitEditor" layoutX="40.0" layoutY="93.0" mnemonicParsing="false" onAction="#backToStart" prefHeight="73.0" prefWidth="252.0" text="Zurück zur Startseite">
+               <font>
+                  <Font name="Helvetica Neue" size="18.0" />
+               </font>
+            </Button>
+         </children>
+      </AnchorPane>
    </children>
 </AnchorPane>
