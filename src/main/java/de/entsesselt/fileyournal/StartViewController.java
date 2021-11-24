@@ -43,13 +43,11 @@ public class StartViewController extends AbstractController {
         //aus dem Knoten (also der Button), der das Event ausgelöst, die Stage ermitteln
         Node source = (Node) event.getSource();
         Window theStage = source.getScene().getWindow();
-        //path of the last user given directory
-        String directoryPath = mainApp.getFilePath().substring(0,mainApp.getFilePath().lastIndexOf("/")); // only path without filename
-        System.out.println(directoryPath);
         FileChooser fileChooser = new FileChooser();
         if (mainApp.getFilePath() == null) { // no user given file directory
             fileChooser.setInitialDirectory(new File(INITIAL_DIRECTORY)); // path from the app directory
         } else {//  goto user given file directory
+            String directoryPath = mainApp.getFilePath().substring(0,mainApp.getFilePath().lastIndexOf("/")); // only path without filename
             fileChooser.setInitialDirectory(new File(directoryPath));
         }
         fileChooser.getExtensionFilters().addAll(

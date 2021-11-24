@@ -2,10 +2,7 @@ package de.entsesselt.fileyournal;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -147,6 +144,8 @@ public class PlanerViewController extends AbstractController{
     @FXML
     private AnchorPane quadHalfPane;
 
+    private int pageIndex;
+
     private final static String FULLPATH = "assets/Content/ContentElements/fullPageContent/";
     private final static String HALFPATH = "assets/Content/ContentElements/halfPageContent/";
 
@@ -156,7 +155,7 @@ public class PlanerViewController extends AbstractController{
 
 
     @FXML
-    public void modifyPage(){
+    public void modifyPage() throws Exception{
 
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Änderungsmanager");
@@ -165,16 +164,24 @@ public class PlanerViewController extends AbstractController{
         ButtonType buttonTypeTwo = new ButtonType("Vor dieser Seite eine neue Seite einfügen.");
         ButtonType buttonTypeThree = new ButtonType("Nach dieser Seite eine neue Seite einfügen.");
         ButtonType buttonTypeFour = new ButtonType("Am Ende weitere Seiten hinzufügen");
+        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
 
-            Optional<ButtonType> result = a.showAndWait();
+        a.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeFour, buttonTypeCancel);
+        Optional<ButtonType> result = a.showAndWait();
 
-            if (result.get() == buttonTypeOne) {
-                mainApp.showPlanerView();//
-
-            } else if (result.get() == buttonTypeTwo) {
-                mainApp.showPlanerView();//
-                mainApp.goToFirstPage();
-            }
+        if (result.get() == buttonTypeOne) {
+            mainApp.showEditView();//
+            mainApp.goToFoPage(pageIndex);
+        } else if (result.get() == buttonTypeTwo) {
+            mainApp.showEditView();//
+            mainApp.goToFoPage(pageIndex - 1);
+        } else if (result.get() == buttonTypeThree) {
+            mainApp.showEditView();//
+            mainApp.goToFoPage(pageIndex + 1);
+        } else if (result.get() == buttonTypeFour) {
+            mainApp.showEditView();//
+            mainApp.goToFoPage(mainApp.getMaxIndex());
+        }
 
         System.out.println("Hier würde irgendwann eine Änderung passieren");
     }
@@ -292,6 +299,8 @@ public class PlanerViewController extends AbstractController{
         this.content3 = (content3);
         this.content4 = (content4);
         pageLabel.setText(String.valueOf(pageindex + 1));
+        this.pageIndex = pageindex;
+
         System.out.println("aus PlanerController loadPage(): " + content1 + content2 + content3 + content4);
         if (template.equals("fullpage")){
             mainApp.showPageTemplate("planerViewController", "fullpage");
