@@ -1,5 +1,6 @@
 package de.entsesselt.fileyournal;
 
+import de.entsesselt.fileyournal.model.Page;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -169,21 +170,25 @@ public class PlanerViewController extends AbstractController{
         a.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeFour, buttonTypeCancel);
         Optional<ButtonType> result = a.showAndWait();
 
-        if (result.get() == buttonTypeOne) {
+        if (result.get() == buttonTypeOne) { // modify current page
             mainApp.showEditView();//
             mainApp.goToFoPage(pageIndex);
-        } else if (result.get() == buttonTypeTwo) {
+        } else if (result.get() == buttonTypeTwo) { // inserts before current page
             mainApp.showEditView();//
-            mainApp.goToFoPage(pageIndex - 1);
-        } else if (result.get() == buttonTypeThree) {
+            mainApp.newPage();
+            mainApp.changePageInsertBeforeButton();
+        } else if (result.get() == buttonTypeThree) { // insert after current page
             mainApp.showEditView();//
-            mainApp.goToFoPage(pageIndex + 1);
-        } else if (result.get() == buttonTypeFour) {
+            mainApp.newPage();
+            mainApp.changePageInsertAfterButton();
+            mainApp.setPageIndex(pageIndex +1);
+        } else if (result.get() == buttonTypeFour) { // add at the end of document
             mainApp.showEditView();//
-            mainApp.goToFoPage(mainApp.getMaxIndex());
-        }
-
-        System.out.println("Hier würde irgendwann eine Änderung passieren");
+            mainApp.newPage();
+            mainApp.setAddNewPageButtonVisible();
+            /*mainApp.changePageViewSaveButtons();
+            mainApp.setPageIndex(mainApp.getMaxIndex() + 1);*/
+        }/*mainApp.setPageIndex(pageIndex);*/
     }
 
 
@@ -252,7 +257,7 @@ public class PlanerViewController extends AbstractController{
     public void nextPage()throws Exception{
         mainApp.nextPage();
     }
-   /* @FXML
+    @FXML
     public void savePage () throws Exception {
         content1 = mainApp.getContent1();
         content2 = mainApp.getContent2();
@@ -276,11 +281,11 @@ public class PlanerViewController extends AbstractController{
             a.show();
         }else { // creates a new JDOM-Page-Element and writes it into the XSL-FO tree
             Page fullPage = new Page(template, content1, content2, content3, content4);
-            mainApp.addToOrganizer(fullPage.pageCreator());
+            mainApp.modifyInOrganizer(fullPage.pageCreator());
             mainApp.newPage(); // shows a empty page and shows the template-overview at the right side
         }
 
-    }*/
+    }
 
     @FXML
     public void setPrevButton(Boolean bool){

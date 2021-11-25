@@ -167,13 +167,27 @@ public class Organizer {
     }
     
 
-    public static void addPage(Element newPage){
+    public static void addPage(Element newPage) throws Exception{
         Element root = currentOrganizer.getRootElement();
         Element pageSequence = root.getChild("page-sequence",fo);
         Element flow = pageSequence.getChild("flow", fo);
-        System.out.println("aus addPage: " + newPage);
         flow.addContent(newPage);
     }
+
+    public void addModifiedContent(int pageIndex, Element modifiedPage){
+        /*Element root = currentOrganizer.getRootElement();
+        Element pageSequence = root.getChild("page-sequence",fo);
+        Element flow = pageSequence.getChild("flow", fo);
+        System.out.println("aus addPage: " + newPage);*/
+        /*flow.addContent(newPage);*/
+        fetchPageParent().setContent(pageIndex,modifiedPage);
+    }
+
+    public void insertContent(int pageIndex, Element newPage){
+        fetchPageParent().addContent(pageIndex, newPage);
+    }
+
+
 
     public static Element fetchPageParent(){
         Element root = currentOrganizer.getRootElement();
@@ -192,6 +206,7 @@ public class Organizer {
     public void writeFO(String filePath){
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
+        System.out.println(filePath);
         try (FileOutputStream fos = new FileOutputStream(new File(filePath))) {
             XMLOutputter op = new XMLOutputter(format);
             op.output(currentOrganizer, fos);

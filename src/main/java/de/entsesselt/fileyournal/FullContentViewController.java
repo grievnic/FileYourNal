@@ -16,7 +16,9 @@ public class FullContentViewController extends AbstractController{
     @FXML
     public void selectContent(ActionEvent event) throws Exception {
         /*selectedTemplate = (Button) event.getSource();*/
-        contentName = ((Button) event.getSource()).getText();
+        contentName = ((Button) event.getSource()).getUserData().toString();
+        System.out.println("In FullContentView ist der User-Data-Content-Name: " + contentName);
+        /*contentName = ((Button) event.getSource()).getText();*/ //TODO
         loadContent(contentName);
 
     }

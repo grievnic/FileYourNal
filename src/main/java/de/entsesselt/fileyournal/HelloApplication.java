@@ -17,6 +17,7 @@ import org.jdom.filter.ElementFilter;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
@@ -40,12 +41,12 @@ public class HelloApplication extends Application {
     private String fileName;
     private String filePath;
     private int maxIndex;
-
+    private int pageIndex;
+    private int maxIdNumber;
 
 
     @FXML
     private AnchorPane pagePane;
-
 
 
     private Element currentPage;
@@ -144,11 +145,13 @@ public class HelloApplication extends Application {
 
     }
 
-    public void startNewOrganizer(String fileName, String foFilePath){
+    public void startNewOrganizer(String fileName, String foFilePath) {
         //Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
         Organizer org = new Organizer(fileName);
         this.org = org;
         org.readFO(foFilePath);
+        /*pageIndex = 0;
+        maxIndex = 0;*/
     }
 
 
@@ -157,7 +160,7 @@ public class HelloApplication extends Application {
         currentTemplate = template;
 
         System.out.println("CurrentTemplate ist : " + currentTemplate);
-        if (controller.equals("pageViewController")){
+        if (controller.equals("pageViewController")) {
             System.out.println("Bin im pageView-Zweig");
             if (currentTemplate.equals("fullpage")) {
                 pageViewController.setFullVisible();
@@ -170,7 +173,7 @@ public class HelloApplication extends Application {
             } else {
                 pageViewController.setHalfQuadVisible();
             }
-            } else {
+        } else {
 
             planerViewController.setFullVisible(false);
             planerViewController.setHalfVisible(false);
@@ -253,7 +256,7 @@ public class HelloApplication extends Application {
         }
     }
 
-    public void nameIt(){
+    public void nameIt() {
         showEditView();
     }
 
@@ -261,7 +264,7 @@ public class HelloApplication extends Application {
         leftViewController.setControlPaneVisible(bool);
     }*/
 
-    public void newPage(){ //to get a new empty pageview
+    public void newPage() { //to get a new empty pageview
         showRightView(); // template overview
         showEditView();
         pageViewController.namePaneUnvisible();
@@ -272,7 +275,40 @@ public class HelloApplication extends Application {
         content4 = "";
     }
 
-    public void addToOrganizer (Element newPage) throws Exception {
+    public void newModifiedPage() { //to get a new empty pageview
+        showRightView(); // template overview
+        showEditView();
+        pageViewController.namePaneUnvisible();
+        //empty all content
+        content1 = "";
+        content2 = "";
+        content3 = "";
+        content4 = "";
+    }
+
+   /* public void deletePage (Element pageElement){
+        currentPage.removeContent();
+    }*/
+
+    public void modifyInOrganizer(Element modifiedPage) throws Exception {
+        org.addModifiedContent(currentPage.getParent().indexOf(currentPage), modifiedPage);
+        org.writeFO(filePath);
+        org.foToPdf(filePath);
+    }
+
+    public void insertBeforeInOrganizer(Element newPage) throws Exception {
+        org.insertContent(currentPage.getParent().indexOf(currentPage), newPage);
+        org.writeFO(filePath);
+        org.foToPdf(filePath);
+    }
+
+    public void insertAfterInOrganizer(Element newPage) throws Exception {
+        org.insertContent(currentPage.getParent().indexOf(currentPage) + 1, newPage);
+        org.writeFO(filePath);
+        org.foToPdf(filePath);
+    }
+
+    public void addToOrganizer(Element newPage) throws Exception {
         org.addPage(newPage);
         currentPage = newPage;
         org.writeFO(filePath); // writes the XST-FO-Document in Organizer Class
@@ -280,16 +316,18 @@ public class HelloApplication extends Application {
     }
 
     public void goToFirstPage() throws Exception { // if user wants to scroll back to older pages
-    if (currentPage == null) return;
+        /*if (currentPage == null) return;*/
         //myElement is the <Element> element in your example
 //List implementation:
-        Element parent = (Element) currentPage.getParent();
+        /*Element parent = (Element) currentPage.getParent();*/
+        Element parent = org.fetchPageParent();
         List children = parent.getChildren();
         /*int myIndex = children.indexOf(currentPage);*/
         /*if (currentPage == children.get(children.size() - 1)) {
             currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
             getFoData();
-        } else*//* if (myIndex > 0 && myIndex < children.size())*/ { //get prevSibling
+        } else*//* if (myIndex > 0 && myIndex < children.size())*/
+        { //get prevSibling
             Element firstElement = (Element) children.get(0);
             currentPage = firstElement;
             currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", ""); // delete pagecounter to get only template-name
@@ -298,40 +336,41 @@ public class HelloApplication extends Application {
             int pageindex = children.indexOf(currentPage);
             System.out.println("Seite " + pageindex + 1);
             getFoData(currentTemplate, pageindex, maxIndex);
+            planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageindex);
         }
     }
 
-    public void loadedOrganizer() throws Exception{
+    public void loadedOrganizer() throws Exception {
         List children = org.fetchPageParent().getChildren();
         Element firstElement = (Element) children.get(0);
         currentPage = firstElement;
         currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
         System.out.println(currentTemplate);
         maxIndex = children.size() - 1;
+        pageIndex = children.indexOf(currentPage);
+        System.out.println("Seite " + pageIndex + 1);
+        getFoData(currentTemplate, pageIndex, maxIndex);
+        checkButtons(pageIndex, maxIndex);
+        planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageIndex);
+    }
+
+    public void nextPage() throws Exception { //User klickt auf nächste Seite
+        Element parent = (Element) currentPage.getParent();
+        List children = parent.getChildren();
         int pageindex = children.indexOf(currentPage);
-        System.out.println("Seite " + pageindex + 1);
+        System.out.println("pageIndex ist " + pageindex);
+        maxIndex = children.size() - 1;
+        System.out.println("Maximaler Index ist " + maxIndex);
+        Element nextElement = (Element) children.get(pageindex + 1);
+        currentPage = nextElement;
+        pageindex = children.indexOf(currentPage);
+        currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
         getFoData(currentTemplate, pageindex, maxIndex);
         checkButtons(pageindex, maxIndex);
         planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageindex);
     }
 
-      public void nextPage()throws Exception { //User klickt auf nächste Seite
-          Element parent = (Element) currentPage.getParent();
-          List children = parent.getChildren();
-          int pageindex = children.indexOf(currentPage);
-          System.out.println("pageIndex ist " + pageindex);
-          maxIndex = children.size() - 1;
-          System.out.println("Maximaler Index ist " + maxIndex);
-          Element nextElement = (Element) children.get(pageindex + 1);
-          currentPage = nextElement;
-          pageindex = children.indexOf(currentPage);
-          currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
-          getFoData(currentTemplate, pageindex, maxIndex);
-          checkButtons(pageindex, maxIndex);
-          planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageindex);
-      }
-
-    public void prevPage()throws Exception {//User klickt auf vorherige Seite
+    public void prevPage() throws Exception {//User klickt auf vorherige Seite
         Element parent = (Element) currentPage.getParent();
         List children = parent.getChildren();
         maxIndex = children.size() - 1;
@@ -345,47 +384,60 @@ public class HelloApplication extends Application {
         planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageindex);
     }
 
-    public void goToFoPage(int pageIndex)throws Exception {
+    public void goToFoPage(int pageIndex) throws Exception {
         List children = org.fetchPageParent().getChildren();
         Element pageElement = (Element) children.get(pageIndex);
         currentPage = pageElement;
         currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
         System.out.println(currentTemplate);
         maxIndex = children.size() - 1;
-       /* int pageindex = children.indexOf(currentPage);*/
+        /* int pageindex = children.indexOf(currentPage);*/
         System.out.println("Seite " + pageIndex + 1);
         getFoData(currentTemplate, pageIndex, maxIndex);
         checkButtons(pageIndex, maxIndex);
         pageViewController.loadPage(currentTemplate, content1, content2, content3, content4);
     }
 
-    public void changeSaveButton(){
+    /*public void changeSaveButton(){
         pageViewController.changeTakeButton();
-    }
+    }*/
 
-      private void getFoData(String currentTemplate, int pageindex, int maxIndex) throws Exception { // filters all graphic paths from children/descendants and assigns to its content variable
-        Iterator<Element> graphics= currentPage.getDescendants(new ElementFilter("external-graphic"));// search for the element <fo:external-graphic>
+    private void getFoData(String currentTemplate, int pageindex, int maxIndex) throws Exception { // filters all graphic paths from children/descendants and assigns to its content variable
+        Iterator<Element> graphics = currentPage.getDescendants(new ElementFilter("external-graphic"));// search for the element <fo:external-graphic>
         ArrayList<String> paths = new ArrayList<>();
         graphics.forEachRemaining((content) -> paths.add(content.getAttributeValue("src"))); //writes the source-paths into an array-list
+        if (currentTemplate.equals("fullpage")) {
+            content1 = paths.get(0).replaceFirst("^.*/", "");
+        } else if (currentTemplate.equals("half")) {
+            content1 = paths.get(0).replaceFirst("^.*/", "");
+            content2 = paths.get(1).replaceFirst("^.*/", "");
+        } else if (currentTemplate.equals("quad")) {
+            content1 = paths.get(0).replaceFirst("^.*/", "");
+            content2 = paths.get(1).replaceFirst("^.*/", "");
+            content3 = paths.get(2).replaceFirst("^.*/", "");
+            content4 = paths.get(3).replaceFirst("^.*/", "");
+        } else {
+            content1 = paths.get(0).replaceFirst("^.*/", "");
+            content2 = paths.get(1).replaceFirst("^.*/", "");
+            content3 = paths.get(2).replaceFirst("^.*/", "");
+        }
+        System.out.println("Der Content ist: " + content1 + ", " + content2 + ", " + content3 + ", " + content4);
+        System.out.println("Current Template ist: " + currentTemplate);
+        Iterator<Element> blockIterator = currentPage.getParent().getDescendants(new ElementFilter("block"));
+        ArrayList<String> fullIds = new ArrayList<>();
+        ArrayList<Integer> indexNumbers =new ArrayList<>();
+        blockIterator.forEachRemaining((iD)-> fullIds.add(iD.getAttributeValue("id")));
+        for( String element : fullIds ){
+            if (element!= null) {
+                indexNumbers.add(Integer.parseInt(element.replaceAll("[^0-9]", "")));
+            }
+        }
+        maxIdNumber = Collections.max(indexNumbers); // Um größte Zahl aller IDs zu erhalten
+        System.out.println("Die höchste Nummer ist: " + maxIdNumber); // Testausgabe
+    }
 
-              if (currentTemplate.equals("fullpage")){
-                  content1 = paths.get(0).replaceFirst("^.*/", "");
-              } else if (currentTemplate.equals("half")){
-                  content1 = paths.get(0).replaceFirst("^.*/", "");
-                  content2 = paths.get(1).replaceFirst("^.*/", "");
-              } else if (currentTemplate.equals("quad")) {
-                  content1 = paths.get(0).replaceFirst("^.*/", "");
-                  content2 = paths.get(1).replaceFirst("^.*/", "");
-                  content3 = paths.get(2).replaceFirst("^.*/", "");
-                  content4 = paths.get(3).replaceFirst("^.*/", "");
-              } else {
-                  content1 = paths.get(0).replaceFirst("^.*/", "");
-                  content2 = paths.get(1).replaceFirst("^.*/", "");
-                  content3 = paths.get(2).replaceFirst("^.*/", "");
-              }
-              System.out.println("Der Content ist: " + content1 + ", " + content2 + ", " +content3 + ", " + content4);
-              System.out.println("Current Template ist: " + currentTemplate);
-      }
+
+
 
       private void checkButtons(int pageIndex, int maxIndex){
           if (pageIndex == maxIndex ){
@@ -399,6 +451,21 @@ public class HelloApplication extends Application {
           }
       }
 
+      public void changePageViewSaveButtons(){
+          pageViewController.takeButton.setVisible(false);
+          pageViewController.takeChangeButton.setVisible(true);
+      }
+
+    public void changePageInsertBeforeButton(){
+        pageViewController.takeButton.setVisible(false);
+        pageViewController.insertBeforeButton.setVisible(true);
+    }
+
+    public void changePageInsertAfterButton(){
+        pageViewController.takeButton.setVisible(false);
+        pageViewController.insertAfterButton.setVisible(true);
+    }
+
       public void FoToPdf(){
       }
 
@@ -409,6 +476,11 @@ public class HelloApplication extends Application {
 
     public void setActiveButton(Button activeButton) {
         this.activeButton = activeButton;
+    }
+
+    public void setAddNewPageButtonVisible(){
+        pageViewController.takeButton.setVisible(false);
+        pageViewController.addNewPageButton.setVisible(true);
     }
 
     public String getContent1() {
@@ -464,6 +536,22 @@ public class HelloApplication extends Application {
 
     public int getMaxIndex() {
         return maxIndex;
+    }
+
+    public void setMaxIndex(int maxIndex) {
+        this.maxIndex = maxIndex;
+    }
+
+    public int getPageIndex() {
+        return pageIndex;
+    }
+
+    public void setPageIndex(int pageIndex) {
+        this.pageIndex = pageIndex;
+    }
+
+    public int getMaxIdNumber() {
+        return maxIdNumber;
     }
 
     public Organizer getOrg() {

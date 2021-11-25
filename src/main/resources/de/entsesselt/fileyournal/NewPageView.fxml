@@ -43,7 +43,7 @@
             </Label>
             <TextField fx:id="nameField" layoutX="104.0" layoutY="77.0" promptText="name" />
          </children></AnchorPane>
-      <Button fx:id="takeButton" disable="true" layoutX="278.0" layoutY="742.0" mnemonicParsing="false" onAction="#savePage" text="Seitenentwurf speichern" />
+      <Button fx:id="takeButton" disable="true" layoutX="278.0" layoutY="741.0" mnemonicParsing="false" onAction="#savePage" text="Seitenentwurf speichern" />
       <AnchorPane fx:id="fullPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
             <ImageView fx:id="page11" fitHeight="712.0" fitWidth="513.0" layoutX="107.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
@@ -136,6 +136,9 @@
       </AnchorPane>
       <Button fx:id="backToStart" layoutX="110.0" layoutY="742.0" mnemonicParsing="false" onAction="#backToStart" text="zur Startseite zurück" />
       <Button fx:id="goToOrganizer" layoutX="468.0" layoutY="742.0" mnemonicParsing="false" onAction="#exitEditor" text="Organizer durchblättern" />
-      <Button fx:id="takeChangeButton" disable="true" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#saveChanges" text="Änderung speichern" visible="false" />
+      <Button fx:id="takeChangeButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#saveChanges" text="Änderung speichern" visible="false" />
+      <Button fx:id="insertBeforeButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#insertNewBefore" text="Änderung einfügen" visible="false" />
+      <Button fx:id="insertAfterButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#insertNewAfter" text="Änderung einfügen" visible="false" />
+      <Button fx:id="addNewPageButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#saveNewPages" text="Seite hinzufügen" visible="false" />
    </children>
 </AnchorPane>

@@ -62,7 +62,7 @@ public class Page {
         this.content2 = content2;
         this.content3 = content3;
         this.content4 = content4;
-        currentPageNumber = ++currentPageNumber;
+
         /*mainApp.setPageID(String.valueOf(currentPageNumber))*/;
     }
 
@@ -73,6 +73,7 @@ public class Page {
 
 
     public Element pageCreator(){
+        currentPageNumber = currentPageNumber + 1;
         System.out.println("Page-Nummer: " + currentPageNumber);
         Element newPage;
     // HALF
@@ -481,6 +482,10 @@ public class Page {
         }
     }*/
 
+    public void setPageID(String pageID) {
+        this.pageID = pageID;
+    }
+
     public String getTemplateType() {
         return templateType;
     }
@@ -524,6 +529,12 @@ public class Page {
     public static int getCurrentPageNumber() {
         return currentPageNumber;
     }
+
+    public static void setCurrentPageNumber(int currentPageNumber) {
+        Page.currentPageNumber = currentPageNumber;
+    }
+
+
 
     /*public static int getCurrentPageNumber() {
         return currentPageNumber;

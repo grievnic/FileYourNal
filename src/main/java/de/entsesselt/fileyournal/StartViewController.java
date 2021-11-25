@@ -56,6 +56,8 @@ public class StartViewController extends AbstractController {
         //ausgewähltes Pic in GUI anzeigen
         if (selectedFile != null) {
             mainApp.startNewOrganizer(selectedFile.getName(), selectedFile.getAbsolutePath());
+            mainApp.setFilePath(selectedFile.getPath());
+            System.out.println(mainApp.getFilePath());
             mainApp.showPlanerView();
             mainApp.loadedOrganizer();
             System.out.println("Die gewählte Datei heißt: " + selectedFile.getName() + "und ist: " + selectedFile.getAbsolutePath() );
