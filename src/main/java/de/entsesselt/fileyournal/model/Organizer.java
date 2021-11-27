@@ -184,10 +184,13 @@ public class Organizer {
     }
 
     public void insertContent(int pageIndex, Element newPage){
+
         fetchPageParent().addContent(pageIndex, newPage);
     }
 
-
+    public void deletePage (int pageIndex) throws Exception{
+        fetchPageParent().removeContent(pageIndex);
+    }
 
     public static Element fetchPageParent(){
         Element root = currentOrganizer.getRootElement();
@@ -195,13 +198,12 @@ public class Organizer {
         Element flow = pageSequence.getChild("flow", fo);
         List pages = flow.getChildren();
         Element firstElement = (Element) pages.get(0);
-        String firstTemplate = firstElement.getAttributeValue("id").replaceFirst(".$", "");
+        /*String firstTemplate = firstElement.getAttributeValue("id").replaceAll(".$", "");*/
         int maxIndex = pages.size() - 1;
-        int pageindex = pages.indexOf(firstElement);
-        System.out.println("Seite " + pageindex + 1);
+        /*int pageindex = pages.indexOf(firstElement);*/
+        /*System.out.println("Seite " + pageindex + 1);*/
         return flow;
     } 
-  
 
     public void writeFO(String filePath){
         Format format = Format.getPrettyFormat();

@@ -259,6 +259,9 @@ public class FullPageViewController extends AbstractController{
             a.show();
         }else { // creates a new JDOM-Page-Element and writes it into the XSL-FO tree
             Page fullPage = new Page(template, content1, content2, content3, content4);
+            if (mainApp.getMaxIdNumber()!= 0){
+                fullPage.setCurrentPageNumber(mainApp.getMaxIdNumber());
+            }
             mainApp.addToOrganizer(fullPage.pageCreator());
             mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
             System.out.println("Das Template lautet nach dem Speichern: " + template + " !");
@@ -325,6 +328,8 @@ public class FullPageViewController extends AbstractController{
                 mainApp.modifyInOrganizer(fullPage.pageCreator());
                 mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
                 System.out.println("Das Template lautet nach dem Speichern: " + template + " !");
+                mainApp.showPlanerView();
+                mainApp.goToPageIndex(mainApp.getPageIndex());
             }
         }
 
@@ -357,6 +362,8 @@ public class FullPageViewController extends AbstractController{
             mainApp.insertBeforeInOrganizer(fullPage.pageCreator());
             mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
             System.out.println("Das Template lautet nach dem Speichern: " + template + " !");
+            mainApp.showPlanerView();
+            mainApp.goToPageIndex(mainApp.getPageIndex());
         }
     }
 
@@ -389,6 +396,8 @@ public class FullPageViewController extends AbstractController{
             mainApp.insertAfterInOrganizer(fullPage.pageCreator());
             mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
             System.out.println("Das Template lautet nach dem Speichern: " + template + " !");
+            mainApp.showPlanerView();
+            mainApp.goToPageIndex(mainApp.getPageIndex());
         }
     }
 
@@ -402,18 +411,18 @@ public class FullPageViewController extends AbstractController{
 
         if (mainApp.getContent1().equals("")) {
             mainApp.showPlanerView();//
-            mainApp.goToFirstPage();
+            mainApp.goToPageIndex(0);
         } else {
             Optional<ButtonType> result = a.showAndWait();
             if (result.get() == buttonTypeOne) {
                 savePage();
                 mainApp.showPlanerView();//
                 mainApp.loadedOrganizer();
-                /*mainApp.goToFirstPage();*/
+                mainApp.goToPageIndex(0);
             } else if (result.get() == buttonTypeTwo) {
                 mainApp.showPlanerView();//
                 mainApp.loadedOrganizer();
-                /*mainApp.goToFirstPage();*/
+                mainApp.goToPageIndex(0);
             }
         }
     }
@@ -548,7 +557,7 @@ public class FullPageViewController extends AbstractController{
         ImageView imageView;
         activeButton = mainApp.getActiveButton();
         if (activeButton.getText().equals("halbe Seite")) { //identifies format of the page area : landscape
-            imagePath = HALFPATH + contentName + ".png";
+            imagePath = HALFPATH + contentName;
             /*imageView = new ImageView(HALFPATH + contentName + ".png"); // Path to halfpage-Content*/
         } else {
             /*imagePath = FULLPATH + contentName + ".png"; //format of the page area : portrait*/

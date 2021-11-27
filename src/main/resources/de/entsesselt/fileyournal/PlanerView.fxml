@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -16,8 +17,9 @@
          </image>
       </ImageView>
       <Button fx:id="nextPageButton" layoutX="538.0" layoutY="742.0" mnemonicParsing="false" onAction="#nextPage" text="Seite vor" />
-      <Button fx:id="modifyPageClick" layoutX="295.0" layoutY="742.0" mnemonicParsing="false" onAction="#modifyPage" text="Änderung vornehmen" />
-      <Button fx:id="prevPageButton" disable="true" layoutX="122.0" layoutY="742.0" mnemonicParsing="false" onAction="#previousPage" text="Seite zurück" />
+      <Button fx:id="modifyPageClick" layoutX="292.0" layoutY="742.0" mnemonicParsing="false" onAction="#modifyPage" text="Änderung vornehmen" visible="false" />
+      <Button fx:id="prevPageButton" disable="true" layoutX="107.0" layoutY="742.0" mnemonicParsing="false" onAction="#previousPage" text="Seite zurück" />
+      <Label fx:id="pageLabel" layoutX="351.0" layoutY="698.0" prefHeight="17.0" prefWidth="54.0" textAlignment="CENTER" />
       <AnchorPane fx:id="fullPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
             <ImageView fx:id="full1" fitHeight="653.125" fitWidth="451.25" layoutX="129.0" layoutY="45.0" pickOnBounds="true" preserveRatio="true" />
@@ -51,6 +53,8 @@
             <ImageView fx:id="quad4" fitHeight="325.375" fitWidth="225.15" layoutX="356.0" layoutY="372.0" pickOnBounds="true" preserveRatio="true" />
          </children>
       </AnchorPane>
-      <Label fx:id="pageLabel" layoutX="357.0" layoutY="699.0" />
+      <Label fx:id="noPage" layoutX="242.0" layoutY="724.0" prefHeight="17.0" prefWidth="241.0" text="Seitenzahl nicht vorhanden!" textAlignment="CENTER" textFill="#c60000" visible="false" />
+      <TextField fx:id="goToPage" layoutX="286.0" layoutY="742.0" onAction="#goToPageNumber" prefHeight="26.0" prefWidth="93.0" promptText="gehe zu Seite" />
+      <Button fx:id="goToButton" layoutX="385.0" layoutY="742.0" mnemonicParsing="false" onAction="#goToPageNumber" text="go to" />
    </children>
 </AnchorPane>

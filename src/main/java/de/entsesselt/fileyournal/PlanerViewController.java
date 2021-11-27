@@ -10,6 +10,8 @@ import javafx.scene.layout.AnchorPane;
 
 import java.util.Optional;
 
+import static javafx.scene.text.TextAlignment.CENTER;
+
 
 public class PlanerViewController extends AbstractController{
 
@@ -22,6 +24,18 @@ public class PlanerViewController extends AbstractController{
 
     @FXML
     Label pageLabel;
+
+    @FXML
+    Label goTo;
+
+    @FXML
+    Button goToButton;
+
+    @FXML
+    TextField goToPage;
+
+    @FXML
+    Label noPage;
 
     @FXML
     Button modifyClick;
@@ -156,8 +170,9 @@ public class PlanerViewController extends AbstractController{
 
 
     @FXML
-    public void modifyPage() throws Exception{
-
+    public void modifyPage() throws Exception {
+        /* mainApp.openChangeManager();*/
+        //
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Änderungsmanager");
         a.setContentText("Was möchtest Du bearbeiten?");
@@ -181,13 +196,13 @@ public class PlanerViewController extends AbstractController{
             mainApp.showEditView();//
             mainApp.newPage();
             mainApp.changePageInsertAfterButton();
-            mainApp.setPageIndex(pageIndex +1);
+            mainApp.setPageIndex(pageIndex + 1);
         } else if (result.get() == buttonTypeFour) { // add at the end of document
             mainApp.showEditView();//
             mainApp.newPage();
             mainApp.setAddNewPageButtonVisible();
-            /*mainApp.changePageViewSaveButtons();
-            mainApp.setPageIndex(mainApp.getMaxIndex() + 1);*/
+            mainApp.changePageViewSaveButtons();
+            mainApp.setPageIndex(mainApp.getMaxIndex() + 1);
         }/*mainApp.setPageIndex(pageIndex);*/
     }
 
@@ -251,14 +266,45 @@ public class PlanerViewController extends AbstractController{
     // three buttons under PageOverview
 
     @FXML
-    public void previousPage() throws Exception { mainApp.prevPage();}
+    public void previousPage() throws Exception {
+        /*mainApp.prevPage();*/
+        mainApp.goToPageIndex(mainApp.getPageIndex() - 1);
+    }
 
     @FXML
     public void nextPage()throws Exception{
-        mainApp.nextPage();
+        /*mainApp.nextPage();*/
+        mainApp.goToPageIndex(mainApp.getPageIndex() + 1);
     }
+
     @FXML
-    public void savePage () throws Exception {
+    private void goToPageNumber() throws Exception{
+        String pagenumber = goToPage.getText();// pagenumber from user
+        if (pagenumber.isEmpty() | pagenumber.equals("0")){
+            noPage.setText("Du hast keine Seitenzahl angegeben!");
+            noPage.setVisible(true);
+        } else { // only int allowed
+            if (!pagenumber.matches("^[0-9]*$")) {
+                System.out.println("keine Buchstaben erwünscht!");
+               pagenumber = pagenumber.replaceAll("[^0-9]", "");
+                System.out.println("ohne Buchstaben: " + pagenumber);
+                goToPage.setText(pagenumber);
+            }
+            System.out.println(pagenumber);
+            int index = Integer.parseInt(pagenumber) - 1; // conversion to index
+            System.out.println("Index ist: " + index);
+            if (index <= mainApp.getMaxIndex()) {//check if index occurs
+                mainApp.goToPageIndex(index);
+                goToPage.setText("");
+                noPage.setVisible(false);
+            } else {
+                noPage.setVisible(true);
+            }
+        }
+    }
+
+    @FXML
+    public void savePage() throws Exception {
         content1 = mainApp.getContent1();
         content2 = mainApp.getContent2();
         content3 = mainApp.getContent3();
@@ -304,6 +350,7 @@ public class PlanerViewController extends AbstractController{
         this.content3 = (content3);
         this.content4 = (content4);
         pageLabel.setText(String.valueOf(pageindex + 1));
+        pageLabel.setTextAlignment(CENTER);
         this.pageIndex = pageindex;
 
         System.out.println("aus PlanerController loadPage(): " + content1 + content2 + content3 + content4);

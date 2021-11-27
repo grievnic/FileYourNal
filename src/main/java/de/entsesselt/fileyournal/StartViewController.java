@@ -60,7 +60,8 @@ public class StartViewController extends AbstractController {
             System.out.println(mainApp.getFilePath());
             mainApp.showPlanerView();
             mainApp.loadedOrganizer();
-            System.out.println("Die gewählte Datei heißt: " + selectedFile.getName() + "und ist: " + selectedFile.getAbsolutePath() );
+            System.out.println("StartView: die Max-Zahl ist: " + mainApp.getMaxIdNumber());
+            System.out.println("Die gewählte Datei heißt: " + selectedFile.getName() + " und ist: " + selectedFile.getAbsolutePath() );
         }
     }
 

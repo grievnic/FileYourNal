@@ -74,7 +74,7 @@ public class Page {
 
     public Element pageCreator(){
         currentPageNumber = currentPageNumber + 1;
-        System.out.println("Page-Nummer: " + currentPageNumber);
+        System.out.println("Aus Page - Page-Nummer: " + currentPageNumber);
         Element newPage;
     // HALF
         if (templateType.equals("half")){ // wenn der TemplateTyp "halbe/halbe Seite" ist
@@ -99,7 +99,7 @@ public class Page {
 
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
-            contentImage1.setAttribute("src",HALFPATH + content1 + ".png");
+            contentImage1.setAttribute("src",HALFPATH + content1);
             contentImage1.setAttribute("content-height", HALFHEIGHT);
             firstContent.addContent(contentImage1);
 
@@ -118,7 +118,7 @@ public class Page {
 
             Element contentImage2 = new Element("external-graphic", fo);
             contentImage2.setAttribute("alignment-adjust", "central");
-            contentImage2.setAttribute("src",HALFPATH + content2 + ".png");
+            contentImage2.setAttribute("src",HALFPATH + content2);
             contentImage2.setAttribute("content-height", HALFHEIGHT);
             secondContent.addContent(contentImage2);
     //QUAD
@@ -144,7 +144,7 @@ public class Page {
             // Inhalt für das Viertel oben links
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
-            contentImage1.setAttribute("src",FULLPATH + content1 + ".png");
+            contentImage1.setAttribute("src",FULLPATH + content1);
             contentImage1.setAttribute("content-height", HALFHEIGHT);
             firstContent.addContent(contentImage1);
 
@@ -162,7 +162,7 @@ public class Page {
             //
             Element contentImage2 = new Element("external-graphic", fo);
             contentImage2.setAttribute("alignment-adjust", "central");
-            contentImage2.setAttribute("src",FULLPATH + content2 + ".png");
+            contentImage2.setAttribute("src",FULLPATH + content2);
             contentImage2.setAttribute("content-height", HALFHEIGHT);
             secondContent.addContent(contentImage2);
 
@@ -181,7 +181,7 @@ public class Page {
             //
             Element contentImage3 = new Element("external-graphic", fo);
             contentImage3.setAttribute("alignment-adjust", "central");
-            contentImage3.setAttribute("src",FULLPATH + content3 + ".png");
+            contentImage3.setAttribute("src",FULLPATH + content3);
             contentImage3.setAttribute("content-height", HALFHEIGHT);
             thirdContent.addContent(contentImage3);
 
@@ -199,7 +199,7 @@ public class Page {
             // Inhalt für das rechte untere Viertel
             Element contentImage4 = new Element("external-graphic", fo);
             contentImage4.setAttribute("alignment-adjust", "central");
-            contentImage4.setAttribute("src",FULLPATH + content4 + ".png");
+            contentImage4.setAttribute("src",FULLPATH + content4);
             contentImage4.setAttribute("content-height", HALFHEIGHT);
             forthContent.addContent(contentImage4);
 
@@ -227,7 +227,7 @@ public class Page {
             // Content für die obere Hälfte
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
-            contentImage1.setAttribute("src",HALFPATH + content1 + ".png");
+            contentImage1.setAttribute("src",HALFPATH + content1);
             contentImage1.setAttribute("content-height", HALFHEIGHT);
             firstContent.addContent(contentImage1);
 
@@ -245,7 +245,7 @@ public class Page {
             // Content für das untere linke Viertel
             Element contentImage2 = new Element("external-graphic", fo);
             contentImage2.setAttribute("alignment-adjust", "central");
-            contentImage2.setAttribute("src",FULLPATH + content2 + ".png");
+            contentImage2.setAttribute("src",FULLPATH + content2);
             contentImage2.setAttribute("content-height", HALFHEIGHT);
             secondContent.addContent(contentImage2);
 
@@ -263,7 +263,7 @@ public class Page {
             // Content für das untere rechte Viertel
             Element contentImage3 = new Element("external-graphic", fo);
             contentImage3.setAttribute("alignment-adjust", "central");
-            contentImage3.setAttribute("src",FULLPATH + content3 + ".png");
+            contentImage3.setAttribute("src",FULLPATH + content3);
             contentImage3.setAttribute("content-height", HALFHEIGHT);
             thirdContent.addContent(contentImage3);
 
@@ -289,7 +289,7 @@ public class Page {
 
             Element contentImage1 = new Element("external-graphic", fo);
             contentImage1.setAttribute("alignment-adjust", "central");
-            contentImage1.setAttribute("src",FULLPATH + content1 + ".png");
+            contentImage1.setAttribute("src",FULLPATH + content1);
             contentImage1.setAttribute("content-height", HALFHEIGHT);
             firstContent.addContent(contentImage1);
 
@@ -307,7 +307,7 @@ public class Page {
             // Content für das rechte obere Viertel
             Element contentImage2 = new Element("external-graphic", fo);
             contentImage2.setAttribute("alignment-adjust", "central");
-            contentImage2.setAttribute("src",FULLPATH + content2 + ".png");
+            contentImage2.setAttribute("src",FULLPATH + content2);
             contentImage2.setAttribute("content-height", HALFHEIGHT);
             secondContent.addContent(contentImage2);
 
@@ -325,7 +325,7 @@ public class Page {
             // Content für die untere Hälfte
             Element contentImage3 = new Element("external-graphic", fo);
             contentImage3.setAttribute("alignment-adjust", "central");
-            contentImage3.setAttribute("src",HALFPATH + content3 + ".png");
+            contentImage3.setAttribute("src",HALFPATH + content3);
             contentImage3.setAttribute("content-height", HALFHEIGHT);
             thirdContent.addContent(contentImage3);
 
@@ -352,13 +352,15 @@ public class Page {
             // erster und einziger Content
             Element contentImage1 = new Element("external-graphic", fo);
             /*contentImage1.setAttribute("alignment-adjust", "central");*/
-            contentImage1.setAttribute("src",FULLPATH + content1 + ".png");
+            contentImage1.setAttribute("src",FULLPATH + content1);
             /*contentImage1.setAttribute("src","/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Blocks/5ColumnSystem.png");
 */
             contentImage1.setAttribute("content-height", FULLHEIGHT);
             firstContent.addContent(contentImage1);
             System.out.println("pageCreator BEGIN: " + content1 + content2 + content3 + content4);
+            System.out.println("Die neue PageId lautet: " + pageID);
         } return newPage;
+
     }
 
 
