@@ -14,9 +14,9 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="170.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
-      <ImageView fx:id="pdfButtonView" fitHeight="125.0" fitWidth="300.0" layoutX="30.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pdfButtonView" fitHeight="147.0" fitWidth="346.0" layoutX="39.0" layoutY="12.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../assets/File.png" />
+            <Image url="@../../../assets/FileYournal.png" />
          </image></ImageView>
       <Button fx:id="exitEditor" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" onAction="#backToStart" prefHeight="73.0" prefWidth="300.0" text="  Zurück zur Startseite" visible="false">
          <font>

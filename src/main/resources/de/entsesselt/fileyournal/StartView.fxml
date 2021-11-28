@@ -30,7 +30,7 @@
       </Button>
       <ImageView fx:id="loadOrganizerImageView" fitHeight="54.0" fitWidth="54.0" layoutX="256.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@../../../assets/loadPlaner.png" />
+            <Image url="@../../../assets/LoadPlaner2.png" />
          </image>
       </ImageView>
    </children>

@@ -1,6 +1,7 @@
 package de.entsesselt.fileyournal;
 
 import de.entsesselt.fileyournal.model.Organizer;
+import de.entsesselt.fileyournal.model.Page;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -68,6 +69,7 @@ public class HelloApplication extends Application {
         initRootLayout();
         showLeftView();
         showStartView();
+        System.out.println("Die MaxID-Nummer lautet zum Programmstart: " + maxIdNumber);
     }
 
     /**
@@ -102,6 +104,7 @@ public class HelloApplication extends Application {
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(startView);
+            changeRightView("EmptyRightView.fxml");
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -336,45 +339,42 @@ public class HelloApplication extends Application {
     }
 
     public void goToPageIndex(int indexnumber) throws Exception { // if user wants to scroll back to older pages
-        /*if (currentPage == null) return;*/
-        //myElement is the <Element> element in your example
-//List implementation:
-        /*Element parent = (Element) currentPage.getParent();*/
         Element parent = org.fetchPageParent();
         List children = parent.getChildren();
-        /*int myIndex = children.indexOf(currentPage);*/
-        /*if (currentPage == children.get(children.size() - 1)) {
-            currentTemplate = currentPage.getAttributeValue("id").replaceFirst(".$", "");
-            getFoData();
-        } else*//* if (myIndex > 0 && myIndex < children.size())*/
-        { //get prevSibling
-            pageIndex = indexnumber;
-            currentPage = (Element) children.get(pageIndex);
-            currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", ""); // delete pagecounter to get only template-name
-            System.out.println(currentTemplate);
-            maxIndex = children.size() - 1;
-            /*pageIndex = children.indexOf(currentPage);*/
-            System.out.println("aktueller Index: " + pageIndex + " und maxIndex lautet: " + maxIndex);
-            System.out.println("aktuelle Seite " + pageIndex + 1);
-            getFoData(currentTemplate, pageIndex, maxIndex);
-            checkButtons(pageIndex, maxIndex);
-            planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageIndex);
-        }
-    }
-
-    public void loadedOrganizer() throws Exception {
-        List children = org.fetchPageParent().getChildren();
-        Element firstElement = (Element) children.get(0);
-        currentPage = firstElement;
-        currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", "");
+        pageIndex = indexnumber;
+        currentPage = (Element) children.get(pageIndex);
+        currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", ""); // delete pagecounter to get only template-name
         System.out.println(currentTemplate);
         maxIndex = children.size() - 1;
-        pageIndex = children.indexOf(currentPage);
-        System.out.println("Seite " + pageIndex + 1);
+        /*pageIndex = children.indexOf(currentPage);*/
+        System.out.println("aktueller Index: " + pageIndex + " und maxIndex lautet: " + maxIndex);
+        System.out.println("aktuelle Seite " + pageIndex + 1);
         getFoData(currentTemplate, pageIndex, maxIndex);
         checkButtons(pageIndex, maxIndex);
         planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageIndex);
+
     }
+
+    /**
+     * Getting the first Page und the information, to show it in the GUI
+     * @throws Exception
+     */
+    public void loadedOrganizer() throws Exception {
+        List children = org.fetchPageParent().getChildren();
+        Element firstElement = (Element) children.get(0); //
+        currentPage = firstElement;
+        // filters the template type out of the id
+        currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", "");
+        maxIndex = children.size() - 1;// important value for controlling the buttons "Seite zurück" and "Seite vor"
+        pageIndex = children.indexOf(currentPage); // index from currently shown page
+        getFoData(currentTemplate, pageIndex, maxIndex); // fetches the content for the current page
+        checkButtons(pageIndex, maxIndex); // (dis)ables the buttons "Seite zurück" and "Seite vor" depending on the indexes
+        // sending all page information to the gui
+        planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageIndex);
+        // important to ensure the explicitness of the ID, when modifying the organizer
+        Page.setCurrentPageNumber(maxIdNumber);
+    }
+
 
     public void nextPage() throws Exception { //User klickt auf nächste Seite
         Element parent = (Element) currentPage.getParent();
@@ -444,8 +444,6 @@ public class HelloApplication extends Application {
             content2 = paths.get(1).replaceFirst("^.*/", "");
             content3 = paths.get(2).replaceFirst("^.*/", "");
         }
-        System.out.println("Get FO-Data: Der Content ist: " + content1 + ", " + content2 + ", " + content3 + ", " + content4);
-        System.out.println("Get FO-Data: Current Template ist: " + currentTemplate);
         Iterator<Element> blockIterator = currentPage.getParent().getDescendants(new ElementFilter("block"));
         ArrayList<String> fullIds = new ArrayList<>();
         ArrayList<Integer> indexNumbers =new ArrayList<>();
@@ -455,8 +453,7 @@ public class HelloApplication extends Application {
                 indexNumbers.add(Integer.parseInt(element.replaceAll("[^0-9]", "")));
             }
         }
-        maxIdNumber = Collections.max(indexNumbers); // Um größte Zahl aller IDs zu erhalten
-        System.out.println("Die höchste Nummer ist: " + maxIdNumber); // Testausgabe
+        maxIdNumber = Collections.max(indexNumbers); // to get the highest number of the IDs
     }
 
       private void checkButtons(int pageIndex, int maxIndex){
@@ -620,9 +617,5 @@ public class HelloApplication extends Application {
 
     public static void main(String[] args) {
         launch();
-    }
-
-    public void showExportFeedback() {
-
     }
 }

@@ -100,9 +100,8 @@ public class LeftViewController extends AbstractController {
         File filename = fileChooser.showSaveDialog(theStage);
         System.out.println("Der Filename lautet: " + filename);
         mainApp.foToPdf(filename.getPath());
-        mainApp.showExportFeedback();
-        delay(3000);
-        backToStart();
+        delay(2000);
+        mainApp.showStartView();
     }
 
     private static void delay(int t){

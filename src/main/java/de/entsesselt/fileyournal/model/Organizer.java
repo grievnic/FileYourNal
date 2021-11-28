@@ -148,15 +148,18 @@ public class Organizer {
         organizername = name;
     }
 
+    /**
+     * This method reads the XSL-FO-File (from path) and saves a JDOM-tree in variable currentOrganizer
+     * @param foPath
+     */
     public void readFO(String foPath) {
         try {
             // Create a DocumentBuilder
             SAXBuilder saxBuilder = new SAXBuilder();
             // Create a Document from a file or stream
             File inputFile = new File("input.txt");
+            // saves the tree-data in variable
             currentOrganizer = saxBuilder.build(foPath);
-            System.out.println("Root element :" + currentOrganizer.getRootElement().getName());
-            System.out.println("----------------------------");
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -193,18 +196,17 @@ public class Organizer {
         fetchPageParent().removeContent(pageIndex);
     }
 
+    /**
+     * This method finds the <fo: flow>-Element, as Parent from all <fo:block>-Elements representing pages (and content)
+     * @return flow
+     */
     public static Element fetchPageParent(){
         Element root = currentOrganizer.getRootElement();
         Element pageSequence = root.getChild("page-sequence",fo);
         Element flow = pageSequence.getChild("flow", fo);
         List pages = flow.getChildren();
-        Element firstElement = (Element) pages.get(0);
-        /*String firstTemplate = firstElement.getAttributeValue("id").replaceAll(".$", "");*/
-        int maxIndex = pages.size() - 1;
-        /*int pageindex = pages.indexOf(firstElement);*/
-        /*System.out.println("Seite " + pageindex + 1);*/
         return flow;
-    } 
+    }
 
     public void writeFO(String filePath){
         Format format = Format.getPrettyFormat();
@@ -217,13 +219,6 @@ public class Organizer {
             e.printStackTrace();
         }
     }
-
-        public static void createOrganizer(Organizer org) {
-            /*Document doc = org.createDoc("root");*/
-            /*org.createDocTemplate(doc);*/
-
-    }
-
 
 
     public void foToPdf(String filePath, String targetPath) throws Exception {

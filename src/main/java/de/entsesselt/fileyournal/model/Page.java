@@ -62,25 +62,20 @@ public class Page {
         this.content2 = content2;
         this.content3 = content3;
         this.content4 = content4;
-
-        /*mainApp.setPageID(String.valueOf(currentPageNumber))*/;
     }
 
-    // sollte mit einem  zu ladenden XML-Template gearbeitet werden
-    /*public void addPageTemplate(String templateType) {
-        templateFilename = templateType + ".xml";
-    }*/
-
-
+    /**
+     * This method creates the <fo:block>- Element per JDOM based on the data from template & content
+     * @return newPage - <fo:block>- Element for the whole page
+     */
     public Element pageCreator(){
-        currentPageNumber = currentPageNumber + 1;
-        System.out.println("Aus Page - Page-Nummer: " + currentPageNumber);
+        currentPageNumber++; // pagecounter for an unique id made up of templatename and pagenumber
         Element newPage;
     // HALF
-        if (templateType.equals("half")){ // wenn der TemplateTyp "halbe/halbe Seite" ist
-            // <fo:block> inkl. Seitenumbruch für eine neue Seite
+        if (templateType.equals("half")){ // if template type is half
+            // creating a <fo:block> incl. page break
             newPage = new Element("block", fo);
-            newPage.setAttribute("page-break-before", "always"); //Seitenumbruch
+            newPage.setAttribute("page-break-before", "always"); //page brake
             pageID = "half" + currentPageNumber;
             newPage.setAttribute("id",pageID);
 
@@ -359,7 +354,8 @@ public class Page {
             firstContent.addContent(contentImage1);
             System.out.println("pageCreator BEGIN: " + content1 + content2 + content3 + content4);
             System.out.println("Die neue PageId lautet: " + pageID);
-        } return newPage;
+        }
+        return newPage;
 
     }
 
