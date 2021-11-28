@@ -16,6 +16,7 @@ import org.jdom.filter.ElementFilter;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -38,6 +39,7 @@ public class HelloApplication extends Application {
     private FullPageViewController pageViewController;
     private PlanerViewController planerViewController;
     private LeftViewController leftViewController;
+    private RightViewController rightViewController;
     private String fileName;
     private String filePath;
     private int maxIndex = 0;
@@ -49,6 +51,8 @@ public class HelloApplication extends Application {
     private AnchorPane pagePane;
 
 
+    private File selectedFile = null;
+    private static final String INITIAL_DIRECTORY = Paths.get(".").toAbsolutePath().normalize().toString();
     private Element currentPage;
     private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/OrganizerTEST.fo";
     private final static File FILE = new File(FILENAME);
@@ -62,9 +66,8 @@ public class HelloApplication extends Application {
 
         // initiales Laden der GUI
         initRootLayout();
-        showStartView();
         showLeftView();
-
+        showStartView();
     }
 
     /**
@@ -119,6 +122,7 @@ public class HelloApplication extends Application {
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(pagePane);
+            leftViewController.showBackToStartButton();
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -139,11 +143,14 @@ public class HelloApplication extends Application {
             // Set person overview into the center of root layout.
             rootLayout.setCenter(fullPane);
             leftViewController.setModifyPaneVisible();
+            leftViewController.showPdfExportButton();
+            leftViewController.showBackToStartButton();
+            changeRightView("EmptyRightView.fxml");
+
 
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
     public void startNewOrganizer(String fileName, String foFilePath) {
@@ -228,8 +235,8 @@ public class HelloApplication extends Application {
             rootLayout.setRight(templatesView);
             // Give the controller access to the main app.
             if (loader.getController() instanceof AbstractController) {
-                AbstractController controller = loader.getController();
-                controller.setMainApp(this);
+                rightViewController = loader.getController();
+                rightViewController.setMainApp(this);
             }
 
         } catch (IOException e) {
@@ -299,7 +306,6 @@ public class HelloApplication extends Application {
     public void modifyInOrganizer(Element modifiedPage) throws Exception {
         org.addModifiedContent(currentPage.getParent().indexOf(currentPage), modifiedPage);
         org.writeFO(filePath);
-        org.foToPdf(filePath);
     }
 
     public void insertBeforeInOrganizer(Element newPage) throws Exception {
@@ -307,7 +313,6 @@ public class HelloApplication extends Application {
         /*org.insertContent(currentPage.getParent().indexOf(currentPage), newPage);*/
         org.insertContent(currentPage.getParent().indexOf(currentPage) - 1, newPage);
         org.writeFO(filePath);
-        org.foToPdf(filePath);
     }
 
     public void insertAfterInOrganizer(Element newPage) throws Exception {
@@ -315,20 +320,19 @@ public class HelloApplication extends Application {
         /*org.insertContent(currentPage.getParent().indexOf(currentPage) + 1, newPage);*/
         org.insertContent(currentPage.getParent().indexOf(currentPage) + 1, newPage);
         org.writeFO(filePath);
-        org.foToPdf(filePath);
     }
 
     public void addToOrganizer(Element newPage) throws Exception {
         org.addPage(newPage);
         currentPage = newPage;
         org.writeFO(filePath); // writes the XST-FO-Document in Organizer Class
-        org.foToPdf(filePath); // creates the PDF-Document in Organizer Class
     }
 
     public void deleteFromOrganizer() throws Exception{
         int index = currentPage.getParent().indexOf(currentPage);
     org.deletePage(index);
     goToPageIndex(0);
+        org.writeFO(filePath); // writes the XST-FO-Document in Organizer Class
     }
 
     public void goToPageIndex(int indexnumber) throws Exception { // if user wants to scroll back to older pages
@@ -467,7 +471,11 @@ public class HelloApplication extends Application {
           }
       }
 
-      public void SetNamePane(){
+      public void setPdfButtonVisible(){
+          leftViewController.showPdfExportButton();
+      }
+
+      public void setNamePane(){
         pageViewController.namePaneUnvisible();
       }
 
@@ -489,8 +497,14 @@ public class HelloApplication extends Application {
         System.out.println("InsertAfterGesetzt");
     }
 
-      public void FoToPdf(){
+      public void foToPdf(String targetPath) throws Exception {
+          org.foToPdf(filePath, targetPath);
+          System.out.println("Die FO ist :" + filePath + " und die Zieldatei lautet: " + targetPath);
+/*
+          rightViewController.pdfFeedback(filePath);
+*/
       }
+
 
       // Getter & Setter
 
@@ -608,4 +622,7 @@ public class HelloApplication extends Application {
         launch();
     }
 
+    public void showExportFeedback() {
+
+    }
 }

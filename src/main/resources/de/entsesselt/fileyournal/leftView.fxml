@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.Label?>
-<?import javafx.scene.effect.DropShadow?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.paint.Color?>
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
@@ -14,66 +14,54 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="170.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
-      <ImageView fitHeight="125.0" fitWidth="300.0" layoutX="30.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="pdfButtonView" fitHeight="125.0" fitWidth="300.0" layoutX="30.0" layoutY="25.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/File.png" />
          </image></ImageView>
-      <AnchorPane fx:id="ControlPane" layoutX="14.0" layoutY="472.0" prefHeight="242.0" prefWidth="332.0" visible="false">
+      <Button fx:id="exitEditor" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" onAction="#backToStart" prefHeight="73.0" prefWidth="300.0" text="  Zurück zur Startseite" visible="false">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="backToStartButtonView" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" visible="false">
+         <image>
+            <Image url="@../../../assets/BackToStart.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="pdfButton" disable="true" layoutX="30.0" layoutY="633.0" mnemonicParsing="false" onAction="#exportToPdf" prefHeight="73.0" prefWidth="300.0" text="Export als PDF">
+         <font>
+            <Font size="18.0" />
+         </font>
+      </Button>
+      <ImageView fx:id="pdfButtonView" disable="true" fitHeight="72.0" fitWidth="60.0" layoutX="40.0" layoutY="640.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/PDFexport.png" />
+         </image>
+      </ImageView>
+      <AnchorPane fx:id="modifyPane" layoutX="14.0" layoutY="267.0" prefHeight="250.0" prefWidth="332.0" visible="false">
          <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="200.0" layoutX="16.0" layoutY="21.0" stroke="#c6c1c1" strokeType="INSIDE" visible="false" width="300.0">
-               <effect>
-                  <DropShadow blurType="TWO_PASS_BOX" height="12.16" radius="5.58" width="12.16">
-                     <color>
-                        <Color opacity="0.6759061813354492" />
-                     </color>
-                  </DropShadow>
-               </effect>
-            </Rectangle>
-            <Button fx:id="exitEditor" layoutX="40.0" layoutY="93.0" mnemonicParsing="false" onAction="#backToStart" prefHeight="73.0" prefWidth="252.0" text="Zurück zur Startseite">
+            <MenuButton fx:id="changeManagement" layoutX="16.0" layoutY="14.0" mnemonicParsing="false" prefHeight="26.0" prefWidth="300.0" text="Änderungsmanager" textAlignment="CENTER">
+              <items>
+                <MenuItem id="menuItemModify" fx:id="modifyCurrentItem" mnemonicParsing="false" onAction="#modifyCurrentPage" text="aktuelle Seite ändern" />
+                <MenuItem id="menuItemDelete" fx:id="deleteCurrentItem" mnemonicParsing="false" onAction="#deleteCurrentPage" text="aktuelle Seite löschen" />
+                  <MenuItem id="menuItemInsertBefore" fx:id="insertBeforeItem" mnemonicParsing="false" onAction="#insertBeforeCurrent" text="Seite einfügen (vor dieser)" />
+                  <MenuItem id="menuItemInsertAfter" fx:id="insertAfterItem" mnemonicParsing="false" onAction="#insertAfterCurrent" text="Seite einfügen (nach dieser)" />
+                  <MenuItem id="menuItemAddPages" fx:id="addAtEndItem" mnemonicParsing="false" onAction="#addAtEnd" text="hinten Seite hinzufügen" />
+              </items>
                <font>
-                  <Font name="Helvetica Neue" size="18.0" />
+                  <Font size="18.0" />
                </font>
-            </Button>
-         </children>
-      </AnchorPane>
-      <AnchorPane fx:id="modifyPane" layoutX="14.0" layoutY="235.0" prefHeight="520.0" prefWidth="332.0" visible="false">
-         <children>
-            <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="462.0" layoutX="16.0" layoutY="21.0" stroke="#c6c1c1" strokeType="INSIDE" width="300.0" />
-            <Button fx:id="deleteCurrentButton" layoutX="40.0" layoutY="260.0" mnemonicParsing="false" onAction="#deleteCurrentPage" prefHeight="37.0" prefWidth="252.0" text="aktuelle Seite löschen" textFill="#47464a">
-               <font>
-                  <Font name="Helvetica Neue" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="insertBeforeButton" layoutX="40.0" layoutY="307.0" mnemonicParsing="false" onAction="#insertBeforeCurrent" prefHeight="37.0" prefWidth="252.0" text="Seite einfügen (vor dieser)" textFill="#47464a">
-               <font>
-                  <Font name="Helvetica Neue" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="insertAfterButton" layoutX="40.0" layoutY="354.0" mnemonicParsing="false" onAction="#insertAfterCurrent" prefHeight="37.0" prefWidth="252.0" text="Seite einfügen (nach dieser)" textFill="#47464a">
-               <font>
-                  <Font name="Helvetica Neue" size="18.0" />
-               </font>
-            </Button>
-            <Button fx:id="addPagesButton" layoutX="40.0" layoutY="401.0" mnemonicParsing="false" onAction="#addAtEnd" prefHeight="37.0" prefWidth="252.0" text="hinten Seiten hinzufügen" textFill="#47464a">
-               <font>
-                  <Font name="Helvetica Neue" size="18.0" />
-               </font>
-            </Button>
-            <Label layoutX="58.0" layoutY="44.0" text="Änderungsmanager" textFill="#47464a">
-               <font>
-                  <Font size="26.0" />
-               </font>
-            </Label>
-            <Label layoutX="40.0" layoutY="75.0" prefHeight="128.0" prefWidth="252.0" text="Wähle bitte aus, welche Art von Änderung Du vornehmen möchtest:" textAlignment="CENTER" wrapText="true">
-               <font>
-                  <Font size="14.0" />
-               </font>
-            </Label>
-            <Button fx:id="modifyCurrentButton" layoutX="40.0" layoutY="213.0" mnemonicParsing="false" onAction="#modifyCurrentPage" prefHeight="37.0" prefWidth="252.0" text="aktuelle Seite ändern" textFill="#47464a">
-               <font>
-                  <Font name="Helvetica Neue" size="18.0" />
-               </font>
-            </Button>
+               <graphic>
+                  <ImageView fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../../assets/Aenderungen.png" />
+                     </image>
+                     <viewport>
+                        <Rectangle2D />
+                     </viewport>
+                  </ImageView>
+               </graphic>
+            </MenuButton>
          </children>
       </AnchorPane>
    </children>

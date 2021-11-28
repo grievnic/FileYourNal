@@ -11,7 +11,7 @@
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="810.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="170.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
-      <AnchorPane fx:id="pageAreaTemplatePane" prefHeight="800.0" prefWidth="360.0" visible="false">
+      <AnchorPane fx:id="pageAreaTemplatePane" prefHeight="800.0" prefWidth="360.0">
          <children>
             <Text fx:id="areaComment" fill="#4a4647" layoutX="47.0" layoutY="73.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Wähle auf der aktuellen Seite den Bereich aus, den Du bearbeiten möchtest!!" textAlignment="CENTER" wrappingWidth="266.6631774902344">
                <font>

@@ -13,15 +13,25 @@
             <Image url="@../../../assets/Organizer.png" />
          </image>
       </ImageView>
-      <Button fx:id="newPlaner" layoutX="291.0" layoutY="344.0" mnemonicParsing="false" onAction="#startNewPlanerClick" prefHeight="49.0" prefWidth="203.0" text="neuen Planer erstellen">
+      <Button fx:id="newOrganizerButton" layoutX="246.0" layoutY="253.0" mnemonicParsing="false" onAction="#startNewPlanerClick" prefHeight="73.0" prefWidth="300.0" text="Organizer erstellen">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <Button fx:id="loadPlaner" layoutX="291.0" layoutY="414.0" mnemonicParsing="false" onAction="#loadFoFromFile" prefHeight="49.0" prefWidth="203.0" text="Planer laden">
+      <ImageView fx:id="newPlanerImageView" fitHeight="60.0" fitWidth="60.0" layoutX="256.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/newPlaner.png" />
+         </image>
+      </ImageView>
+      <Button fx:id="loadOrganizerButton" layoutX="246.0" layoutY="333.0" mnemonicParsing="false" onAction="#loadFoFromFile" prefHeight="73.0" prefWidth="300.0" text="Organizer laden">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
+      <ImageView fx:id="loadOrganizerImageView" fitHeight="54.0" fitWidth="54.0" layoutX="256.0" layoutY="340.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@../../../assets/loadPlaner.png" />
+         </image>
+      </ImageView>
    </children>
 </AnchorPane>

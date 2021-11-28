@@ -162,6 +162,7 @@ public class Organizer {
         }
     }
 
+
     public Document getCurrentOrganizer() {
         return currentOrganizer;
     }
@@ -225,7 +226,7 @@ public class Organizer {
 
 
 
-    public void foToPdf(String filePath) throws Exception {
+    public void foToPdf(String filePath, String targetPath) throws Exception {
         String pdfPath = filePath.substring(0,filePath.lastIndexOf("."));
 
         /*org.writeFO(currentOrganizer);*/
@@ -235,7 +236,7 @@ public class Organizer {
 
 // Step 2: Set up output stream.
 // Note: Using BufferedOutputStream for performance reasons (helpful with FileOutputStreams).
-        OutputStream pdfOut = new BufferedOutputStream(new FileOutputStream(new File(pdfPath +".pdf")));
+        OutputStream pdfOut = new BufferedOutputStream(new FileOutputStream(new File(targetPath)));
 
         try {
             // Step 3: Construct fop with desired output format

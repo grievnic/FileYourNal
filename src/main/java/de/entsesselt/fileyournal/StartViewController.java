@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 public class StartViewController extends AbstractController {
     @FXML
-    Button newPlaner;
+    Button newOrganizerButton;
 
     @FXML
     ImageView planer;
@@ -22,7 +22,6 @@ public class StartViewController extends AbstractController {
     ImageView page;
 
     private File selectedFile = null;
-
     private static final String INITIAL_DIRECTORY = Paths.get(".").toAbsolutePath().normalize().toString();
 
 
@@ -32,13 +31,12 @@ public class StartViewController extends AbstractController {
     @FXML
     protected void startNewPlanerClick() throws Exception {
         mainApp.nameIt();
-            newPlaner.setVisible(false);
-            planer.setVisible(false);
-
+        /*newOrganizerButton.setVisible(false);
+        planer.setVisible(false);*/
     }
 
 
-
+    @FXML
     public void loadFoFromFile(ActionEvent event) throws Exception{
         //aus dem Knoten (also der Button), der das Event ausgelöst, die Stage ermitteln
         Node source = (Node) event.getSource();
@@ -57,6 +55,7 @@ public class StartViewController extends AbstractController {
         if (selectedFile != null) {
             mainApp.startNewOrganizer(selectedFile.getName(), selectedFile.getAbsolutePath());
             mainApp.setFilePath(selectedFile.getPath());
+            mainApp.setFileName(selectedFile.getName());
             System.out.println(mainApp.getFilePath());
             mainApp.showPlanerView();
             mainApp.loadedOrganizer();

@@ -227,8 +227,8 @@ public class FullPageViewController extends AbstractController{
         mainApp.changeRightView("HalfContentView.fxml");
     }
 
-   // three buttons under PageOverview
 
+   // three buttons under PageOverview
 
     @FXML
     public void nextPage()throws Exception{
@@ -265,6 +265,7 @@ public class FullPageViewController extends AbstractController{
             mainApp.addToOrganizer(fullPage.pageCreator());
             mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
             System.out.println("Das Template lautet nach dem Speichern: " + template + " !");
+            mainApp.setPdfButtonVisible();
             }
         }
 
@@ -404,10 +405,13 @@ public class FullPageViewController extends AbstractController{
     @FXML
     protected void exitEditor() throws Exception {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-        a.setTitle("Ungesichterter Entwurf!");
-        a.setContentText("Dein letzter Seitenentwurf ist noch nicht gespeichert, trotzdem zum fertigen Organizer gehen?");
+        a.setTitle("Möglicher Datenverlust");
+        a.setContentText("Ist Dein letzter Seitenentwurf gespeichert?");
         ButtonType buttonTypeOne = new ButtonType("Speichern & weiter");
         ButtonType buttonTypeTwo = new ButtonType("Entwurf verwerfen & weiter");
+        ButtonType buttonTypeCancel = new ButtonType("abbrechen");
+
+        a.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
 
         if (mainApp.getContent1().equals("")) {
             mainApp.showPlanerView();//
@@ -498,7 +502,7 @@ public class FullPageViewController extends AbstractController{
            imageView2.setPreserveRatio(true);
            quadButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
            // sets the content in the left bottom quarter
-           quadButton3.setGraphic(imageView2);
+           quadButton3.setGraphic(imageView3);
            imageView3.fitWidthProperty().bind(quadButton3.widthProperty());
            imageView3.setPreserveRatio(true);
            quadButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);

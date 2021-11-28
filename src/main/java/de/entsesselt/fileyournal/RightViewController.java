@@ -1,12 +1,35 @@
 package de.entsesselt.fileyournal;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
 
 public class RightViewController extends AbstractController {
+
+    @FXML
+    AnchorPane pageAreaTemplatePane;
+
+    @FXML
+    Label pdfPathLabel;
+
+    @FXML
+    Text pdfFeedbackText;
+
+    @FXML
+    AnchorPane templateViewPane;
+
+    @FXML
+
 
     String template = "";
     // Reference to the main application.
     /*private HelloApplication mainApp;*/
+
+    /*@FXML*/
+    /*public void showTemplateView(){
+        templateViewPane.setVisible();
+    }*/
 
     //shows the QuadQuad-Page-View in the Center of the GUI and takes the template-Selection away
     @FXML
@@ -49,8 +72,22 @@ public class RightViewController extends AbstractController {
         template = "halfQuad";
         sendTemplate();
         emptyRightView();
-
     }
+
+    public void hidePageAreaTemplatePane(){
+        mainApp.showRightView();
+        pageAreaTemplatePane.setVisible(false);
+    }
+
+    @FXML
+    public void emptyIt(){
+        pageAreaTemplatePane.setVisible(false);
+    }
+
+    /*public void pdfFeedback(String path){
+        *//*pdfFeedbackText.setVisible(true);
+        pdfPathLabel.setText(path);*//*
+    }*/
 
     private void sendTemplate(){
         mainApp.setCurrentTemplate(template);
@@ -63,6 +100,7 @@ public class RightViewController extends AbstractController {
 
     public void showTemplateView(){
         mainApp.showRightView();
+        emptyIt();
     }
     /**
      * Is called by the main application to give a reference back to itself.
