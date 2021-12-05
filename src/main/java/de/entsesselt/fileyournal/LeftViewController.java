@@ -15,13 +15,13 @@ import java.util.Optional;
 
 public class LeftViewController extends AbstractController {
 
-    @FXML
-    private AnchorPane ControlPane;
+   /* @FXML
+    private AnchorPane ControlPane;*/
 
     @FXML
     private AnchorPane modifyPane;
 
-    @FXML
+   /* @FXML
     private Button modifyCurrentButton;
 
     @FXML
@@ -52,7 +52,7 @@ public class LeftViewController extends AbstractController {
     private MenuItem insertAfterItem;
 
     @FXML
-    private MenuItem addAtEndItem;
+    private MenuItem addAtEndItem;*/
 
     @FXML
     private Button exitEditor;
@@ -66,7 +66,7 @@ public class LeftViewController extends AbstractController {
     @FXML
     private ImageView pdfButtonView;
 
-    @FXML
+   /* @FXML
     private Button loadOrganizerButton;
 
     @FXML
@@ -76,7 +76,7 @@ public class LeftViewController extends AbstractController {
     private Button newOrganizerButton;
 
     @FXML
-    private ImageView newPlanerImageView;
+    private ImageView newPlanerImageView;*/
 
 
     // Menu Buttons
@@ -100,6 +100,7 @@ public class LeftViewController extends AbstractController {
         File filename = fileChooser.showSaveDialog(theStage);
         System.out.println("Der Filename lautet: " + filename);
         mainApp.foToPdf(filename.getPath());
+        pdfFeedback();
         delay(2000);
         mainApp.showStartView();
     }
@@ -110,8 +111,11 @@ public class LeftViewController extends AbstractController {
             // abwarten und Tee trinken
         }
     }
-    public void pdfFeedback(String filepath){
-
+    public void pdfFeedback(){
+        Alert a = new Alert(Alert.AlertType.NONE);
+        a.setAlertType(Alert.AlertType.INFORMATION);
+        a.setContentText("Deine PDF wurde exportiert!");
+        a.show();
     }
 
 
@@ -149,8 +153,8 @@ public class LeftViewController extends AbstractController {
     // modification manager
 
     @FXML
-    public void setModifyPaneVisible(){
-        modifyPane.setVisible(true);
+    public void setModifyPaneVisible(Boolean bool){
+        modifyPane.setVisible(bool);
     }
 
     @FXML

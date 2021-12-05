@@ -24,17 +24,13 @@ public class StartViewController extends AbstractController {
     private File selectedFile = null;
     private static final String INITIAL_DIRECTORY = Paths.get(".").toAbsolutePath().normalize().toString();
 
-
     // Reference to the main application.
     /*private HelloApplication mainApp;*/
 
     @FXML
     protected void startNewPlanerClick() throws Exception {
-        mainApp.nameIt();
-        /*newOrganizerButton.setVisible(false);
-        planer.setVisible(false);*/
+        mainApp.showEditView();
     }
-
 
     @FXML
     public void loadFoFromFile(ActionEvent event) throws Exception{
@@ -59,8 +55,6 @@ public class StartViewController extends AbstractController {
             System.out.println(mainApp.getFilePath());
             mainApp.showPlanerView();
             mainApp.loadedOrganizer();
-            System.out.println("StartView: die Max-Zahl ist: " + mainApp.getMaxIdNumber());
-            System.out.println("Die gewählte Datei heißt: " + selectedFile.getName() + " und ist: " + selectedFile.getAbsolutePath() );
         }
     }
 

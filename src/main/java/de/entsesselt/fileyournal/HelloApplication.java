@@ -12,18 +12,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.jdom.Element;
-import org.jdom.Namespace;
 import org.jdom.filter.ElementFilter;
-
-import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
-
-/*import org.jdom.Document;*/
 
 
 public class HelloApplication extends Application {
@@ -40,28 +34,15 @@ public class HelloApplication extends Application {
     private FullPageViewController pageViewController;
     private PlanerViewController planerViewController;
     private LeftViewController leftViewController;
-    private RightViewController rightViewController;
     private String fileName;
-    private String filePath;
+    private String filePath = "";
     private int maxIndex = 0;
     private int pageIndex = 0;
     private int maxIdNumber = 0;
-
-
-    @FXML
-    private AnchorPane pagePane;
-
-
-    private File selectedFile = null;
-    private static final String INITIAL_DIRECTORY = Paths.get(".").toAbsolutePath().normalize().toString();
     private Element currentPage;
-    private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/OrganizerTEST.fo";
-    private final static File FILE = new File(FILENAME);
-    private final static String NAMESPACE = "http://www.w3.org/1999/XSL/Format";
-    Namespace fo = Namespace.getNamespace("fo", NAMESPACE);
 
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("FileYOURnal");
 
@@ -69,7 +50,6 @@ public class HelloApplication extends Application {
         initRootLayout();
         showLeftView();
         showStartView();
-        System.out.println("Die MaxID-Nummer lautet zum Programmstart: " + maxIdNumber);
     }
 
     /**
@@ -80,8 +60,7 @@ public class HelloApplication extends Application {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("GuiView.fxml"));
-            rootLayout = (BorderPane) loader.load();
-
+            rootLayout = loader.load();
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
@@ -91,246 +70,259 @@ public class HelloApplication extends Application {
         }
     }
 
+    /**
+     * shows the first view center of the root
+     */
     public void showStartView() { // shows the page-view with the organizer-picture
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("StartView.fxml"));
-            AnchorPane startView = (AnchorPane) loader.load();
+            AnchorPane startView = loader.load();
             // Give the controller access to the main app.
             AbstractController controller;
             controller = loader.getController();
             controller.setMainApp(this);
-
             // Set person overview into the center of root layout.
             rootLayout.setCenter(startView);
             changeRightView("EmptyRightView.fxml");
+            leftViewController.setModifyPaneVisible(false);
+            leftViewController.showPdfExportButton();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * shows the edit view at center of the root
+     */
     @FXML
     public void showEditView() { // shows the empty page-view
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("NewPageView.fxml"));
-            pagePane = (AnchorPane) loader.load();
-            /*AnchorPane fullPane = (AnchorPane) loader.load();*/
+            AnchorPane pagePane = loader.load();
             // Give the controller access to the main app.
             pageViewController = loader.getController();
             pageViewController.setMainApp(this);
-
             // Set person overview into the center of root layout.
             rootLayout.setCenter(pagePane);
             leftViewController.showBackToStartButton();
+            leftViewController.setModifyPaneVisible(false);
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * shows the flick through view to show saved pages
+     */
     @FXML
     public void showPlanerView() { //
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("PlanerView.fxml"));
-            AnchorPane fullPane = (AnchorPane) loader.load();
+            AnchorPane fullPane = loader.load();
             // Give the controller access to the main app.
             planerViewController = loader.getController();
             planerViewController.setMainApp(this);
 
             // Set person overview into the center of root layout.
             rootLayout.setCenter(fullPane);
-            leftViewController.setModifyPaneVisible();
+            leftViewController.setModifyPaneVisible(true);
             leftViewController.showPdfExportButton();
             leftViewController.showBackToStartButton();
             changeRightView("EmptyRightView.fxml");
-
 
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+    /**
+     * creates a new organizer document with user given name und path
+     * @param fileName user given at start of the new organizer
+     * @param foFilePath user given at start of the new organizer
+     */
     public void startNewOrganizer(String fileName, String foFilePath) {
-        //Organizer-Objekt erstellen und per JDOM eine XSL-FO erstellen
-        Organizer org = new Organizer(fileName);
-        this.org = org;
+        this.org = (Organizer.getInstance(fileName));
         org.readFO(foFilePath);
-        /*pageIndex = 0;
-        maxIndex = 0;*/
     }
 
-
+    /**
+     * depending on calling instance the chosen template page view will be shown
+     * in edit or flick through view
+     * @param controller calling instance submitted by itself
+     * @param template the user selected template
+     */
     @FXML
     public void showPageTemplate(String controller, String template) {
         currentTemplate = template;
-
-        System.out.println("CurrentTemplate ist : " + currentTemplate);
         if (controller.equals("pageViewController")) {
-            System.out.println("Bin im pageView-Zweig");
-            if (currentTemplate.equals("fullpage")) {
-                pageViewController.setFullVisible();
-            } else if (currentTemplate.equals("half")) {
-                pageViewController.setHalfVisible();
-            } else if (currentTemplate.equals("quad")) {
-                pageViewController.setQuadVisible();
-            } else if (currentTemplate.equals("quadHalf")) {
-                pageViewController.setQuadHalfVisible();
-            } else {
-                pageViewController.setHalfQuadVisible();
+            // to prevent the current view from being overlaid by other panes
+            pageViewController.setFullVisible(false);
+            pageViewController.setHalfVisible(false);
+            pageViewController.setQuadVisible(false);
+            pageViewController.setHalfQuadVisible(false);
+            pageViewController.setQuadHalfVisible(false);
+
+            switch (currentTemplate) {
+                case "fullpage" -> pageViewController.setFullVisible(true);
+                case "half" -> pageViewController.setHalfVisible(true);
+                case "quad" -> pageViewController.setQuadVisible(true);
+                case "quadHalf" -> pageViewController.setQuadHalfVisible(true);
+                default -> pageViewController.setHalfQuadVisible(true);
             }
         } else {
-
+            //to prevent the current view from being overlaid by other panes
             planerViewController.setFullVisible(false);
             planerViewController.setHalfVisible(false);
             planerViewController.setQuadVisible(false);
             planerViewController.setHalfQuadVisible(false);
             planerViewController.setQuadHalfVisible(false);
 
-            if (currentTemplate.equals("fullpage")) {
-                System.out.println("Bin im PlanerView-Zweig!");
-                planerViewController.setFullVisible(true);
-            } else if (currentTemplate.equals("half")) {
-                planerViewController.setHalfVisible(true);
-            } else if (currentTemplate.equals("quad")) {
-                planerViewController.setQuadVisible(true);
-            } else if (currentTemplate.equals("quadHalf")) {
-                planerViewController.setQuadHalfVisible(true);
-            } else {
-                planerViewController.setHalfQuadVisible(true);
+            switch (currentTemplate) {
+                case "fullpage" -> planerViewController.setFullVisible(true);
+                case "half" -> planerViewController.setHalfVisible(true);
+                case "quad" -> planerViewController.setQuadVisible(true);
+                case "quadHalf" -> planerViewController.setQuadHalfVisible(true);
+                default -> planerViewController.setHalfQuadVisible(true);
             }
             changeRightView("EmptyRightView.fxml");
         }
     }
 
+    /**
+     * shows the view on the left side from gui
+     */
     public void showLeftView() { // to show the left side of the gui
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("leftView.fxml"));
-            AnchorPane pageView = (AnchorPane) loader.load();
-
+            AnchorPane pageView = loader.load();
             // Set person overview into the center of root layout.
             rootLayout.setLeft(pageView);
-
             if (loader.getController() instanceof AbstractController) {
                 leftViewController = loader.getController();
                 leftViewController.setMainApp(this);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void showRightView() { // to show the template-overview at the right side
+    /**
+     * shows the view on the right side from gui
+     */
+    public void showRightView() { // to show the template-overview on the right side
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(HelloApplication.class.getResource("rightView.fxml"));
-            AnchorPane templatesView = (AnchorPane) loader.load();
+            AnchorPane templatesView = loader.load();
             // Set person overview into the center of root layout.
             rootLayout.setRight(templatesView);
             // Give the controller access to the main app.
             if (loader.getController() instanceof AbstractController) {
-                rightViewController = loader.getController();
+                RightViewController rightViewController = loader.getController();
                 rightViewController.setMainApp(this);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void changeRightView(String pageTemplate) { // changes the according to the page template
+    /**
+     * changes the template overview on the right side of the gui
+     * according to the submitted template
+      * @param templateFxml is the template according content overview as fxml
+     */
+    public void changeRightView(String templateFxml) { // changes the view according to the page template
         try {
-            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(pageTemplate));
+            FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(templateFxml));
             Node node = loader.load();
-           /* FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource(pageTemplate));
-            AnchorPane templatesView = (AnchorPane) loader.load();*/
-
             rootLayout.setRight(node);
-
             if (loader.getController() instanceof AbstractController) {
                 AbstractController controller = loader.getController();
                 controller.setMainApp(this);
             }
-
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public void nameIt() {
-        showEditView();
+    private void deleteContent(){
+        //empty all content
+        content1 = "";
+        content2 = "";
+        content3 = "";
+        content4 = "";
     }
 
-   /* public void showEditControl(Boolean bool){
-        leftViewController.setControlPaneVisible(bool);
-    }*/
-
+    /**
+     * cleans the side view as preparation for the new template and content selection
+     */
     public void newPage() { //to get a new empty pageview
         showRightView(); // template overview
         showEditView();
         pageViewController.namePaneUnvisible();
-        //empty all content
-        content1 = "";
-        content2 = "";
-        content3 = "";
-        content4 = "";
+        deleteContent();
     }
 
-    /*public void newModifiedPage() { //to get a new empty pageview
-        showRightView(); // template overview
-        showEditView();
-        pageViewController.namePaneUnvisible();
-        //empty all content
-        content1 = "";
-        content2 = "";
-        content3 = "";
-        content4 = "";
-    }*/
-
-   /* public void deletePage (Element pageElement){
-        currentPage.removeContent();
-    }*/
-
-    public void openChangeManager() throws Exception{
-        leftViewController.setModifyPaneVisible();
-        /*planerViewController.s*/
-    }
-
-    public void modifyInOrganizer(Element modifiedPage) throws Exception {
+    /**
+     * hands over the modified page to organizer to save it
+     * @param modifiedPage the <fo:block> page element from modified page
+     */
+    public void modifyInOrganizer(Element modifiedPage) {
         org.addModifiedContent(currentPage.getParent().indexOf(currentPage), modifiedPage);
         org.writeFO(filePath);
     }
 
-    public void insertBeforeInOrganizer(Element newPage) throws Exception {
-
-        /*org.insertContent(currentPage.getParent().indexOf(currentPage), newPage);*/
+    /**
+     * hands over the new page to organizer to insert it into the document (before current page)
+     * @param newPage the <fo:block> page element from new page
+     */
+    public void insertBeforeInOrganizer(Element newPage) {
         org.insertContent(currentPage.getParent().indexOf(currentPage) - 1, newPage);
         org.writeFO(filePath);
     }
 
-    public void insertAfterInOrganizer(Element newPage) throws Exception {
-
-        /*org.insertContent(currentPage.getParent().indexOf(currentPage) + 1, newPage);*/
+    /**
+     * hands over the new page to organizer to insert it into the document (after current page)
+     * @param newPage the <fo:block> page element from new page
+     */
+    public void insertAfterInOrganizer(Element newPage) {
         org.insertContent(currentPage.getParent().indexOf(currentPage) + 1, newPage);
         org.writeFO(filePath);
     }
 
-    public void addToOrganizer(Element newPage) throws Exception {
-        org.addPage(newPage);
+    /**
+     * hands over the new page to organizer to save it
+     * @param newPage the <fo:block> page element from new page
+     */
+    public void addToOrganizer(Element newPage) {
+        Organizer.addPage(newPage);
         currentPage = newPage;
         org.writeFO(filePath); // writes the XST-FO-Document in Organizer Class
     }
 
+    /**
+     * service method to get the List of <fo: flow> children from current organizer
+     * @return the list of children representing all page elements
+     */
+    private List getChildren(){
+        return Organizer.fetchPageParent().getChildren();
+    }
+
+    /**
+     * delegates the delete-instruction to organizer
+     * @throws Exception if error occurs
+     */
     public void deleteFromOrganizer() throws Exception{
         int index = currentPage.getParent().indexOf(currentPage);
     org.deletePage(index);
@@ -338,111 +330,98 @@ public class HelloApplication extends Application {
         org.writeFO(filePath); // writes the XST-FO-Document in Organizer Class
     }
 
+    /**
+     * enables to go to user given page by searching the page in document
+     * and sending the read-out page data to the flick through view
+     * @param indexnumber to jump to desired page <fo:block> element
+     * @throws Exception if error occurs
+     */
     public void goToPageIndex(int indexnumber) throws Exception { // if user wants to scroll back to older pages
-        Element parent = org.fetchPageParent();
-        List children = parent.getChildren();
+        /*List children = Organizer.fetchPageParent().getChildren();*/
         pageIndex = indexnumber;
-        currentPage = (Element) children.get(pageIndex);
+        currentPage = (Element) getChildren().get(pageIndex);
         currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", ""); // delete pagecounter to get only template-name
-        System.out.println(currentTemplate);
-        maxIndex = children.size() - 1;
-        /*pageIndex = children.indexOf(currentPage);*/
-        System.out.println("aktueller Index: " + pageIndex + " und maxIndex lautet: " + maxIndex);
-        System.out.println("aktuelle Seite " + pageIndex + 1);
-        getFoData(currentTemplate, pageIndex, maxIndex);
+        maxIndex = getChildren().size() - 1;
+        getFoData(currentTemplate);
         checkButtons(pageIndex, maxIndex);
         planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageIndex);
-
     }
 
     /**
-     * Getting the first Page und the information, to show it in the GUI
-     * @throws Exception
+     * Getting the first Page and the information, to show it in flick through view
+     * @throws Exception if error occurs
      */
     public void loadedOrganizer() throws Exception {
-        List children = org.fetchPageParent().getChildren();
-        Element firstElement = (Element) children.get(0); //
-        currentPage = firstElement;
+        /*List children = Organizer.fetchPageParent().getChildren();*/
+        currentPage = (Element) getChildren().get(0);
         // filters the template type out of the id
         currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", "");
-        maxIndex = children.size() - 1;// important value for controlling the buttons "Seite zurück" and "Seite vor"
-        pageIndex = children.indexOf(currentPage); // index from currently shown page
-        getFoData(currentTemplate, pageIndex, maxIndex); // fetches the content for the current page
+        maxIndex = getChildren().size() - 1;// important value for controlling the buttons "Seite zurück" and "Seite vor"
+        pageIndex = getChildren().indexOf(currentPage); // index from currently shown page
+        getFoData(currentTemplate); // fetches the content for the current page
         checkButtons(pageIndex, maxIndex); // (dis)ables the buttons "Seite zurück" and "Seite vor" depending on the indexes
         // sending all page information to the gui
         planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageIndex);
-        // important to ensure the explicitness of the ID, when modifying the organizer
+        // sets the max number from ids - important to ensure the explicitness of the ID, when modifying the organizer
         Page.setCurrentPageNumber(maxIdNumber);
     }
 
-
+    /**
+     * getting the next page and show it in flick through view
+     * @throws Exception if error occurs
+     */
     public void nextPage() throws Exception { //User klickt auf nächste Seite
-        Element parent = (Element) currentPage.getParent();
-        List children = parent.getChildren();
-        pageIndex = children.indexOf(currentPage);
-        System.out.println("pageIndex ist " + pageIndex);
-        maxIndex = children.size() - 1;
-        System.out.println("Maximaler Index ist " + maxIndex);
-        Element nextElement = (Element) children.get(pageIndex + 1);
-        currentPage = nextElement;
-        pageIndex = children.indexOf(currentPage);
+        pageIndex = getChildren().indexOf(currentPage);
+        maxIndex = getChildren().size() - 1;
+        currentPage = (Element) getChildren().get(pageIndex + 1);
+        pageIndex = getChildren().indexOf(currentPage);
         currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", "");
-        getFoData(currentTemplate, pageIndex, maxIndex);
+        getFoData(currentTemplate);
         checkButtons(pageIndex, maxIndex);
         planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageIndex);
     }
 
-    public void prevPage() throws Exception {//User klickt auf vorherige Seite
-        Element parent = (Element) currentPage.getParent();
-        List children = parent.getChildren();
-        maxIndex = children.size() - 1;
-        pageIndex = children.indexOf(currentPage);
-        Element nextElement = (Element) children.get(pageIndex - 1);
-        currentPage = nextElement;
-        pageIndex = children.indexOf(currentPage);
-        currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", "");
-        getFoData(currentTemplate, pageIndex, maxIndex);
-        checkButtons(pageIndex, maxIndex);
-        planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageIndex);
-    }
-
+    /**
+     * getting the user requested page and shows in flick through view
+     * @param pageIndex to jump to desired page <fo:block> element
+     * @throws Exception if error occurs
+     */
     public void goToFoPage(int pageIndex) throws Exception {
-        List children = org.fetchPageParent().getChildren();
-        Element pageElement = (Element) children.get(pageIndex);
-        currentPage = pageElement;
+        /*List children = Organizer.fetchPageParent().getChildren();*/
+        currentPage = (Element) getChildren().get(pageIndex);
         this.pageIndex = pageIndex;
         currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", "");
-        System.out.println(currentTemplate);
-        maxIndex = children.size() - 1;
-        /* int pageindex = children.indexOf(currentPage);*/
-        System.out.println("Seite " + pageIndex + 1);
-        getFoData(currentTemplate, this.pageIndex, maxIndex);
+        maxIndex = getChildren().size() - 1;
+        getFoData(currentTemplate);
         checkButtons(this.pageIndex, maxIndex);
         pageViewController.loadPage(currentTemplate, content1, content2, content3, content4);
     }
 
-    /*public void changeSaveButton(){
-        pageViewController.changeTakeButton();
-    }*/
-
-    private void getFoData(String currentTemplate, int pageindex, int maxIndex) throws Exception { // filters all graphic paths from children/descendants and assigns to its content variable
+    /**
+     * reads out the page data from XSL-FO document and assigns it to the variables
+     * @param currentTemplate to find out how much template data has to be read
+     */
+    private void getFoData(String currentTemplate) { // filters all graphic paths from children/descendants and assigns to its content variable
         Iterator<Element> graphics = currentPage.getDescendants(new ElementFilter("external-graphic"));// search for the element <fo:external-graphic>
         ArrayList<String> paths = new ArrayList<>();
         graphics.forEachRemaining((content) -> paths.add(content.getAttributeValue("src"))); //writes the source-paths into an array-list
-        if (currentTemplate.equals("fullpage")) {
-            content1 = paths.get(0).replaceFirst("^.*/", "");
-        } else if (currentTemplate.equals("half")) {
-            content1 = paths.get(0).replaceFirst("^.*/", "");
-            content2 = paths.get(1).replaceFirst("^.*/", "");
-        } else if (currentTemplate.equals("quad")) {
-            content1 = paths.get(0).replaceFirst("^.*/", "");
-            content2 = paths.get(1).replaceFirst("^.*/", "");
-            content3 = paths.get(2).replaceFirst("^.*/", "");
-            content4 = paths.get(3).replaceFirst("^.*/", "");
-        } else { // template is halfQuad or quadHalf
-            content1 = paths.get(0).replaceFirst("^.*/", "");
-            content2 = paths.get(1).replaceFirst("^.*/", "");
-            content3 = paths.get(2).replaceFirst("^.*/", "");
+        switch (currentTemplate) {
+            case "fullpage" -> content1 = paths.get(0).replaceFirst("^.*/", "");
+            case "half" -> {
+                content1 = paths.get(0).replaceFirst("^.*/", "");
+                content2 = paths.get(1).replaceFirst("^.*/", "");
+            }
+            case "quad" -> {
+                content1 = paths.get(0).replaceFirst("^.*/", "");
+                content2 = paths.get(1).replaceFirst("^.*/", "");
+                content3 = paths.get(2).replaceFirst("^.*/", "");
+                content4 = paths.get(3).replaceFirst("^.*/", "");
+            }
+            default -> {  // template is halfQuad or quadHalf
+                content1 = paths.get(0).replaceFirst("^.*/", "");
+                content2 = paths.get(1).replaceFirst("^.*/", "");
+                content3 = paths.get(2).replaceFirst("^.*/", "");
+            }
         }
         Iterator<Element> blockIterator = currentPage.getParent().getDescendants(new ElementFilter("block"));
         ArrayList<String> fullIds = new ArrayList<>();
@@ -453,19 +432,13 @@ public class HelloApplication extends Application {
                 indexNumbers.add(Integer.parseInt(element.replaceAll("[^0-9]", "")));
             }
         }
-        maxIdNumber = Collections.max(indexNumbers); // to get the highest number of the IDs
+        //getting the highest number of the ids is important to create unique ids when modifying
+        maxIdNumber = Collections.max(indexNumbers);
     }
 
       private void checkButtons(int pageIndex, int maxIndex){
-          if (pageIndex == maxIndex ){
-              planerViewController.setNextButton(true);
-          } else {
-              planerViewController.setNextButton(false);
-          }  if (pageIndex == 0){
-              planerViewController.setPrevButton(true);
-          } else {
-              planerViewController.setPrevButton(false);
-          }
+          planerViewController.setNextButton(pageIndex == maxIndex);
+          planerViewController.setPrevButton(pageIndex == 0);
       }
 
       public void setPdfButtonVisible(){
@@ -479,29 +452,26 @@ public class HelloApplication extends Application {
       public void changePageViewSaveButtons(){
           pageViewController.takeButton.setVisible(false);
           pageViewController.takeChangeButton.setVisible(true);
-          System.out.println("InsertSaveGesetzt");
       }
 
     public void changePageInsertBeforeButton(){
         pageViewController.takeButton.setVisible(false);
         pageViewController.insertBeforeButton.setVisible(true);
-        System.out.println("InsertBeforeGesetzt");
     }
 
     public void changePageInsertAfterButton(){
         pageViewController.takeButton.setVisible(false);
         pageViewController.insertAfterButton.setVisible(true);
-        System.out.println("InsertAfterGesetzt");
     }
 
       public void foToPdf(String targetPath) throws Exception {
           org.foToPdf(filePath, targetPath);
-          System.out.println("Die FO ist :" + filePath + " und die Zieldatei lautet: " + targetPath);
-/*
-          rightViewController.pdfFeedback(filePath);
-*/
       }
 
+    public void setAddNewPageButtonVisible(){
+        pageViewController.takeButton.setVisible(false);
+        pageViewController.addNewPageButton.setVisible(true);
+    }
 
       // Getter & Setter
 
@@ -513,11 +483,6 @@ public class HelloApplication extends Application {
         this.activeButton = activeButton;
     }
 
-    public void setAddNewPageButtonVisible(){
-        pageViewController.takeButton.setVisible(false);
-        pageViewController.addNewPageButton.setVisible(true);
-    }
-
     public String getContent1() {
         return content1;
     }
@@ -525,7 +490,6 @@ public class HelloApplication extends Application {
     public void setContent1(String content1) {
 
         this.content1 = content1;
-        System.out.println("Aus der Set-Methode: " + content1);
     }
 
     public String getContent2() {
@@ -558,15 +522,6 @@ public class HelloApplication extends Application {
 
     public void setCurrentTemplate(String template) {
         this.currentTemplate = template;
-        System.out.println("current Template is: " + currentTemplate);
-    }
-
-    public void setCurrentPage(Element currentPage) {
-        this.currentPage = currentPage;
-    }
-
-    public Element getCurrentPage() {
-        return currentPage;
     }
 
     public FullPageViewController getPageViewController() {
@@ -575,10 +530,6 @@ public class HelloApplication extends Application {
 
     public int getMaxIndex() {
         return maxIndex;
-    }
-
-    public void setMaxIndex(int maxIndex) {
-        this.maxIndex = maxIndex;
     }
 
     public int getPageIndex() {
@@ -591,10 +542,6 @@ public class HelloApplication extends Application {
 
     public int getMaxIdNumber() {
         return maxIdNumber;
-    }
-
-    public Organizer getOrg() {
-        return org;
     }
 
     public String getFileName() {
@@ -612,8 +559,6 @@ public class HelloApplication extends Application {
     public String getFilePath() {
         return filePath;
     }
-
-
 
     public static void main(String[] args) {
         launch();

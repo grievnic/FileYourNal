@@ -13,26 +13,18 @@ import java.util.Optional;
 
 /**
  * FullPageViewController ist the controller of the editorview
- * @version 1.0
  *
  */
 public class FullPageViewController extends AbstractController{
 
-    /**
-     * full pageareal button
-     */
     @FXML
     Button button1;
-
 
     @FXML
     Button halfButton1;
 
     @FXML
     Button halfButton2;
-
-    /*@FXML
-    Button halfButton3;*/
 
     @FXML
     Button quadButton1;
@@ -63,10 +55,6 @@ public class FullPageViewController extends AbstractController{
 
     @FXML
     Button quadHalfButton3;
-
-   /* @FXML
-    Button previousButton;*/
-
 
     @FXML
     Label label;
@@ -153,7 +141,13 @@ public class FullPageViewController extends AbstractController{
     private final static String HALFPATH = "assets/Content/ContentElements/halfPageContent/";
     private final static String FO_TEMPLATE = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/PageTemplateDinA4.fo";
 
-
+    /**
+     * realizes the active button
+     * gets the template identifier
+     * intitilizes showing the corresponding content overview
+     * @param event
+     * @throws Exception
+     */
    @FXML
     public void selectArea(ActionEvent event) throws Exception {
         Button activeButton = (Button) event.getSource();
@@ -179,7 +173,6 @@ public class FullPageViewController extends AbstractController{
            if (file != null) {
                file = new File(file.getAbsolutePath()+ "/" + fileName + ".fo");}
            String filePath = file.getPath();
-           System.out.println(filePath);
            if (filePath != null) {
                namePane.setVisible(false);
                mainApp.startNewOrganizer(fileName, FO_TEMPLATE);
@@ -196,43 +189,36 @@ public class FullPageViewController extends AbstractController{
    }
 
    @FXML
-   public void changeTakeButton(){
-       takeButton.setVisible(false);
-       takeChangeButton.setVisible(true);
-   }
-
-   @FXML
-   public void setFullVisible(){
-       fullPane.setVisible(true);
+   public void setFullVisible(Boolean bool){
+       fullPane.setVisible(bool);
        label.setVisible(false);
        takeButton.setDisable(false);
-
    }
 
     @FXML
-    public void setHalfVisible(){
-        halfPane.setVisible(true);
+    public void setHalfVisible(Boolean bool){
+        halfPane.setVisible(bool);
         label.setVisible(false);
         takeButton.setDisable(false);
     }
 
     @FXML
-    public void setQuadVisible(){
-        quadPane.setVisible(true);
+    public void setQuadVisible(Boolean bool){
+        quadPane.setVisible(bool);
         label.setVisible(false);
         takeButton.setDisable(false);
     }
 
     @FXML
-    public void setQuadHalfVisible(){
-        quadHalfPane.setVisible(true);
+    public void setQuadHalfVisible(Boolean bool){
+        quadHalfPane.setVisible(bool);
         label.setVisible(false);
         takeButton.setDisable(false);
     }
 
     @FXML
-    public void setHalfQuadVisible(){
-        halfQuadPane.setVisible(true);
+    public void setHalfQuadVisible(Boolean bool){
+        halfQuadPane.setVisible(bool);
         label.setVisible(false);
         takeButton.setDisable(false);
     }
@@ -245,8 +231,6 @@ public class FullPageViewController extends AbstractController{
         mainApp.changeRightView("HalfContentView.fxml");
     }
 
-
-   // three buttons under PageOverview
 
     /**
      * forwards the call to mainapp
@@ -281,7 +265,7 @@ public class FullPageViewController extends AbstractController{
         Alert a = new Alert(Alert.AlertType.NONE);
         a.setAlertType(Alert.AlertType.ERROR);
         a.setContentText("Es müssen alle Seitenelemente befüllt sein!");
-        //Are all Page-Elements filled with content?
+        //Checks if all pageAreas are filled with content?
         if (template.equals("full") & content1.isEmpty()){
             a.show();
         }else if (template.equals("half") && content1.isEmpty() | content2.isEmpty()){
@@ -293,22 +277,35 @@ public class FullPageViewController extends AbstractController{
         }else // creates a new JDOM-Page-Element to writes it into the XSL-FO tree
             if (template.equals("quad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty() | content4.isEmpty()){
             a.show();
-        }else fullPage = new Page(template, content1, content2, content3, content4);
+        }else fullPage = new Page(template, content1, content2, content3, content4); //new page if all areas are filled
         return fullPage;
     }
 
+    /**
+     * button-click initializes the check, if all areas are filled,
+     * the page will be created with JDOM and saved in the FO-document
+     * an empty page will be shown and
+     * after the first page it will be possible, to click the PDF export button
+     * @throws Exception
+     */
     @FXML
     public void saveNewPages() throws Exception {
         pageDataService();
-            Page page = pageContentComposer();
-            if (page!=null) {
-                // new page will be created an added to the XSL-FO-document
-                mainApp.addToOrganizer(page.pageCreator());
-                mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
+        Page page = pageContentComposer();
+        if (page!=null) {
+            // new page will be created an added to the XSL-FO-document
+            mainApp.addToOrganizer(page.pageCreator());
+            mainApp.newPage(); // shows an empty page and shows the template-overview on the right side
             }
         }
 
-
+    /**
+     * button-click initializes the check, if all areas are filled,
+     * the page will be created with JDOM and saved in the FO-document
+     * an empty page will be shown and
+     * after the first page it will be possible, to click the PDF export button
+      * @throws Exception
+     */
     @FXML
     public void savePage () throws Exception {
         pageDataService();
@@ -316,53 +313,71 @@ public class FullPageViewController extends AbstractController{
         if (page!=null) {
             // new page will be created an added to the XSL-FO-document
             mainApp.addToOrganizer(page.pageCreator());
-            mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
+            mainApp.newPage(); // shows an empty page and shows the template-overview on the right side
             mainApp.setPdfButtonVisible(); // after the first storage of a page, it will be able to export it as pdf
         }
     }
 
+    /**
+     * button-click initializes the check, if all areas are filled,
+     * the page will be modified with JDOM and saved in the FO-document
+     * an empty page will be shown and
+     * after the first page it will be possible, to click the PDF export button
+     * @throws Exception
+     */
     public void saveChanges() throws Exception {
         pageDataService();
         Page page = pageContentComposer();
         if (page!=null) {
             mainApp.modifyInOrganizer(page.pageCreator());
-            mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
+            mainApp.newPage(); // shows an empty page and shows the template-overview on the right side
             mainApp.showPlanerView();
             mainApp.goToPageIndex(mainApp.getPageIndex());
         }
-        /*}*/
     }
 
+    /**
+     * button-click initializes the check, if all areas are filled,
+     * the page will be inserted before the current one with JDOM and saved in the FO-document
+     * an empty page will be shown and
+     * after the first page it will be possible, to click the PDF export button
+     * @throws Exception
+     */
     public void insertNewBefore() throws Exception {
         pageDataService();
         Page page = pageContentComposer();
         if (page!=null) {
-            page.setCurrentPageNumber(mainApp.getMaxIdNumber()); // important to get an unique id
-            System.out.println("MaxPageIndex lautet: " + mainApp.getMaxIndex());
-            System.out.println("CurrentPageNumber aus Page: " + page.getCurrentPageNumber());
+            page.setCurrentPageNumber(mainApp.getMaxIdNumber()); // important to get a unique id
             mainApp.insertBeforeInOrganizer(page.pageCreator());
-            mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
-            System.out.println("Das Template lautet nach dem Speichern: " + template + " !");
+            mainApp.newPage(); // shows an empty page and shows the template-overview on the right side
             mainApp.showPlanerView();
             mainApp.goToPageIndex(mainApp.getPageIndex());
         }
     }
 
+    /**
+     * button-click initializes the check, if all areas are filled,
+     * the page will be inserted after the current one with JDOM and saved in the FO-document
+     * an empty page will be shown and
+     * after the first page it will be possible, to click the PDF export button
+     * @throws Exception
+     */
     public void insertNewAfter() throws Exception {
         pageDataService();
         Page fullPage = pageContentComposer();
         if (fullPage!=null) {
-            fullPage.setCurrentPageNumber(mainApp.getMaxIdNumber()); // important to get an unique id
-            System.out.println("MaxPageIndex lautet: " + mainApp.getMaxIndex());
-            System.out.println("CurrentPageNumber aus Page: " + fullPage.getCurrentPageNumber());
+            fullPage.setCurrentPageNumber(mainApp.getMaxIdNumber()); // important to get a unique id
             mainApp.insertAfterInOrganizer(fullPage.pageCreator());
-            mainApp.newPage(); // shows an empty page and shows the template-overview at the right side
-            System.out.println("Das Template lautet nach dem Speichern: " + template + " !");
+            mainApp.newPage(); // shows an empty page and shows the template-overview on the right side
             mainApp.showPlanerView();
             mainApp.goToPageIndex(mainApp.getPageIndex());
         }
     }
 
+    /**
+     * leaves the editor mode and makes a superficial check, if unsaved content may be set
+     * @throws Exception
+     */
     @FXML
     protected void exitEditor() throws Exception {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -381,17 +396,23 @@ public class FullPageViewController extends AbstractController{
             Optional<ButtonType> result = a.showAndWait();
             if (result.get() == buttonTypeOne) {
                 savePage();
-                mainApp.showPlanerView();//
-                mainApp.loadedOrganizer();
-                mainApp.goToPageIndex(0);
+                showPlanerViewFirstPage();
             } else if (result.get() == buttonTypeTwo) {
-                mainApp.showPlanerView();//
-                mainApp.loadedOrganizer();
-                mainApp.goToPageIndex(0);
+                showPlanerViewFirstPage();
             }
         }
     }
 
+    private void showPlanerViewFirstPage() throws Exception {
+        mainApp.showPlanerView();//
+        mainApp.loadedOrganizer();
+        mainApp.goToPageIndex(0);
+    }
+
+    /**
+     * directs to start and warns, that possibly not saved data will be lost
+     * @throws Exception
+     */
     @FXML
     protected void backToStart() throws Exception{
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
@@ -407,6 +428,17 @@ public class FullPageViewController extends AbstractController{
         }
     }
 
+    /**
+     * loads site view with content depending on the data
+     * if an area is portrait, the path to portrait content files will be addet
+     * if an area is landcape, the path to landscape content files will be addet
+     * @param template
+     * @param content1
+     * @param content2
+     * @param content3
+     * @param content4
+     * @throws Exception
+     */
     @FXML
     public void loadPage(String template, String  content1, String content2, String content3, String content4) throws Exception {
         this.content1 = (content1);
@@ -414,7 +446,6 @@ public class FullPageViewController extends AbstractController{
         this.content3 = (content3);
         this.content4 = (content4);
         this.template = template;
-        System.out.println("aus Controller load Page: " + content1 + content2 + content3 + content4);
         takeButton.setVisible(false);
         takeChangeButton.setVisible(true);
 
@@ -422,17 +453,13 @@ public class FullPageViewController extends AbstractController{
            ImageView imageView1;
            mainApp.showPageTemplate("pageViewController","fullpage");
            String imagePath = FULLPATH + content1;
-           System.out.println(imagePath);
            imageView1 = new ImageView(imagePath);
            button1.setGraphic(imageView1);
            imageView1.fitWidthProperty().bind(button1.widthProperty());
-           /*imageView1.setFitHeight(button1.getHeight());*/
            imageView1.setPreserveRatio(true);
            button1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
-           System.out.println(button1.getHeight());
        } else if (mainApp.getCurrentTemplate().equals("half")){
            mainApp.showPageTemplate("pageViewController", "half");
-           System.out.println("half erkannt"+ halfButton1.getText());
            ImageView imageView1 = new ImageView(HALFPATH + content1);
            ImageView imageView2 = new ImageView(HALFPATH + content2);
            // sets the content in the top half
@@ -447,7 +474,6 @@ public class FullPageViewController extends AbstractController{
            halfButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
        } else if (mainApp.getCurrentTemplate().equals("quad")){
            mainApp.showPageTemplate("pageViewController", "quad");
-           System.out.println("quad erkannt" + quadButton1.getText());
            ImageView imageView1 = new ImageView(FULLPATH + content1);
            ImageView imageView2 = new ImageView(FULLPATH + content2);
            ImageView imageView3 = new ImageView(FULLPATH + content3);
@@ -494,7 +520,6 @@ public class FullPageViewController extends AbstractController{
            halfQuadButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
        } else {
            mainApp.showPageTemplate("pageViewController", "quadHalf");
-           System.out.println("quadhalf erkannt");
            ImageView imageView1 = new ImageView(FULLPATH + content1);
            ImageView imageView2 = new ImageView(FULLPATH + content2);
            ImageView imageView3 = new ImageView(HALFPATH + content3);
@@ -556,16 +581,55 @@ public class FullPageViewController extends AbstractController{
         }
     }
 
+    public Button getButton1() {
+        return button1;
+    }
 
+    public Button getHalfButton1() {
+        return halfButton1;
+    }
 
+    public Button getHalfButton2() {
+        return halfButton2;
+    }
 
-    /**
-     * Is called by the main application to give a reference back to itself.
-     *
-     * @param mainApp
-     */
-    /*public void setMainApp(HelloApplication mainApp) {
+    public Button getQuadButton1() {
+        return quadButton1;
+    }
 
-        this.mainApp = mainApp;
-    }*/
+    public Button getQuadButton2() {
+        return quadButton2;
+    }
+
+    public Button getQuadButton3() {
+        return quadButton3;
+    }
+
+    public Button getQuadButton4() {
+        return quadButton4;
+    }
+
+    public Button getHalfQuadButton1() {
+        return halfQuadButton1;
+    }
+
+    public Button getHalfQuadButton2() {
+        return halfQuadButton2;
+    }
+
+    public Button getHalfQuadButton3() {
+        return halfQuadButton3;
+    }
+
+    public Button getQuadHalfButton1() {
+        return quadHalfButton1;
+    }
+
+    public Button getQuadHalfButton2() {
+        return quadHalfButton2;
+    }
+
+    public Button getQuadHalfButton3() {
+        return quadHalfButton3;
+    }
 }

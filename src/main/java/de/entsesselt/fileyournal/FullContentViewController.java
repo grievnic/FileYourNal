@@ -6,41 +6,32 @@ import javafx.scene.control.Button;
 
 public class FullContentViewController extends AbstractController{
 
-    // Reference to the main application.
-    /*private HelloApplication mainApp;*/
-    @FXML
-    Button selectedTemplate;
     String contentName;
 
-
+    /**
+     * gets the active content-button and reads the user data with the filename
+     * initializes that the chosen content will be shown
+     * @param event
+     * @throws Exception
+     */
     @FXML
     public void selectContent(ActionEvent event) throws Exception {
-        /*selectedTemplate = (Button) event.getSource();*/
         contentName = ((Button) event.getSource()).getUserData().toString();
-        System.out.println("In FullContentView ist der User-Data-Content-Name: " + contentName);
-        /*contentName = ((Button) event.getSource()).getText();*/ //TODO
         loadContent(contentName);
-
     }
-    //shows the Full-Page-View in the Center of the GUI
+
+    /**
+     * initializes that the content will be shown in the page
+     * @param contentName
+     * @throws Exception
+     */
     @FXML
     public void loadContent(String contentName) throws Exception {
         FullPageViewController control = mainApp.getPageViewController();
         control.addContent(contentName);
     }
 
-
     public void backToTemplate(){
         mainApp.showRightView();
     }
-
-
-    /**
-     * Is called by the main application to give a reference back to itself.
-     *
-     * @param mainApp
-     */
-   /* public void setMainApp(HelloApplication mainApp) {
-        this.mainApp = mainApp;
-    }*/
 }
