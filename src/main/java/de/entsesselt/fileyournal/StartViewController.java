@@ -32,22 +32,22 @@ public class StartViewController extends AbstractController {
         mainApp.showEditView();
     }
 
+    /**
+     * Method loads an organizer .fo-File from directory, to represent it in the
+     * @param event clickEvent: Button "Organizer laden"
+     * @throws Exception if error occurs
+     */
     @FXML
     public void loadFoFromFile(ActionEvent event) throws Exception{
-        //aus dem Knoten (also der Button), der das Event ausgelöst, die Stage ermitteln
+        //gets the stage from the node that triggered the event
         Node source = (Node) event.getSource();
         Window theStage = source.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
-        if (mainApp.getFilePath() == null) { // no user given file directory
-            fileChooser.setInitialDirectory(new File(INITIAL_DIRECTORY)); // path from the app directory
-        } else {//  goto user given file directory
-            String directoryPath = mainApp.getFilePath().substring(0,mainApp.getFilePath().lastIndexOf("/")); // only path without filename
-            fileChooser.setInitialDirectory(new File(directoryPath));
-        }
-        fileChooser.getExtensionFilters().addAll(
+        fileChooser.setInitialDirectory(new File(INITIAL_DIRECTORY)); // path from the app directory
+        fileChooser.getExtensionFilters().addAll( // filter to make only .fo files selectable
                 new FileChooser.ExtensionFilter(".fo-Files", "*.fo"));
         selectedFile = fileChooser.showOpenDialog(theStage);
-        //ausgewähltes Pic in GUI anzeigen
+        //starts a new organizer-instance, gets file information and loads page content to show in flick through view
         if (selectedFile != null) {
             mainApp.startNewOrganizer(selectedFile.getName(), selectedFile.getAbsolutePath());
             mainApp.setFilePath(selectedFile.getPath());

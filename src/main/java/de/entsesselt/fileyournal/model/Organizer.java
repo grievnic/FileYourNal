@@ -65,7 +65,7 @@ public class Organizer {
     }
 
     public void addModifiedContent(int pageIndex, Element modifiedPage){
-        fetchPageParent().setContent(pageIndex,modifiedPage);
+        fetchPageParent().setContent(pageIndex, modifiedPage);
     }
 
     public void insertContent(int pageIndex, Element newPage){
@@ -95,6 +95,7 @@ public class Organizer {
     public void writeFO(String filePath){
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
+        System.out.println(filePath);
         try (FileOutputStream fos = new FileOutputStream(new File(filePath))) {
             XMLOutputter op = new XMLOutputter(format);
             op.output(currentOrganizer, fos);

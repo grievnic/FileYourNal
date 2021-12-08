@@ -31,7 +31,7 @@ public class HelloApplication extends Application {
     private String content3 = "";
     private String content4 = "";
     private String currentTemplate = "";
-    private FullPageViewController pageViewController;
+    private EditViewController editViewController;
     private PlanerViewController planerViewController;
     private LeftViewController leftViewController;
     private String fileName;
@@ -41,6 +41,10 @@ public class HelloApplication extends Application {
     private int maxIdNumber = 0;
     private Element currentPage;
 
+    /**
+     * The start method
+     * @param primaryStage
+     */
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -102,11 +106,11 @@ public class HelloApplication extends Application {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(HelloApplication.class.getResource("NewPageView.fxml"));
+            loader.setLocation(HelloApplication.class.getResource("EditView.fxml"));
             AnchorPane pagePane = loader.load();
             // Give the controller access to the main app.
-            pageViewController = loader.getController();
-            pageViewController.setMainApp(this);
+            editViewController = loader.getController();
+            editViewController.setMainApp(this);
             // Set person overview into the center of root layout.
             rootLayout.setCenter(pagePane);
             leftViewController.showBackToStartButton();
@@ -149,6 +153,15 @@ public class HelloApplication extends Application {
      * @param foFilePath user given at start of the new organizer
      */
     public void startNewOrganizer(String fileName, String foFilePath) {
+        if (this.org != null){
+            this.org = null;
+            Page.setCurrentPageNumber(0);
+            deleteContent();
+            maxIndex = 0;
+            pageIndex = 0;
+            maxIdNumber = 0;
+            currentPage = null;
+        }
         this.org = (Organizer.getInstance(fileName));
         org.readFO(foFilePath);
     }
@@ -164,18 +177,18 @@ public class HelloApplication extends Application {
         currentTemplate = template;
         if (controller.equals("pageViewController")) {
             // to prevent the current view from being overlaid by other panes
-            pageViewController.setFullVisible(false);
-            pageViewController.setHalfVisible(false);
-            pageViewController.setQuadVisible(false);
-            pageViewController.setHalfQuadVisible(false);
-            pageViewController.setQuadHalfVisible(false);
+            editViewController.setFullVisible(false);
+            editViewController.setHalfVisible(false);
+            editViewController.setQuadVisible(false);
+            editViewController.setHalfQuadVisible(false);
+            editViewController.setQuadHalfVisible(false);
 
             switch (currentTemplate) {
-                case "fullpage" -> pageViewController.setFullVisible(true);
-                case "half" -> pageViewController.setHalfVisible(true);
-                case "quad" -> pageViewController.setQuadVisible(true);
-                case "quadHalf" -> pageViewController.setQuadHalfVisible(true);
-                default -> pageViewController.setHalfQuadVisible(true);
+                case "fullpage" -> editViewController.setFullVisible(true);
+                case "half" -> editViewController.setHalfVisible(true);
+                case "quad" -> editViewController.setQuadVisible(true);
+                case "quadHalf" -> editViewController.setQuadHalfVisible(true);
+                default -> editViewController.setHalfQuadVisible(true);
             }
         } else {
             //to prevent the current view from being overlaid by other panes
@@ -256,12 +269,16 @@ public class HelloApplication extends Application {
         }
     }
 
+    /**
+     * deleting old content information
+     */
     private void deleteContent(){
         //empty all content
         content1 = "";
         content2 = "";
         content3 = "";
         content4 = "";
+        currentTemplate = "";
     }
 
     /**
@@ -270,7 +287,8 @@ public class HelloApplication extends Application {
     public void newPage() { //to get a new empty pageview
         showRightView(); // template overview
         showEditView();
-        pageViewController.namePaneUnvisible();
+        editViewController.namePaneUnvisible();
+        if (currentPage == null) editViewController.goToOrganizerDisable(true);
         deleteContent();
     }
 
@@ -308,6 +326,7 @@ public class HelloApplication extends Application {
     public void addToOrganizer(Element newPage) {
         Organizer.addPage(newPage);
         currentPage = newPage;
+        
         org.writeFO(filePath); // writes the XST-FO-Document in Organizer Class
     }
 
@@ -394,7 +413,7 @@ public class HelloApplication extends Application {
         maxIndex = getChildren().size() - 1;
         getFoData(currentTemplate);
         checkButtons(this.pageIndex, maxIndex);
-        pageViewController.loadPage(currentTemplate, content1, content2, content3, content4);
+        editViewController.loadPage(currentTemplate, content1, content2, content3, content4);
     }
 
     /**
@@ -423,54 +442,84 @@ public class HelloApplication extends Application {
                 content3 = paths.get(2).replaceFirst("^.*/", "");
             }
         }
+        // filters all block elements to get their id
         Iterator<Element> blockIterator = currentPage.getParent().getDescendants(new ElementFilter("block"));
         ArrayList<String> fullIds = new ArrayList<>();
         ArrayList<Integer> indexNumbers =new ArrayList<>();
         blockIterator.forEachRemaining((iD)-> fullIds.add(iD.getAttributeValue("id")));
         for( String element : fullIds ){
             if (element!= null) {
-                indexNumbers.add(Integer.parseInt(element.replaceAll("[^0-9]", "")));
+                indexNumbers.add(Integer.parseInt(element.replaceAll("[^0-9]", ""))); //keeps only numeric part
             }
         }
         //getting the highest number of the ids is important to create unique ids when modifying
         maxIdNumber = Collections.max(indexNumbers);
     }
 
-      private void checkButtons(int pageIndex, int maxIndex){
-          planerViewController.setNextButton(pageIndex == maxIndex);
-          planerViewController.setPrevButton(pageIndex == 0);
-      }
+    /**
+     * checks whether the button display is logical, is there a previous or next page
+     * @param pageIndex index from current page
+     * @param maxIndex
+     */
+    private void checkButtons(int pageIndex, int maxIndex){
+        planerViewController.setNextButton(pageIndex == maxIndex);
+        planerViewController.setPrevButton(pageIndex == 0);
+    }
 
-      public void setPdfButtonVisible(){
-          leftViewController.showPdfExportButton();
-      }
+    /**
+     * service method to set the PDF-Export-Button visible at the left view, if there is anything to export
+     */
+    public void setPdfButtonVisible(){
+        leftViewController.showPdfExportButton();
+     }
 
-      public void setNamePane(){
-        pageViewController.namePaneUnvisible();
-      }
+    /**
+     * service method to hide the namePane at the EditView
+     */
+    public void setNamePane(){
+        editViewController.namePaneUnvisible();
+    }
 
-      public void changePageViewSaveButtons(){
-          pageViewController.takeButton.setVisible(false);
-          pageViewController.takeChangeButton.setVisible(true);
-      }
+    /**
+     * service method to change the save button according to edit- or modify mode at the EditView
+     * modify page
+     */
+    public void changePageViewSaveButtons(){
+        editViewController.takeButton.setVisible(false);
+        editViewController.takeChangeButton.setVisible(true);
+    }
 
+    /**
+     * service method to change the save button according to edit- or modify mode at the EditView
+     * insert before
+     */
     public void changePageInsertBeforeButton(){
-        pageViewController.takeButton.setVisible(false);
-        pageViewController.insertBeforeButton.setVisible(true);
+        editViewController.takeButton.setVisible(false);
+        editViewController.insertBeforeButton.setVisible(true);
     }
 
+    /**
+     * service method to change the save button according to edit- or modify mode at the EditView
+     * insert after
+     */
     public void changePageInsertAfterButton(){
-        pageViewController.takeButton.setVisible(false);
-        pageViewController.insertAfterButton.setVisible(true);
+        editViewController.takeButton.setVisible(false);
+        editViewController.insertAfterButton.setVisible(true);
     }
 
-      public void foToPdf(String targetPath) throws Exception {
-          org.foToPdf(filePath, targetPath);
-      }
+    /**
+     * service method to start the pdf export
+     */
+    public void foToPdf(String targetPath) throws Exception {
+        org.foToPdf(filePath, targetPath);
+    }
 
+    /**
+     * sets the save-button in edit mode according to modify type add pages
+     */
     public void setAddNewPageButtonVisible(){
-        pageViewController.takeButton.setVisible(false);
-        pageViewController.addNewPageButton.setVisible(true);
+        editViewController.takeButton.setVisible(false);
+        editViewController.addNewPageButton.setVisible(true);
     }
 
       // Getter & Setter
@@ -488,7 +537,6 @@ public class HelloApplication extends Application {
     }
 
     public void setContent1(String content1) {
-
         this.content1 = content1;
     }
 
@@ -524,8 +572,8 @@ public class HelloApplication extends Application {
         this.currentTemplate = template;
     }
 
-    public FullPageViewController getPageViewController() {
-        return pageViewController;
+    public EditViewController getEditViewController() {
+        return editViewController;
     }
 
     public int getMaxIndex() {
@@ -542,6 +590,10 @@ public class HelloApplication extends Application {
 
     public int getMaxIdNumber() {
         return maxIdNumber;
+    }
+
+    public Element getCurrentPage() {
+        return currentPage;
     }
 
     public String getFileName() {

@@ -125,6 +125,7 @@ public class LeftViewController extends AbstractController {
         a.setTitle("Zur Startseite zurückkehren");
         a.setContentText("Bist Du sicher, dass Du diese Ansicht verlassen möchtest?");
 
+
         Optional<ButtonType> result = a.showAndWait();
         if (result.get() == ButtonType.OK) {
             mainApp.showStartView();

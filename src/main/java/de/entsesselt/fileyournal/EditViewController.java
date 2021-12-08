@@ -7,15 +7,16 @@ import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.DirectoryChooser;
+import javafx.stage.Stage;
 
 import java.io.File;
 import java.util.Optional;
 
 /**
- * FullPageViewController ist the controller of the editorview
+ * EditViewController ist the controller of the editorview
  *
  */
-public class FullPageViewController extends AbstractController{
+public class EditViewController extends AbstractController{
 
     @FXML
     Button button1;
@@ -73,6 +74,9 @@ public class FullPageViewController extends AbstractController{
 
     @FXML
     Button addNewPageButton;
+
+    @FXML
+    Button templateViewShow;
 
     @FXML
     Button backToStart;
@@ -142,98 +146,169 @@ public class FullPageViewController extends AbstractController{
     private final static String FO_TEMPLATE = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/PageTemplateDinA4.fo";
 
     /**
+     * first method when starting the editor to get all file information (name and dir) from user
+     * @param event click on Button "speichern & Speicherort festlegen"
+     */
+   @FXML
+   public void nameYourOrganizer(ActionEvent event) {
+       File file = null;
+       String fileName = null;
+       File newFile = null;
+       // to get the files name
+       if (nameField.getText().isEmpty()) { // if no name is entered
+           nameWarn.setVisible(true); // warning message appears
+
+       } else {
+           fileName = nameField.getText();
+           mainApp.setFileName(fileName);
+        // to open a window to set a directory
+           DirectoryChooser dc = new DirectoryChooser();
+           Stage stage = (Stage) namePane.getScene().getWindow(); // gets the current window
+           file = dc.showDialog(stage);
+           if (file != null) {
+               file = fileRenameCheck(file, fileName); // checks and change name, if path is already taken
+           }
+       }
+       String filePath = file.getPath(); // selected filepath
+       if (filePath != null) {
+           namePane.setVisible(false);
+           mainApp.startNewOrganizer(mainApp.getFileName(), FO_TEMPLATE); // starts a new organizer
+           mainApp.setFilePath(filePath);
+           mainApp.newPage();
+       } else {
+           pathWarn.setVisible(true);
+       }
+   }
+
+    /**
      * realizes the active button
      * gets the template identifier
      * intitilizes showing the corresponding content overview
-     * @param event
+     * @param event selected Page area
      * @throws Exception
      */
-   @FXML
+    @FXML
     public void selectArea(ActionEvent event) throws Exception {
         Button activeButton = (Button) event.getSource();
         mainApp.setActiveButton(activeButton);
         if (activeButton.getText().equals("halbe Seite")){
-            showHalfTemplates();
-       } else {
-        showFullTemplates();
+            showLandscapeTemplates();
+        } else {
+            showPortraitTemplates();
         }
+    }
+
+    /**
+     * checks, if file already exist
+     * @param file to check
+     * @return
+     */
+   private Boolean fileCheck(File file){
+       return file.exists() && !file.isDirectory();
    }
 
-   @FXML
-   public void nameYourOrganizer(ActionEvent event){
-       if (nameField.getText().isEmpty()){
-           nameWarn.setVisible(true);
-
+    /**
+     * This recursive method checks, if the path already exists, if true, the number "1" will be concatenated
+     * @param file File with origin path
+     * @param fileName tested filename
+     * @return a unique file
+     */
+   private File fileRenameCheck(File file, String fileName){
+       File newFile = new File(file.getAbsolutePath() + "/" + fileName + ".fo");
+       if(!fileCheck(newFile)){
+           return newFile;
        } else {
-           String fileName = nameField.getText();
-           mainApp.setFileName(fileName);
-
-           DirectoryChooser dc = new DirectoryChooser();
-           File file = dc.showDialog(null);
-           if (file != null) {
-               file = new File(file.getAbsolutePath()+ "/" + fileName + ".fo");}
-           String filePath = file.getPath();
-           if (filePath != null) {
-               namePane.setVisible(false);
-               mainApp.startNewOrganizer(fileName, FO_TEMPLATE);
-               mainApp.setFilePath(filePath);
-               mainApp.newPage();
-           } else {
-               pathWarn.setVisible(true);
-           }
+           String newFileName = fileName + "1";
+           mainApp.setFileName(newFileName);
+           return fileRenameCheck(file, newFileName);
        }
    }
 
+    /**
+     * sets namePane unvisible after the start process getting file information
+     */
    public void namePaneUnvisible(){
        namePane.setVisible(false);
    }
 
+    /**
+     * sets the fullpageview on air / off air
+     * @param bool
+     */
    @FXML
    public void setFullVisible(Boolean bool){
        fullPane.setVisible(bool);
        label.setVisible(false);
        takeButton.setDisable(false);
+       if (mainApp.getCurrentPage() == null) goToOrganizer.setDisable(true); // if there is no first page, there ist no possibility to flipping through
    }
 
+    /**
+     * sets the hafepageview on air / off air
+     * @param bool
+     */
     @FXML
     public void setHalfVisible(Boolean bool){
         halfPane.setVisible(bool);
         label.setVisible(false);
         takeButton.setDisable(false);
+        if (mainApp.getCurrentPage() == null) goToOrganizer.setDisable(true); // if there is no first page, there ist no possibility to flipping through
     }
 
+    /**
+     * sets the quadpageview on air / off air
+     * @param bool
+     */
     @FXML
     public void setQuadVisible(Boolean bool){
         quadPane.setVisible(bool);
         label.setVisible(false);
         takeButton.setDisable(false);
+        if (mainApp.getCurrentPage() == null) goToOrganizer.setDisable(true); // if there is no first page, there ist no possibility to flipping through
     }
 
+    /**
+     * sets the quadhalfpageview on air / off air
+     * @param bool
+     */
     @FXML
     public void setQuadHalfVisible(Boolean bool){
         quadHalfPane.setVisible(bool);
         label.setVisible(false);
         takeButton.setDisable(false);
+        if (mainApp.getCurrentPage() == null) goToOrganizer.setDisable(true); // if there is no first page, there ist no possibility to flipping through
     }
 
+    /**
+     * sets the halfquadpageview on air / off air
+     * @param bool
+     */
     @FXML
     public void setHalfQuadVisible(Boolean bool){
         halfQuadPane.setVisible(bool);
         label.setVisible(false);
         takeButton.setDisable(false);
+        if (mainApp.getCurrentPage() == null) goToOrganizer.setDisable(true); // if there is no first page, there ist no possibility to flipping through
     }
 
-    protected void showFullTemplates() throws Exception {
+    /**
+     * controls the content overview in the rightView - shows portrait content
+     * @throws Exception
+     */
+    protected void showPortraitTemplates() throws Exception {
         mainApp.changeRightView("FullContentView.fxml");
     }
 
-    protected void showHalfTemplates() throws Exception {
+    /**
+     * controls the content overiew in the rightView - shows landscape content
+     * @throws Exception
+     */
+    protected void showLandscapeTemplates() throws Exception {
         mainApp.changeRightView("HalfContentView.fxml");
     }
 
-
     /**
-     * forwards the call to mainapp
+     * forwards the call to mainapp to begin a new page
      * @throws Exception
      */
     @FXML
@@ -376,33 +451,59 @@ public class FullPageViewController extends AbstractController{
 
     /**
      * leaves the editor mode and makes a superficial check, if unsaved content may be set
+     * and gives a possibility to save from dialogue - depending on edit- or modification mode
      * @throws Exception
      */
     @FXML
     protected void exitEditor() throws Exception {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Möglicher Datenverlust");
-        a.setContentText("Ist Dein letzter Seitenentwurf gespeichert?");
         ButtonType buttonTypeOne = new ButtonType("Speichern & weiter");
-        ButtonType buttonTypeTwo = new ButtonType("Entwurf verwerfen & weiter");
+        ButtonType buttonTypeTwo = new ButtonType("Editor verlassen!");
         ButtonType buttonTypeCancel = new ButtonType("abbrechen");
-
-        a.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
-
-        if (mainApp.getContent1().equals("")) {
-            mainApp.showPlanerView();//
-            mainApp.goToPageIndex(0);
+        pageDataService();
+        if (!allAreasFull() | template.equals("")){
+            a.setContentText("Bist Du sicher, dass Du den Editor verlassen möchtest?");
+            a.getButtonTypes().setAll(buttonTypeTwo, buttonTypeCancel);
         } else {
+            a.setContentText("Dein aktueller Seitenentwurf ist nicht gespeichert?");
+            a.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
+        }
             Optional<ButtonType> result = a.showAndWait();
             if (result.get() == buttonTypeOne) {
-                savePage();
+                if (takeChangeButton.isVisible()) saveChanges();
+                else if (insertBeforeButton.isVisible()) insertNewBefore();
+                else if (insertAfterButton.isVisible()) insertNewAfter();
+                else if (addNewPageButton.isVisible()) saveNewPages();
+                else savePage();
                 showPlanerViewFirstPage();
             } else if (result.get() == buttonTypeTwo) {
                 showPlanerViewFirstPage();
             }
-        }
     }
 
+    /**
+     * depending on the template the method checks, if all page areas are filled with content
+     * @return true, if all areas are filled
+     */
+    private Boolean allAreasFull() {
+        if (template.equals("full") & content1.isEmpty()) {
+            return false;
+        } else if (template.equals("half") && content1.isEmpty() | content2.isEmpty()) {
+            return false;
+        } else if (template.equals("halfQuad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty()) {
+            return false;
+        } else if (template.equals("quadHalf") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty()) {
+            return false;
+        } else if (template.equals("quad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty() | content4.isEmpty()) {
+            return false;
+        } else return true;
+    }
+
+    /**
+     * service to get to page 1 at the flipping through mode
+     * @throws Exception
+     */
     private void showPlanerViewFirstPage() throws Exception {
         mainApp.showPlanerView();//
         mainApp.loadedOrganizer();
@@ -410,33 +511,14 @@ public class FullPageViewController extends AbstractController{
     }
 
     /**
-     * directs to start and warns, that possibly not saved data will be lost
-     * @throws Exception
-     */
-    @FXML
-    protected void backToStart() throws Exception{
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-        a.setTitle("Ungesichterter Entwurf!");
-        a.setContentText("Dein letzter Seitenentwurf ist noch nicht gespeichert, trotzdem zum Programmstart gehen?");
-        if (mainApp.getContent1().equals("")) {
-            mainApp.showStartView();
-        } else {
-            Optional<ButtonType> result = a.showAndWait();
-            if (result.get() == ButtonType.OK) {
-                mainApp.showStartView();
-            }
-        }
-    }
-
-    /**
-     * loads site view with content depending on the data
+     * loads site view with content depending on the data and template
      * if an area is portrait, the path to portrait content files will be addet
      * if an area is landcape, the path to landscape content files will be addet
      * @param template
-     * @param content1
-     * @param content2
-     * @param content3
-     * @param content4
+     * @param content1 for fullpage, half1, quad1, halfquad1, quadhalf1
+     * @param content2 for half2, quad2, halfquad2, quadhalf2
+     * @param content3 for quad3, halfquad3, quadhalf3
+     * @param content4 for quad4
      * @throws Exception
      */
     @FXML
@@ -543,7 +625,7 @@ public class FullPageViewController extends AbstractController{
 
     /**
      * method displays the chosen content in the active button (handled in mainApp)
-     * @param contentName - in the rightview chosen content
+     * @param contentName - in the right view chosen content
      * @throws Exception
      */
     @FXML
@@ -566,6 +648,14 @@ public class FullPageViewController extends AbstractController{
     }
 
     /**
+     * service to show the template overview at the right view
+     */
+    @FXML
+    private void templateView(){
+        mainApp.showRightView();
+    }
+
+    /**
      * Assignment of the content linked to the buttons
      */
     public void sendContent(){
@@ -580,6 +670,16 @@ public class FullPageViewController extends AbstractController{
            mainApp.setContent4(contentName);
         }
     }
+
+    /**
+     * service to able/disable the button "Organizer durchblättern"
+     * @param bool
+     */
+    public void goToOrganizerDisable(Boolean bool){
+        goToOrganizer.setDisable(bool);
+    }
+
+    // getter and setter
 
     public Button getButton1() {
         return button1;

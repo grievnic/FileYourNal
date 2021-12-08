@@ -9,22 +9,22 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.FullContentViewController">
+<AnchorPane xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.ContentViewController">
    <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c1c1" height="70.0" stroke="#c6c1c1" strokeType="INSIDE" width="362.0" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="55.0" layoutY="50.0" stroke="#c6c1c1" strokeType="INSIDE" width="362.0" />
-      <Button fx:id="templateButton" layoutX="88.0" layoutY="12.0" mnemonicParsing="false" onAction="#backToTemplate" text="zurück zur Template-Übersicht" />
-      <Label layoutX="59.0" layoutY="63.0" text="Content-Auswahl: &quot;ganze Seite&quot;" textAlignment="CENTER" textFill="#47464a">
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c1c1" height="70.0" stroke="#c6c1c1" strokeType="INSIDE" visible="false" width="362.0" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="170.0" layoutY="-3.0" stroke="#c6c1c1" strokeType="INSIDE" width="362.0" />
+      <Button fx:id="templateButton" layoutX="88.0" layoutY="12.0" mnemonicParsing="false" onAction="#backToTemplate" text="zurück zur Template-Übersicht" visible="false" />
+      <Label layoutX="65.0" layoutY="71.0" text="Content-Auswahl: Hochformat" textAlignment="CENTER" textFill="#47464a">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <ScrollPane layoutY="105.0" prefHeight="800.0" prefWidth="362.0">
+      <ScrollPane layoutY="170.0" prefHeight="800.0" prefWidth="362.0">
          <content>
             <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="1092.0" prefWidth="360.0">
                <children>
                   <Rectangle arcHeight="5.0" arcWidth="5.0" fill="WHITE" height="1093.0" stroke="#c6c1c1" strokeType="INSIDE" width="360.0" />
-                  <Button id="Dots" fx:id="Dots" userData="Dots.png" contentDisplay="CENTER" layoutX="34.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Dots" textFill="#47464a">
+                  <Button id="Dots" fx:id="Dots" contentDisplay="CENTER" layoutX="34.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Dots" textFill="#47464a" userData="Dots.png">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -33,7 +33,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="ColumnSystem" fx:id="ColumnSystem" userData="ColumnSystem.png" contentDisplay="CENTER" layoutX="197.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="ColumnSystem" textFill="#47464a">
+                  <Button id="ColumnSystem" fx:id="ColumnSystem" contentDisplay="CENTER" layoutX="197.0" layoutY="47.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="ColumnSystem" textFill="#47464a" userData="ColumnSystem.png">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -42,7 +42,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="TagesbetrachtungTL" fx:id="TagesbetrachtungTL" userData="TagesbetrachtungTL.png" contentDisplay="CENTER" layoutX="34.0" layoutY="261.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="TagesbetrachtungTL" textFill="#47464a">
+                  <Button id="TagesbetrachtungTL" fx:id="TagesbetrachtungTL" contentDisplay="CENTER" layoutX="34.0" layoutY="261.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="TagesbetrachtungTL" textFill="#47464a" userData="TagesbetrachtungTL.png">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -51,7 +51,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="Tagesbetrachtung" fx:id="Tagesbetrachtung" userData="Tagesbetrachtung.png" contentDisplay="CENTER" layoutX="197.0" layoutY="258.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Tagesbetrachtung" textFill="#47464a">
+                  <Button id="Tagesbetrachtung" fx:id="Tagesbetrachtung" contentDisplay="CENTER" layoutX="197.0" layoutY="258.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Tagesbetrachtung" textFill="#47464a" userData="Tagesbetrachtung.png">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -60,7 +60,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button fx:id="Blanko" userData="Blanko.png" contentDisplay="CENTER" layoutX="34.0" layoutY="475.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Blanko" textFill="#47464a">
+                  <Button fx:id="Blanko" contentDisplay="CENTER" layoutX="34.0" layoutY="475.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Blanko" textFill="#47464a" userData="Blanko.png">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -69,7 +69,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="Stressprotokoll" fx:id="Stressprotokoll" userData="Stressprotokoll.png" contentDisplay="CENTER" layoutX="197.0" layoutY="475.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Stressprotokoll" textFill="#47464a">
+                  <Button id="Stressprotokoll" fx:id="Stressprotokoll" contentDisplay="CENTER" layoutX="197.0" layoutY="475.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Stressprotokoll" textFill="#47464a" userData="Stressprotokoll.png">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -78,7 +78,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="Ikigai" fx:id="Ikigai" userData="Ikigai.png" alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" layoutY="689.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Ikigai" textFill="#47464a">
+                  <Button id="Ikigai" fx:id="Ikigai" alignment="CENTER" contentDisplay="CENTER" layoutX="34.0" layoutY="689.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="Ikigai" textFill="#47464a" userData="Ikigai.png">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>
@@ -87,7 +87,7 @@
                         </ImageView>
                      </graphic>
                   </Button>
-                  <Button id="test" fx:id="test" userData="test.png" alignment="CENTER" contentDisplay="CENTER" layoutX="197.0" layoutY="689.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="test" textFill="#47464a">
+                  <Button id="test" fx:id="test" alignment="CENTER" contentDisplay="CENTER" layoutX="197.0" layoutY="689.0" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#selectContent" prefHeight="184.0" prefWidth="130.0" text="test" textFill="#47464a" userData="test.png">
                      <graphic>
                         <ImageView fitWidth="125.0" pickOnBounds="true" preserveRatio="true">
                            <image>

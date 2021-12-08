@@ -9,20 +9,20 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="pagePane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.FullPageViewController">
+<AnchorPane fx:id="pagePane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="810.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="de.entsesselt.fileyournal.EditViewController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#c6c1c1" height="810.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" width="720.0" />
-      <ImageView fx:id="page" fitHeight="712.0" fitWidth="513.0" layoutX="107.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="page" fitHeight="712.0" fitWidth="513.0" layoutX="100.0" layoutY="21.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/page.png" />
          </image>
       </ImageView>
-      <Label fx:id="label" layoutX="205.0" layoutY="327.0" text="Wähle rechts ein Template für diese Seite" textFill="#47464a">
+      <Label fx:id="label" layoutX="181.0" layoutY="294.0" prefHeight="104.0" prefWidth="342.0" text="Zur Erstellung einer Seite wähle rechts ein Template aus." textAlignment="CENTER" textFill="#47464a" wrapText="true">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <AnchorPane fx:id="namePane" layoutX="176.0" layoutY="279.0" prefHeight="206.0" prefWidth="368.0">
+      <AnchorPane fx:id="namePane" layoutX="170.0" layoutY="274.0" prefHeight="206.0" prefWidth="368.0">
          <children>
             <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#faf3f2" height="200.0" layoutY="3.0" stroke="#c6c1c1" strokeType="INSIDE" strokeWidth="2.0" width="368.0" />
             <Label fx:id="nameWarn" layoutX="58.0" layoutY="124.0" text="Du musst bitte erst einen Namen eingeben!" textFill="#a10023" visible="false">
@@ -43,7 +43,7 @@
             </Label>
             <TextField fx:id="nameField" layoutX="104.0" layoutY="77.0" promptText="name" />
          </children></AnchorPane>
-      <Button fx:id="takeButton" disable="true" layoutX="278.0" layoutY="741.0" mnemonicParsing="false" onAction="#savePage" text="Seitenentwurf speichern" />
+      <Button fx:id="takeButton" disable="true" layoutX="282.0" layoutY="741.0" mnemonicParsing="false" onAction="#savePage" text="Seitenentwurf speichern" />
       <AnchorPane fx:id="fullPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">
          <children>
             <ImageView fx:id="page11" fitHeight="712.0" fitWidth="513.0" layoutX="107.0" layoutY="26.0" pickOnBounds="true" preserveRatio="true">
@@ -134,8 +134,8 @@
             </Button>
          </children>
       </AnchorPane>
-      <Button fx:id="backToStart" layoutX="110.0" layoutY="742.0" mnemonicParsing="false" onAction="#backToStart" text="zur Startseite zurück" />
-      <Button fx:id="goToOrganizer" layoutX="468.0" layoutY="742.0" mnemonicParsing="false" onAction="#exitEditor" text="Organizer durchblättern" />
+      <Button fx:id="templateViewShow" layoutX="101.0" layoutY="741.0" mnemonicParsing="false" onAction="#templateView" text="zur Template-Übersicht" />
+      <Button fx:id="goToOrganizer" layoutX="463.0" layoutY="741.0" mnemonicParsing="false" onAction="#exitEditor" text="Organizer durchblättern" />
       <Button fx:id="takeChangeButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#saveChanges" text="Änderung speichern" visible="false" />
       <Button fx:id="insertBeforeButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#insertNewBefore" text="Änderung einfügen" visible="false" />
       <Button fx:id="insertAfterButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#insertNewAfter" text="Änderung einfügen" visible="false" />

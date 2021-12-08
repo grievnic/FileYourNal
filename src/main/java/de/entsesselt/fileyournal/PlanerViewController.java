@@ -1,6 +1,5 @@
 package de.entsesselt.fileyournal;
 
-import de.entsesselt.fileyournal.model.Page;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
@@ -178,15 +177,23 @@ public class PlanerViewController extends AbstractController{
         mainApp.goToPageIndex(mainApp.getPageIndex() + 1);
     }
 
+    /**
+     * Method allows to jump to the requested pagenumber and checks the correctness of the entry
+     * @throws Exception
+     */
     @FXML
     private void goToPageNumber() throws Exception{
         String pagenumber = goToPage.getText();// pagenumber from user
-        if (pagenumber.isEmpty() | pagenumber.equals("0")){
+        if (pagenumber.isEmpty()){ // textfield is empty
             noPage.setText("Du hast keine Seitenzahl angegeben!");
             noPage.setVisible(true);
-        } else { // only int allowed
+        } else if (pagenumber.equals("0")){ // entry is "0"
+            noPage.setText("Du hast keine gültige Seitenzahl angegeben!");
+            noPage.setVisible(true);
+        }
+        else { // only int allowed
             if (!pagenumber.matches("^[0-9]*$")) {
-               pagenumber = pagenumber.replaceAll("[^0-9]", "");
+               pagenumber = pagenumber.replaceAll("[^0-9]", ""); //deletes the non-numeric entry
                 goToPage.setText(pagenumber);
             }
             int index = Integer.parseInt(pagenumber) - 1; // conversion to index
@@ -194,33 +201,10 @@ public class PlanerViewController extends AbstractController{
                 mainApp.goToPageIndex(index);
                 goToPage.setText("");
                 noPage.setVisible(false);
-            } else {
+            } else { // if entry > number of existing pages
+                noPage.setText("Diese Seitenzahl existiert nicht!");
                 noPage.setVisible(true);
             }
-        }
-    }
-
-    @FXML
-    public void savePage() throws Exception {
-        // alert
-        Alert a = new Alert(Alert.AlertType.NONE);
-        a.setAlertType(Alert.AlertType.ERROR);
-        a.setContentText("Es müssen alle Seitenelemente befüllt sein!");
-        //Are all Page-Elements filled with content?
-        if (template.equals("fullpage") & content1.isEmpty()){
-            a.show();
-        }else if (template.equals("half") && content1.isEmpty() | content2.isEmpty()){
-            a.show();
-        }else if (template.equals("halfQuad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty() ){
-            a.show();
-        }else if (template.equals("quadHalf") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty()){
-            a.show();
-        }else if (template.equals("quad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty() | content4.isEmpty()){
-            a.show();
-        }else { // creates a new JDOM-Page-Element and writes it into the XSL-FO tree
-            Page fullPage = new Page(template, content1, content2, content3, content4);
-            mainApp.modifyInOrganizer(fullPage.pageCreator());
-            mainApp.newPage(); // shows a empty page and shows the template-overview at the right side
         }
     }
 

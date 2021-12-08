@@ -4,7 +4,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
-public class FullContentViewController extends AbstractController{
+public class ContentViewController extends AbstractController{
 
     String contentName;
 
@@ -27,10 +27,13 @@ public class FullContentViewController extends AbstractController{
      */
     @FXML
     public void loadContent(String contentName) throws Exception {
-        FullPageViewController control = mainApp.getPageViewController();
+        EditViewController control = mainApp.getEditViewController();
         control.addContent(contentName);
     }
 
+    /**
+     * Shows the TemplateView
+     */
     public void backToTemplate(){
         mainApp.showRightView();
     }
