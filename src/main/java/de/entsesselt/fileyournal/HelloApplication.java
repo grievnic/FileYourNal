@@ -43,7 +43,7 @@ public class HelloApplication extends Application {
 
     /**
      * The start method
-     * @param primaryStage
+     * @param primaryStage first stage
      */
     @Override
     public void start(Stage primaryStage) throws Exception {
@@ -162,7 +162,7 @@ public class HelloApplication extends Application {
             maxIdNumber = 0;
             currentPage = null;
         }
-        this.org = (Organizer.getInstance(fileName));
+        this.org = (Organizer.getInstance());
         org.readFO(foFilePath);
     }
 
@@ -459,7 +459,7 @@ public class HelloApplication extends Application {
     /**
      * checks whether the button display is logical, is there a previous or next page
      * @param pageIndex index from current page
-     * @param maxIndex
+     * @param maxIndex the last page
      */
     private void checkButtons(int pageIndex, int maxIndex){
         planerViewController.setNextButton(pageIndex == maxIndex);

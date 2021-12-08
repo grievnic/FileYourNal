@@ -183,7 +183,7 @@ public class EditViewController extends AbstractController{
      * gets the template identifier
      * intitilizes showing the corresponding content overview
      * @param event selected Page area
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     @FXML
     public void selectArea(ActionEvent event) throws Exception {
@@ -199,7 +199,7 @@ public class EditViewController extends AbstractController{
     /**
      * checks, if file already exist
      * @param file to check
-     * @return
+     * @return true, if file already exists
      */
    private Boolean fileCheck(File file){
        return file.exists() && !file.isDirectory();
@@ -231,7 +231,7 @@ public class EditViewController extends AbstractController{
 
     /**
      * sets the fullpageview on air / off air
-     * @param bool
+     * @param bool true or false for on / off air
      */
    @FXML
    public void setFullVisible(Boolean bool){
@@ -243,7 +243,7 @@ public class EditViewController extends AbstractController{
 
     /**
      * sets the hafepageview on air / off air
-     * @param bool
+     * @param bool true or false for on / off air
      */
     @FXML
     public void setHalfVisible(Boolean bool){
@@ -255,7 +255,7 @@ public class EditViewController extends AbstractController{
 
     /**
      * sets the quadpageview on air / off air
-     * @param bool
+     * @param bool true or false for on / off air
      */
     @FXML
     public void setQuadVisible(Boolean bool){
@@ -267,7 +267,7 @@ public class EditViewController extends AbstractController{
 
     /**
      * sets the quadhalfpageview on air / off air
-     * @param bool
+     * @param bool true or false for on / off air
      */
     @FXML
     public void setQuadHalfVisible(Boolean bool){
@@ -279,7 +279,7 @@ public class EditViewController extends AbstractController{
 
     /**
      * sets the halfquadpageview on air / off air
-     * @param bool
+     * @param bool true or false for on / off air
      */
     @FXML
     public void setHalfQuadVisible(Boolean bool){
@@ -291,7 +291,7 @@ public class EditViewController extends AbstractController{
 
     /**
      * controls the content overview in the rightView - shows portrait content
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     protected void showPortraitTemplates() throws Exception {
         mainApp.changeRightView("FullContentView.fxml");
@@ -299,19 +299,10 @@ public class EditViewController extends AbstractController{
 
     /**
      * controls the content overiew in the rightView - shows landscape content
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     protected void showLandscapeTemplates() throws Exception {
         mainApp.changeRightView("HalfContentView.fxml");
-    }
-
-    /**
-     * forwards the call to mainapp to begin a new page
-     * @throws Exception
-     */
-    @FXML
-    public void nextPage()throws Exception{
-       mainApp.nextPage();
     }
 
     /**
@@ -330,7 +321,7 @@ public class EditViewController extends AbstractController{
      * if not: shows an alert
      * if it's ok...
      * @return a new page
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     private Page pageContentComposer() throws Exception {
        Page fullPage = null;
@@ -359,7 +350,7 @@ public class EditViewController extends AbstractController{
      * the page will be created with JDOM and saved in the FO-document
      * an empty page will be shown and
      * after the first page it will be possible, to click the PDF export button
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     @FXML
     public void saveNewPages() throws Exception {
@@ -377,7 +368,7 @@ public class EditViewController extends AbstractController{
      * the page will be created with JDOM and saved in the FO-document
      * an empty page will be shown and
      * after the first page it will be possible, to click the PDF export button
-      * @throws Exception
+      * @throws Exception if error occurs
      */
     @FXML
     public void savePage () throws Exception {
@@ -396,7 +387,7 @@ public class EditViewController extends AbstractController{
      * the page will be modified with JDOM and saved in the FO-document
      * an empty page will be shown and
      * after the first page it will be possible, to click the PDF export button
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     public void saveChanges() throws Exception {
         pageDataService();
@@ -414,7 +405,7 @@ public class EditViewController extends AbstractController{
      * the page will be inserted before the current one with JDOM and saved in the FO-document
      * an empty page will be shown and
      * after the first page it will be possible, to click the PDF export button
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     public void insertNewBefore() throws Exception {
         pageDataService();
@@ -433,7 +424,7 @@ public class EditViewController extends AbstractController{
      * the page will be inserted after the current one with JDOM and saved in the FO-document
      * an empty page will be shown and
      * after the first page it will be possible, to click the PDF export button
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     public void insertNewAfter() throws Exception {
         pageDataService();
@@ -450,7 +441,7 @@ public class EditViewController extends AbstractController{
     /**
      * leaves the editor mode and makes a superficial check, if unsaved content may be set
      * and gives a possibility to save from dialogue - depending on edit- or modification mode
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     @FXML
     protected void exitEditor() throws Exception {
@@ -500,7 +491,7 @@ public class EditViewController extends AbstractController{
 
     /**
      * service to get to page 1 at the flipping through mode
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     private void showPlanerViewFirstPage() throws Exception {
         mainApp.showPlanerView();//
@@ -512,12 +503,12 @@ public class EditViewController extends AbstractController{
      * loads site view with content depending on the data and template
      * if an area is portrait, the path to portrait content files will be addet
      * if an area is landcape, the path to landscape content files will be addet
-     * @param template
+     * @param template template type
      * @param content1 for fullpage, half1, quad1, halfquad1, quadhalf1
      * @param content2 for half2, quad2, halfquad2, quadhalf2
      * @param content3 for quad3, halfquad3, quadhalf3
      * @param content4 for quad4
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     @FXML
     public void loadPage(String template, String  content1, String content2, String content3, String content4) throws Exception {
@@ -624,7 +615,7 @@ public class EditViewController extends AbstractController{
     /**
      * method displays the chosen content in the active button (handled in mainApp)
      * @param contentName - in the right view chosen content
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     @FXML
     public void addContent(String contentName) throws Exception{
@@ -671,7 +662,7 @@ public class EditViewController extends AbstractController{
 
     /**
      * service to able/disable the button "Organizer durchblättern"
-     * @param bool
+     * @param bool true = disable, false = able
      */
     public void goToOrganizerDisable(Boolean bool){
         goToOrganizer.setDisable(bool);

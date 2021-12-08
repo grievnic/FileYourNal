@@ -21,8 +21,6 @@ import java.io.*;
 
 public class Organizer {
 
-    private final static String FILENAME = "/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/Organizer.fo";
-    private static String organizername = "Organizer";
     private static Document currentOrganizer;
     private static Organizer INSTANCE = null;
 
@@ -31,23 +29,18 @@ public class Organizer {
 
 
     /**
-     *
-     * @param name given from user at the start
+     * singleton
      * @return the only instance from organizer as singleton
      */
-    public static Organizer getInstance(String name) {
+    public static Organizer getInstance() {
         if(INSTANCE == null){
-            INSTANCE = new Organizer(name);
+            INSTANCE = new Organizer();
         } return INSTANCE;
-    }
-
-    public Organizer(String name){
-        organizername = name;
     }
 
     /**
      * This method reads the XSL-FO-File (from path) and saves a JDOM-tree in variable currentOrganizer
-     * @param foPath
+     * @param foPath path to XSL-FO file
      */
     public void readFO(String foPath) {
         try {
@@ -60,18 +53,36 @@ public class Organizer {
         }
     }
 
+    /**
+     * add new page to the end of the index
+     * @param newPage the new page
+     */
     public static void addPage(Element newPage) {
         fetchPageParent().addContent(newPage);
     }
 
+    /**
+     * replace page content from current page
+     * @param pageIndex current page
+     * @param modifiedPage the new page
+     */
     public void addModifiedContent(int pageIndex, Element modifiedPage){
         fetchPageParent().setContent(pageIndex, modifiedPage);
     }
 
+    /**
+     * insert new page at index (before or after current)
+     * @param pageIndex place to insert
+     * @param newPage the new page
+     */
     public void insertContent(int pageIndex, Element newPage){
         fetchPageParent().addContent(pageIndex, newPage);
     }
 
+    /**
+     * delete current page
+     * @param pageIndex from current page
+     */
     public void deletePage (int pageIndex) {
         fetchPageParent().removeContent(pageIndex);
     }
@@ -83,20 +94,19 @@ public class Organizer {
     public static Element fetchPageParent(){
         Element root = currentOrganizer.getRootElement();
         Element pageSequence = root.getChild("page-sequence",fo);
-        Element flow = pageSequence.getChild("flow", fo);
-        return flow;
+        return pageSequence.getChild("flow", fo);
     }
 
 
     /**
      * saves the XSL-FO at the user given path
-     * @param filePath
+     * @param filePath where to write the XSL-FO file
      */
     public void writeFO(String filePath){
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
         System.out.println(filePath);
-        try (FileOutputStream fos = new FileOutputStream(new File(filePath))) {
+        try (FileOutputStream fos = new FileOutputStream(filePath)) {
             XMLOutputter op = new XMLOutputter(format);
             op.output(currentOrganizer, fos);
         } catch (IOException e) {
@@ -108,15 +118,14 @@ public class Organizer {
      * exports the XSL-FO document to pdf
      * @param filePath the path to XSL-FO document
      * @param targetPath given from user at the start - as offer for the save dialogue
-     * @throws Exception
+     * @throws Exception if error occurs
      */
     public void foToPdf(String filePath, String targetPath) throws Exception {
         // Construct a FopFactory
         FopFactory fopFactory = FopFactory.newInstance(new File("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/fop.xconf"));
         // Set up output stream.
         // Note: Using BufferedOutputStream for performance reasons (helpful with FileOutputStreams).
-        OutputStream pdfOut = new BufferedOutputStream(new FileOutputStream(new File(targetPath)));
-        try {
+        try (OutputStream pdfOut = new BufferedOutputStream(new FileOutputStream(targetPath))) {
             // Construct fop with desired output format
             Fop fop = fopFactory.newFop(MimeConstants.MIME_PDF, pdfOut);
             // Step 4: Setup JAXP using identity transformer
@@ -130,10 +139,8 @@ public class Organizer {
             // Start XSLT transformation and FOP processing
             transformer.transform(foIn, res);
         } catch (FOPException e) {
-            e.printStackTrace();}
-        finally {
-            //Clean-up
-            pdfOut.close();
+            e.printStackTrace();
         }
+        //Clean-up
     }
 }

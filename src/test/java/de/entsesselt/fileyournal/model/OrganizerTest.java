@@ -19,7 +19,7 @@ class OrganizerTest {
     @Test
     void testDeletePage(){
         org = null;
-        this.org = (Organizer.getInstance("test"));
+        this.org = (Organizer.getInstance());
         org.readFO("/Users/nicolegrieve/Desktop/testing_Del2.fo");
         assertEquals("flow", org.fetchPageParent().getName());
 
@@ -31,7 +31,7 @@ class OrganizerTest {
     void testAddPage() {
         org = null;
         Page.setCurrentPageNumber(0);
-        this.org = (Organizer.getInstance("test"));
+        this.org = (Organizer.getInstance());
         org.readFO("/Users/nicolegrieve/Desktop/testing.fo");
         org.addPage(p.pageCreator());
         org.addPage(p.pageCreator());
@@ -47,7 +47,7 @@ class OrganizerTest {
     void addModifiedContent() {
         org = null;
         Page.setCurrentPageNumber(0);
-        this.org = (Organizer.getInstance("test"));
+        this.org = (Organizer.getInstance());
         org.readFO("/Users/nicolegrieve/Desktop/testing_Mod.fo");
         org.addModifiedContent(1,h.pageCreator());
         assertEquals(2,(org.fetchPageParent().getChildren().size()));
@@ -59,7 +59,7 @@ class OrganizerTest {
     void insertContent() {
         org = null;
         Page.setCurrentPageNumber(0);
-        this.org = (Organizer.getInstance("test"));
+        this.org = (Organizer.getInstance());
         org.readFO("/Users/nicolegrieve/Desktop/testing.fo");
         org.addPage(p.pageCreator());
         org.addPage(p.pageCreator());
