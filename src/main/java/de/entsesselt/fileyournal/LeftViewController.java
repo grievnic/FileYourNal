@@ -15,44 +15,8 @@ import java.util.Optional;
 
 public class LeftViewController extends AbstractController {
 
-   /* @FXML
-    private AnchorPane ControlPane;*/
-
     @FXML
     private AnchorPane modifyPane;
-
-   /* @FXML
-    private Button modifyCurrentButton;
-
-    @FXML
-    private Button deleteCurrentButton;
-
-    @FXML
-    private Button insertBeforeButton;
-
-    @FXML
-    private Button insertAfterButton;
-
-    @FXML
-    private Button addPagesButton;
-
-    @FXML
-    private MenuButton modificationManagement;
-
-    @FXML
-    private MenuItem modifyCurrentItem;
-
-    @FXML
-    private MenuItem deleteCurrentItem;
-
-    @FXML
-    private MenuItem insertBeforeItem;
-
-    @FXML
-    private MenuItem insertAfterItem;
-
-    @FXML
-    private MenuItem addAtEndItem;*/
 
     @FXML
     private Button exitEditor;
@@ -66,18 +30,6 @@ public class LeftViewController extends AbstractController {
     @FXML
     private ImageView pdfButtonView;
 
-   /* @FXML
-    private Button loadOrganizerButton;
-
-    @FXML
-    private ImageView loadOrganizerImageView;
-
-    @FXML
-    private Button newOrganizerButton;
-
-    @FXML
-    private ImageView newPlanerImageView;*/
-
 
     // Menu Buttons
 
@@ -88,7 +40,7 @@ public class LeftViewController extends AbstractController {
         Window theStage = source.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
         if (mainApp.getFilePath() == null) { // no user given file directory
-            System.out.println("Inital Filename: " + mainApp.getFileName());
+            System.out.println("Initial Filename: " + mainApp.getFileName());
             fileChooser.setInitialDirectory(new File(mainApp.getFilePath()));// path from the app directory
         } else {//  goto user given file directory
             String directoryPath = mainApp.getFilePath().substring(0,mainApp.getFilePath().lastIndexOf("/")); // only path without filename
@@ -108,7 +60,6 @@ public class LeftViewController extends AbstractController {
     private static void delay(int t){
         long ende = (new Date()).getTime() + t;
         while( (new Date()).getTime() < ende ){
-            // abwarten und Tee trinken
         }
     }
     public void pdfFeedback(){
@@ -124,8 +75,6 @@ public class LeftViewController extends AbstractController {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Zur Startseite zurückkehren");
         a.setContentText("Bist Du sicher, dass Du diese Ansicht verlassen möchtest?");
-
-
         Optional<ButtonType> result = a.showAndWait();
         if (result.get() == ButtonType.OK) {
             mainApp.showStartView();

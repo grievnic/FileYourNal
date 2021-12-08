@@ -16,11 +16,6 @@ public class RightViewController extends AbstractController {
     @FXML
     Text pdfFeedbackText;
 
-    @FXML
-    AnchorPane templateViewPane;
-
-    @FXML
-
 
     String template = "";
     // Reference to the main application.
@@ -94,7 +89,7 @@ public class RightViewController extends AbstractController {
     }
 
     // takes the template-Selection away
-    public void emptyRightView(){
+    public void emptyRightView() throws Exception{
         mainApp.changeRightView("EmptyRightView.fxml");
     }
 

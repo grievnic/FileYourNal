@@ -79,9 +79,6 @@ public class EditViewController extends AbstractController{
     Button templateViewShow;
 
     @FXML
-    Button backToStart;
-
-    @FXML
     Button goToOrganizer;
 
     /**
@@ -147,13 +144,13 @@ public class EditViewController extends AbstractController{
 
     /**
      * first method when starting the editor to get all file information (name and dir) from user
-     * @param event click on Button "speichern & Speicherort festlegen"
+     * click on Button "speichern & Speicherort festlegen"
      */
    @FXML
-   public void nameYourOrganizer(ActionEvent event) {
-       File file = null;
-       String fileName = null;
-       File newFile = null;
+   public void nameYourOrganizer() throws Exception {
+       File file;
+       String fileName;
+       String filePath = null;
        // to get the files name
        if (nameField.getText().isEmpty()) { // if no name is entered
            nameWarn.setVisible(true); // warning message appears
@@ -167,9 +164,10 @@ public class EditViewController extends AbstractController{
            file = dc.showDialog(stage);
            if (file != null) {
                file = fileRenameCheck(file, fileName); // checks and change name, if path is already taken
+               filePath = file.getPath(); // selected filepath
            }
        }
-       String filePath = file.getPath(); // selected filepath
+
        if (filePath != null) {
            namePane.setVisible(false);
            mainApp.startNewOrganizer(mainApp.getFileName(), FO_TEMPLATE); // starts a new organizer

@@ -46,7 +46,7 @@ public class HelloApplication extends Application {
      * @param primaryStage
      */
     @Override
-    public void start(Stage primaryStage) {
+    public void start(Stage primaryStage) throws Exception {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("FileYOURnal");
 
@@ -59,7 +59,7 @@ public class HelloApplication extends Application {
     /**
      * Initializes the root layout.
      */
-    public void initRootLayout() {
+    public void initRootLayout() throws Exception{
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
@@ -77,7 +77,7 @@ public class HelloApplication extends Application {
     /**
      * shows the first view center of the root
      */
-    public void showStartView() { // shows the page-view with the organizer-picture
+    public void showStartView() throws Exception { // shows the page-view with the organizer-picture
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -125,7 +125,7 @@ public class HelloApplication extends Application {
      * shows the flick through view to show saved pages
      */
     @FXML
-    public void showPlanerView() { //
+    public void showPlanerView() throws Exception { //
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -173,7 +173,7 @@ public class HelloApplication extends Application {
      * @param template the user selected template
      */
     @FXML
-    public void showPageTemplate(String controller, String template) {
+    public void showPageTemplate(String controller, String template) throws Exception{
         currentTemplate = template;
         if (controller.equals("pageViewController")) {
             // to prevent the current view from being overlaid by other panes
@@ -255,7 +255,7 @@ public class HelloApplication extends Application {
      * according to the submitted template
       * @param templateFxml is the template according content overview as fxml
      */
-    public void changeRightView(String templateFxml) { // changes the view according to the page template
+    public void changeRightView(String templateFxml) throws Exception { // changes the view according to the page template
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(templateFxml));
             Node node = loader.load();
@@ -284,7 +284,7 @@ public class HelloApplication extends Application {
     /**
      * cleans the side view as preparation for the new template and content selection
      */
-    public void newPage() { //to get a new empty pageview
+    public void newPage() throws Exception { //to get a new empty pageview
         showRightView(); // template overview
         showEditView();
         editViewController.namePaneUnvisible();
