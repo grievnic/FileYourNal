@@ -18,12 +18,12 @@
          <image>
             <Image url="@../../../assets/FileYournal.png" />
          </image></ImageView>
-      <Button fx:id="exitEditor" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" onAction="#backToStart" prefHeight="73.0" prefWidth="300.0" text="  Zurück zur Startseite" visible="false">
+      <Button fx:id="exitEditor" layoutX="30.0" layoutY="200.0" mnemonicParsing="false" onAction="#backToStart" prefHeight="73.0" prefWidth="300.0" text="            zurück zur Programmstart" textAlignment="RIGHT">
          <font>
             <Font size="18.0" />
          </font>
       </Button>
-      <ImageView fx:id="backToStartButtonView" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true" visible="false">
+      <ImageView fx:id="backToStartButtonView" fitHeight="60.0" fitWidth="60.0" layoutX="40.0" layoutY="207.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@../../../assets/BackToStart.png" />
          </image>
@@ -46,7 +46,7 @@
                 <MenuItem id="menuItemDelete" fx:id="deleteCurrentItem" mnemonicParsing="false" onAction="#deleteCurrentPage" text="aktuelle Seite löschen" />
                   <MenuItem id="menuItemInsertBefore" fx:id="insertBeforeItem" mnemonicParsing="false" onAction="#insertBeforeCurrent" text="Seite einfügen (vor dieser)" />
                   <MenuItem id="menuItemInsertAfter" fx:id="insertAfterItem" mnemonicParsing="false" onAction="#insertAfterCurrent" text="Seite einfügen (nach dieser)" />
-                  <MenuItem id="menuItemAddPages" fx:id="addAtEndItem" mnemonicParsing="false" onAction="#addAtEnd" text="hinten Seite hinzufügen" />
+                  <MenuItem id="menuItemAddPages" fx:id="addAtEndItem" mnemonicParsing="false" onAction="#addAtEnd" text="hinten Seite(n) hinzufügen" />
               </items>
                <font>
                   <Font size="18.0" />

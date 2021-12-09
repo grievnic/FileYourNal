@@ -102,7 +102,7 @@ public class HelloApplication extends Application {
      * shows the edit view at center of the root
      */
     @FXML
-    public void showEditView() { // shows the empty page-view
+    public void showEditView() throws Exception{ // shows the empty page-view
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -122,10 +122,10 @@ public class HelloApplication extends Application {
     }
 
     /**
-     * shows the flick through view to show saved pages
+     * shows the flipping through view to show saved pages
      */
     @FXML
-    public void showPlanerView() throws Exception { //
+    public void showPlanerView() throws Exception {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();

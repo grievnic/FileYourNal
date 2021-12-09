@@ -6,8 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 
-import java.util.Optional;
-
 import static javafx.scene.text.TextAlignment.CENTER;
 
 
@@ -70,12 +68,6 @@ public class PlanerViewController extends AbstractController{
     @FXML
     ImageView quad4;
 
-    String template;
-    String content1;
-    String content2;
-    String content3;
-    String content4;
-
     @FXML
     private AnchorPane fullPane;
 
@@ -91,95 +83,82 @@ public class PlanerViewController extends AbstractController{
     @FXML
     private AnchorPane quadHalfPane;
 
-    private int pageIndex;
+    private int currentPageIndex;
     private final static String FULLPATH = "assets/Content/ContentElements/fullPageContent/";
     private final static String HALFPATH = "assets/Content/ContentElements/halfPageContent/";
 
+    // controls all page views
 
-    @FXML
-    public void modifyPage() throws Exception {
-
-        Alert a = new Alert(Alert.AlertType.CONFIRMATION);
-        a.setTitle("Änderungsmanager");
-        a.setContentText("Was möchtest Du bearbeiten?");
-        ButtonType buttonTypeOne = new ButtonType("Die aktuelle Seite ändern.");
-        ButtonType buttonTypeTwo = new ButtonType("Vor dieser Seite eine neue Seite einfügen.");
-        ButtonType buttonTypeThree = new ButtonType("Nach dieser Seite eine neue Seite einfügen.");
-        ButtonType buttonTypeFour = new ButtonType("Am Ende weitere Seiten hinzufügen");
-        ButtonType buttonTypeCancel = new ButtonType("Cancel", ButtonBar.ButtonData.CANCEL_CLOSE);
-
-        a.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeThree, buttonTypeFour, buttonTypeCancel);
-        Optional<ButtonType> result = a.showAndWait();
-
-        if (result.get() == buttonTypeOne) { // modify current page
-            mainApp.showEditView();//
-            mainApp.goToFoPage(pageIndex);
-        } else if (result.get() == buttonTypeTwo) { // inserts before current page
-            mainApp.showEditView();//
-            mainApp.newPage();
-            mainApp.changePageInsertBeforeButton();
-        } else if (result.get() == buttonTypeThree) { // insert after current page
-            mainApp.showEditView();//
-            mainApp.newPage();
-            mainApp.changePageInsertAfterButton();
-            mainApp.setPageIndex(pageIndex + 1);
-        } else if (result.get() == buttonTypeFour) { // add at the end of document
-            mainApp.showEditView();//
-            mainApp.newPage();
-            mainApp.setAddNewPageButtonVisible();
-            mainApp.changePageViewSaveButtons();
-            mainApp.setPageIndex(mainApp.getMaxIndex() + 1);
-        }
-    }
-
+    /**
+     * page view for template: full / fullpage
+     * @param bool true = visible
+     */
     @FXML
     public void setFullVisible(Boolean bool){
         fullPane.setVisible(bool);
     }
 
+    /**
+     * page view for template: half
+     * @param bool true = visible
+     */
     @FXML
     public void setHalfVisible(Boolean bool){
         halfPane.setVisible(bool);
     }
 
+    /**
+     * page view for template: quad
+     * @param bool true = visible
+     */
     @FXML
     public void setQuadVisible(Boolean bool){
         quadPane.setVisible(bool);
     }
 
+    /**
+     * page view for template: quadHalf
+     * @param bool true = visible
+     */
     @FXML
     public void setQuadHalfVisible(Boolean bool){
         quadHalfPane.setVisible(bool);
     }
 
+    /**
+     * page view for template: halfQuad
+     * @param bool true = visible
+     */
     @FXML
     public void setHalfQuadVisible(Boolean bool){
         halfQuadPane.setVisible(bool);
     }
 
-    protected void showFullTemplates() throws Exception {
-        mainApp.changeRightView("FullContentView.fxml");
-    }
-
-    protected void showHalfTemplates() throws Exception {
-        mainApp.changeRightView("HalfContentView.fxml");
-    }
 
     // three buttons under PageOverview
 
+    /**
+     * decrements the index from current page and loads the page view
+     * @throws Exception if error occurs
+     */
     @FXML
     public void previousPage() throws Exception {
-        mainApp.goToPageIndex(mainApp.getPageIndex() - 1);
-    }
-
-    @FXML
-    public void nextPage()throws Exception{
-        mainApp.goToPageIndex(mainApp.getPageIndex() + 1);
+        mainApp.goToPageIndex(currentPageIndex - 1);
     }
 
     /**
-     * Method allows to jump to the requested pagenumber and checks the correctness of the entry
-     * @throws Exception
+     * increments the index from current page and loads the page view
+     * @throws Exception if error occurs
+     */
+    @FXML
+    public void nextPage()throws Exception{
+        mainApp.goToPageIndex(currentPageIndex + 1);
+    }
+
+    /**
+     * goto page number -
+     * Method allows jumping to the requested page number and checks the correctness of the entry and gives feedback
+     * @throws Exception if error occurs
      */
     @FXML
     private void goToPageNumber() throws Exception{
@@ -208,25 +187,39 @@ public class PlanerViewController extends AbstractController{
         }
     }
 
+    /**
+     * service to control access logically
+     * @param bool true = disable
+     */
     @FXML
     public void setPrevButton(Boolean bool){
         prevPageButton.setDisable(bool);
     }
 
+    /**
+     * service to control access logically
+     * @param bool true = disable
+     */
     @FXML
     public void setNextButton(Boolean bool){
         nextPageButton.setDisable(bool);
     }
 
+    /**
+     * method to load the content in the page view
+     * @param template template type
+     * @param content1 for fullpage, half1, quad1, halfquad1, quadhalf1
+     * @param content2 for half2, quad2, halfquad2, quadhalf2
+     * @param content3 for quad3, halfquad3, quadhalf3
+     * @param content4 for quad4
+     * @param pageindex index of the current page (to display the page number at the bottom of the page)
+     * @throws Exception if error occurs
+     */
     @FXML
     public void loadPage(String template, String  content1, String content2, String content3, String content4, int pageindex) throws Exception {
-        this.content1 = (content1);
-        this.content2 = (content2);
-        this.content3 = (content3);
-        this.content4 = (content4);
-        pageLabel.setText(String.valueOf(pageindex + 1));
+        currentPageIndex = pageindex;
+        pageLabel.setText(String.valueOf(pageindex + 1)); // page number
         pageLabel.setTextAlignment(CENTER);
-        this.pageIndex = pageindex;
 
         if (template.equals("fullpage")){
             mainApp.showPageTemplate("planerViewController", "fullpage");
@@ -292,6 +285,3 @@ public class PlanerViewController extends AbstractController{
         }
     }
 }
-
-
-

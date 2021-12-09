@@ -19,6 +19,18 @@ import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
 
+/**
+ *
+ * Model class -  Organizer is the representation of the organizer - SINGLETON
+ * method loads the document frame from XSL-FO file and makes an JDOM tree
+ * method loads saved organizer documents
+ * method saves new and modified pages
+ * method deletes pages
+ * * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
+ * @version 1.0
+ *
+ */
+
 public class Organizer {
 
     private static Document currentOrganizer;
@@ -96,7 +108,6 @@ public class Organizer {
         Element pageSequence = root.getChild("page-sequence",fo);
         return pageSequence.getChild("flow", fo);
     }
-
 
     /**
      * saves the XSL-FO at the user given path

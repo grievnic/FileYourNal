@@ -13,7 +13,10 @@ import java.io.File;
 import java.util.Optional;
 
 /**
- * EditViewController ist the controller of the editorview
+ * Controller of the EditView
+ *
+ * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
+ * @version 1.0
  *
  */
 public class EditViewController extends AbstractController{

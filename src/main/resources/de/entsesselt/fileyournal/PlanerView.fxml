@@ -17,7 +17,6 @@
          </image>
       </ImageView>
       <Button fx:id="nextPageButton" layoutX="538.0" layoutY="742.0" mnemonicParsing="false" onAction="#nextPage" text="Seite vor" />
-      <Button fx:id="modifyPageClick" layoutX="292.0" layoutY="742.0" mnemonicParsing="false" onAction="#modifyPage" text="Änderung vornehmen" visible="false" />
       <Button fx:id="prevPageButton" disable="true" layoutX="107.0" layoutY="742.0" mnemonicParsing="false" onAction="#previousPage" text="Seite zurück" />
       <Label fx:id="pageLabel" layoutX="351.0" layoutY="698.0" prefHeight="17.0" prefWidth="54.0" textAlignment="CENTER" />
       <AnchorPane fx:id="fullPane" minHeight="-Infinity" minWidth="-Infinity" prefHeight="725.0" prefWidth="720.0" visible="false">

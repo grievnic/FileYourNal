@@ -11,6 +11,14 @@ import javafx.stage.Window;
 import java.io.File;
 import java.nio.file.Paths;
 
+/**
+ * Controller of the StartView
+ *
+ * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
+ * @version 1.0
+ *
+ */
+
 public class StartViewController extends AbstractController {
     @FXML
     Button newOrganizerButton;
@@ -18,15 +26,13 @@ public class StartViewController extends AbstractController {
     @FXML
     ImageView planer;
 
-    @FXML
-    ImageView page;
 
-    private File selectedFile = null;
     private static final String INITIAL_DIRECTORY = Paths.get(".").toAbsolutePath().normalize().toString();
 
-    // Reference to the main application.
-    /*private HelloApplication mainApp;*/
-
+    /**
+     * button click on "Organizer erstellen" to start a new organizer
+     * @throws Exception if error occurs
+     */
     @FXML
     protected void startNewPlanerClick() throws Exception {
         mainApp.showEditView();
@@ -46,7 +52,7 @@ public class StartViewController extends AbstractController {
         fileChooser.setInitialDirectory(new File(INITIAL_DIRECTORY)); // path from the app directory
         fileChooser.getExtensionFilters().addAll( // filter to make only .fo files selectable
                 new FileChooser.ExtensionFilter(".fo-Files", "*.fo"));
-        selectedFile = fileChooser.showOpenDialog(theStage);
+        File selectedFile = fileChooser.showOpenDialog(theStage);
         //starts a new organizer-instance, gets file information and loads page content to show in flick through view
         if (selectedFile != null) {
             mainApp.startNewOrganizer(selectedFile.getName(), selectedFile.getAbsolutePath());
@@ -57,13 +63,4 @@ public class StartViewController extends AbstractController {
             mainApp.loadedOrganizer();
         }
     }
-
-    /**
-     * Is called by the main application to give a reference back to itself.
-     *
-     * @param mainApp
-     */
-    /*public void setMainApp(HelloApplication mainApp) {
-        this.mainApp = mainApp;
-    }*/
 }

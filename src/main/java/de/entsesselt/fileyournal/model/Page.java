@@ -3,6 +3,15 @@ package de.entsesselt.fileyournal.model;
 import org.jdom.Element;
 import org.jdom.Namespace;
 
+/**
+ *
+ * Model class -  Page is the representation of one page
+ * method creates a JDOM page element, that can be written into the document
+ * * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
+ * @version 1.0
+ *
+ */
+
 public class Page {
 
     private String templateType;

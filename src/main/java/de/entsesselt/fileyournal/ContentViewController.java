@@ -4,6 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 
+/**
+ * Controller of the ContentViews: (because of the same code requirement)
+ * FullContentView
+ * HalfContentView
+ *
+ *
+ * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
+ * @version 1.0
+ *
+ */
+
 public class ContentViewController extends AbstractController{
 
     String contentName;
