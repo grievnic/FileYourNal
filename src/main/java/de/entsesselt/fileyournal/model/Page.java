@@ -5,20 +5,20 @@ import org.jdom.Namespace;
 
 /**
  *
- * Model class -  Page is the representation of one page
+ * Model class -  Page is the representation of a page
  * method creates a JDOM page element, that can be written into the document
- * * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
+ * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
  * @version 1.0
  *
  */
 
 public class Page {
 
-    private String templateType;
-    private String content1;
-    private String content2;
-    private String content3;
-    private String content4;
+    private final String templateType;
+    private final String content1;
+    private final String content2;
+    private final String content3;
+    private final String content4;
 
     private final static String FULLPATH = "/Users/nicolegrieve/IdeaProjects/FileYournal/New/src/main/resources/assets/Content/ContentElements/fullPageContent/";
     private final static String HALFPATH = "/Users/nicolegrieve/IdeaProjects/FileYournal/New/src/main/resources/assets/Content/ContentElements/halfPageContent/";
@@ -54,8 +54,8 @@ public class Page {
      * This method creates the <fo:block>- Element per JDOM based on the data from template & content
      * @return newPage - <fo:block>- Element for the whole page
      */
-    public Element pageCreator(){
-        currentPageNumber++; // pagecounter for an unique id made up of templatename and pagenumber
+    public Element pageCreator() {
+        currentPageNumber++; // pagecounter for a unique id made up of templatename and pagenumber
         Element newPage;
     // HALF
         String pageID;

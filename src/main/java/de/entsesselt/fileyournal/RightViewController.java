@@ -5,6 +5,17 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 
+/**
+ * Controller of the RightView(s):
+ * rightView
+ * EmptyRightView
+ * InfoRightView
+ * guides the user through the template and content overview
+ * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
+ * @version 1.0
+ *
+ */
+
 public class RightViewController extends AbstractController {
 
     @FXML
@@ -21,11 +32,10 @@ public class RightViewController extends AbstractController {
 
     /**
      * shows the Quad-Page-View in the Center of the GUI and takes the template-Selection away
-     * @throws Exception if error occurs
      */
     @FXML
-    protected void startQuadQuadTemplate() throws Exception {
-        mainApp.showPageTemplate("pageViewController", "quad");
+    protected void startQuadQuadTemplate() {
+        mainApp.showPageTemplate("editViewController", "quad");
         template = "quad";
         sendTemplate();
         emptyRightView();
@@ -33,11 +43,10 @@ public class RightViewController extends AbstractController {
 
     /**
      * shows the Full-Page-View in the Center of the GUI and takes the template-Selection away
-     * @throws Exception if error occurs
      */
     @FXML
-    protected void startFullTemplate() throws Exception {
-        mainApp.showPageTemplate("pageViewController", "fullpage");
+    protected void startFullTemplate() {
+        mainApp.showPageTemplate("editViewController", "fullpage");
         template = "full";
         sendTemplate();
         emptyRightView();
@@ -45,11 +54,10 @@ public class RightViewController extends AbstractController {
 
     /**
      * shows the Half-Page-View in the Center of the GUI and takes the template-Selection away
-     * @throws Exception if error occurs
      */
     @FXML
-    protected void startHalfHalfTemplate() throws Exception {
-        mainApp.showPageTemplate("pageViewController", "half");
+    protected void startHalfHalfTemplate() {
+        mainApp.showPageTemplate("editViewController", "half");
         template = "half";
         sendTemplate();
         emptyRightView();
@@ -58,11 +66,10 @@ public class RightViewController extends AbstractController {
 
     /**
      * shows the QuadHalf-Page-View in the Center of the GUI and takes the template-Selection away
-     * @throws Exception if error occurs
      */
     @FXML
-    protected void startQuadHalfTemplate() throws Exception {
-        mainApp.showPageTemplate("pageViewController", "quadHalf");
+    protected void startQuadHalfTemplate() {
+        mainApp.showPageTemplate("editViewController", "quadHalf");
         template = "quadHalf";
         sendTemplate();
         emptyRightView();
@@ -70,11 +77,10 @@ public class RightViewController extends AbstractController {
 
     /**
      * shows the HalfQuad-Page-View in the Center of the GUI and takes the template-Selection away
-     * @throws Exception if error occurs
      */
     @FXML
-    protected void startHalfQuadTemplate() throws Exception {
-        mainApp.showPageTemplate("pageViewController", "halfQuad");
+    protected void startHalfQuadTemplate() {
+        mainApp.showPageTemplate("editViewController", "halfQuad");
         template = "halfQuad";
         sendTemplate();
         emptyRightView();
@@ -84,30 +90,40 @@ public class RightViewController extends AbstractController {
      * sets the info pane unvisible for an empty right view
      */
     @FXML
-    public void emptyIt(){
+    public void emptyIt() {
         pageAreaTemplatePane.setVisible(false);
     }
 
     /**
      * sets the selected template at the mainApp
      */
-    private void sendTemplate(){
+    private void sendTemplate() {
         mainApp.setCurrentTemplate(template);
     }
 
     /**
      * takes the template-Selection away and shows info
-     * @throws Exception if error occurs
      */
-    public void emptyRightView() throws Exception{
+    public void emptyRightView() {
         mainApp.changeRightView("EmptyRightView.fxml");
     }
 
     /**
      * shows the template overview
      */
-    public void showTemplateView(){
+    public void showTemplateView() {
         mainApp.showRightView();
         emptyIt();
     }
+
+    private void createMonthCal(){
+
+    }
+
+    @FXML
+    private void createQuartCal(){
+        startFullTemplate();
+        mainApp.calComposer("Quart");
+    }
 }
+

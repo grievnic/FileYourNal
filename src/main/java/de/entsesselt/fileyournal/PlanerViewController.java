@@ -8,6 +8,14 @@ import javafx.scene.layout.AnchorPane;
 
 import static javafx.scene.text.TextAlignment.CENTER;
 
+/**
+ * Controller of the PlanerView - the flipping through mode
+ * user can go to previous and next page or use the goto textfield to enter a pagenumber
+ *
+ * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
+ * @version 1.0
+ *
+ */
 
 public class PlanerViewController extends AbstractController{
 
@@ -139,29 +147,26 @@ public class PlanerViewController extends AbstractController{
 
     /**
      * decrements the index from current page and loads the page view
-     * @throws Exception if error occurs
      */
     @FXML
-    public void previousPage() throws Exception {
+    public void previousPage() {
         mainApp.goToPageIndex(currentPageIndex - 1);
     }
 
     /**
      * increments the index from current page and loads the page view
-     * @throws Exception if error occurs
      */
     @FXML
-    public void nextPage()throws Exception{
+    public void nextPage() {
         mainApp.goToPageIndex(currentPageIndex + 1);
     }
 
     /**
      * goto page number -
      * Method allows jumping to the requested page number and checks the correctness of the entry and gives feedback
-     * @throws Exception if error occurs
      */
     @FXML
-    private void goToPageNumber() throws Exception{
+    private void goToPageNumber() {
         String pagenumber = goToPage.getText();// pagenumber from user
         if (pagenumber.isEmpty()){ // textfield is empty
             noPage.setText("Du hast keine Seitenzahl angegeben!");
@@ -213,10 +218,9 @@ public class PlanerViewController extends AbstractController{
      * @param content3 for quad3, halfquad3, quadhalf3
      * @param content4 for quad4
      * @param pageindex index of the current page (to display the page number at the bottom of the page)
-     * @throws Exception if error occurs
      */
     @FXML
-    public void loadPage(String template, String  content1, String content2, String content3, String content4, int pageindex) throws Exception {
+    public void loadPage(String template, String  content1, String content2, String content3, String content4, int pageindex) {
         currentPageIndex = pageindex;
         pageLabel.setText(String.valueOf(pageindex + 1)); // page number
         pageLabel.setTextAlignment(CENTER);
@@ -224,6 +228,7 @@ public class PlanerViewController extends AbstractController{
         if (template.equals("fullpage")){
             mainApp.showPageTemplate("planerViewController", "fullpage");
             String imagePath = FULLPATH + content1;
+            System.out.println(imagePath);
             Image image1 = new Image(imagePath);
             full1.setImage(image1);
         } else if (mainApp.getCurrentTemplate().equals("half")){
@@ -233,7 +238,6 @@ public class PlanerViewController extends AbstractController{
             half1.setImage(image1);
 
             String imagePath2 = HALFPATH + content2;
-            System.out.println(imagePath2);
             Image image2 = new Image(imagePath2);
             half2.setImage(image2);
 

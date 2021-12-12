@@ -139,6 +139,6 @@
       <Button fx:id="takeChangeButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#saveChanges" text="Änderung speichern" visible="false" />
       <Button fx:id="insertBeforeButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#insertNewBefore" text="Änderung einfügen" visible="false" />
       <Button fx:id="insertAfterButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#insertNewAfter" text="Änderung einfügen" visible="false" />
-      <Button fx:id="addNewPageButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#saveNewPages" text="Seite hinzufügen" visible="false" />
+      <Button fx:id="addNewPageButton" layoutX="289.0" layoutY="741.0" mnemonicParsing="false" onAction="#savePage" text="Seite hinzufügen" visible="false" />
    </children>
 </AnchorPane>

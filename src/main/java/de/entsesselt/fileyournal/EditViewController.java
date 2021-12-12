@@ -14,6 +14,7 @@ import java.util.Optional;
 
 /**
  * Controller of the EditView
+ * This view enables the user to create pages. The selected templates can be filled with content elements.
  *
  * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
  * @version 1.0
@@ -21,6 +22,9 @@ import java.util.Optional;
  */
 public class EditViewController extends AbstractController{
 
+    /**
+     * buttons as areas depending on selected template
+     */
     @FXML
     Button button1;
 
@@ -60,9 +64,10 @@ public class EditViewController extends AbstractController{
     @FXML
     Button quadHalfButton3;
 
-    @FXML
-    Label label;
 
+    /**
+     * save buttons depending on selected modification mode  - combined with different onAction methods
+     */
     @FXML
     Button takeButton;
 
@@ -77,6 +82,12 @@ public class EditViewController extends AbstractController{
 
     @FXML
     Button addNewPageButton;
+
+    /**
+     *  other
+     */
+    @FXML
+    Label label;
 
     @FXML
     Button templateViewShow;
@@ -94,7 +105,7 @@ public class EditViewController extends AbstractController{
     String content4;
 
     /**
-     * variables to get informations
+     * variables to get information
      */
     String contentName;
     String imagePath;
@@ -150,7 +161,7 @@ public class EditViewController extends AbstractController{
      * click on Button "speichern & Speicherort festlegen"
      */
    @FXML
-   public void nameYourOrganizer() throws Exception {
+   public void nameYourOrganizer() {
        File file;
        String fileName;
        String filePath = null;
@@ -184,12 +195,11 @@ public class EditViewController extends AbstractController{
     /**
      * realizes the active button
      * gets the template identifier
-     * intitilizes showing the corresponding content overview
+     * initializes showing the corresponding content overview
      * @param event selected Page area
-     * @throws Exception if error occurs
      */
     @FXML
-    public void selectArea(ActionEvent event) throws Exception {
+    public void selectArea(ActionEvent event) {
         Button activeButton = (Button) event.getSource();
         mainApp.setActiveButton(activeButton);
         if (activeButton.getText().equals("halbe Seite")){
@@ -214,7 +224,7 @@ public class EditViewController extends AbstractController{
      * @param fileName tested filename
      * @return a unique file
      */
-   private File fileRenameCheck(File file, String fileName){
+   private File fileRenameCheck(File file, String fileName) {
        File newFile = new File(file.getAbsolutePath() + "/" + fileName + ".fo");
        if(!fileCheck(newFile)){
            return newFile;
@@ -233,8 +243,8 @@ public class EditViewController extends AbstractController{
    }
 
     /**
-     * sets the fullpageview on air / off air
-     * @param bool true or false for on / off air
+     * sets the fullpageview on-air / off-air
+     * @param bool true or false for on / off-air
      */
    @FXML
    public void setFullVisible(Boolean bool){
@@ -245,8 +255,8 @@ public class EditViewController extends AbstractController{
    }
 
     /**
-     * sets the hafepageview on air / off air
-     * @param bool true or false for on / off air
+     * sets the halfpageview on-air / off-air
+     * @param bool true or false for on / off-air
      */
     @FXML
     public void setHalfVisible(Boolean bool){
@@ -257,8 +267,8 @@ public class EditViewController extends AbstractController{
     }
 
     /**
-     * sets the quadpageview on air / off air
-     * @param bool true or false for on / off air
+     * sets the quadpageview on-air / off-air
+     * @param bool true or false for on / off-air
      */
     @FXML
     public void setQuadVisible(Boolean bool){
@@ -269,8 +279,8 @@ public class EditViewController extends AbstractController{
     }
 
     /**
-     * sets the quadhalfpageview on air / off air
-     * @param bool true or false for on / off air
+     * sets the quadhalfpageview on-air / off-air
+     * @param bool true or false for on / off-air
      */
     @FXML
     public void setQuadHalfVisible(Boolean bool){
@@ -281,8 +291,8 @@ public class EditViewController extends AbstractController{
     }
 
     /**
-     * sets the halfquadpageview on air / off air
-     * @param bool true or false for on / off air
+     * sets the halfquadpageview on-air / off-air
+     * @param bool true or false for on / off-air
      */
     @FXML
     public void setHalfQuadVisible(Boolean bool){
@@ -294,17 +304,15 @@ public class EditViewController extends AbstractController{
 
     /**
      * controls the content overview in the rightView - shows portrait content
-     * @throws Exception if error occurs
      */
-    protected void showPortraitTemplates() throws Exception {
+    protected void showPortraitTemplates() {
         mainApp.changeRightView("FullContentView.fxml");
     }
 
     /**
-     * controls the content overiew in the rightView - shows landscape content
-     * @throws Exception if error occurs
+     * controls the content overview in the rightView - shows landscape content
      */
-    protected void showLandscapeTemplates() throws Exception {
+    protected void showLandscapeTemplates() {
         mainApp.changeRightView("HalfContentView.fxml");
     }
 
@@ -324,25 +332,15 @@ public class EditViewController extends AbstractController{
      * if not: shows an alert
      * if it's ok...
      * @return a new page
-     * @throws Exception if error occurs
      */
-    private Page pageContentComposer() throws Exception {
+    private Page pageContentComposer() {
        Page fullPage = null;
         // alert
         Alert a = new Alert(Alert.AlertType.NONE);
         a.setAlertType(Alert.AlertType.ERROR);
         a.setContentText("Es müssen alle Seitenelemente befüllt sein!");
         //Checks if all pageAreas are filled with content?
-        if (template.equals("full") & content1.isEmpty()){
-            a.show();
-        }else if (template.equals("half") && content1.isEmpty() | content2.isEmpty()){
-            a.show();
-        }else if (template.equals("halfQuad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty() ){
-            a.show();
-        }else if (template.equals("quadHalf") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty()){
-            a.show();
-        }else // creates a new JDOM-Page-Element to writes it into the XSL-FO tree
-            if (template.equals("quad") && content1.isEmpty() | content2.isEmpty() | content3.isEmpty() | content4.isEmpty()){
+        if (!allAreasFull()){
             a.show();
         }else fullPage = new Page(template, content1, content2, content3, content4); //new page if all areas are filled
         return fullPage;
@@ -353,33 +351,14 @@ public class EditViewController extends AbstractController{
      * the page will be created with JDOM and saved in the FO-document
      * an empty page will be shown and
      * after the first page it will be possible, to click the PDF export button
-     * @throws Exception if error occurs
      */
     @FXML
-    public void saveNewPages() throws Exception {
+    public void savePage () {
         pageDataService();
-        Page page = pageContentComposer();
+        Page page = pageContentComposer(); // if all areas got content, a new page object will be created
         if (page!=null) {
             // new page will be created an added to the XSL-FO-document
-            mainApp.addToOrganizer(page.pageCreator());
-            mainApp.newPage(); // shows an empty page and shows the template-overview on the right side
-            }
-        }
-
-    /**
-     * button-click initializes the check, if all areas are filled,
-     * the page will be created with JDOM and saved in the FO-document
-     * an empty page will be shown and
-     * after the first page it will be possible, to click the PDF export button
-      * @throws Exception if error occurs
-     */
-    @FXML
-    public void savePage () throws Exception {
-        pageDataService();
-        Page page = pageContentComposer();
-        if (page!=null) {
-            // new page will be created an added to the XSL-FO-document
-            mainApp.addToOrganizer(page.pageCreator());
+            mainApp.addToOrganizer(page.pageCreator()); // page object will be converted to a JDOM element
             mainApp.newPage(); // shows an empty page and shows the template-overview on the right side
             mainApp.setPdfButtonVisible(); // after the first storage of a page, it will be able to export it as pdf
         }
@@ -390,9 +369,8 @@ public class EditViewController extends AbstractController{
      * the page will be modified with JDOM and saved in the FO-document
      * an empty page will be shown and
      * after the first page it will be possible, to click the PDF export button
-     * @throws Exception if error occurs
      */
-    public void saveChanges() throws Exception {
+    public void saveChanges() {
         pageDataService();
         Page page = pageContentComposer();
         if (page!=null) {
@@ -408,13 +386,12 @@ public class EditViewController extends AbstractController{
      * the page will be inserted before the current one with JDOM and saved in the FO-document
      * an empty page will be shown and
      * after the first page it will be possible, to click the PDF export button
-     * @throws Exception if error occurs
      */
-    public void insertNewBefore() throws Exception {
+    public void insertNewBefore() {
         pageDataService();
         Page page = pageContentComposer();
         if (page!=null) {
-            page.setCurrentPageNumber(mainApp.getMaxIdNumber()); // important to get a unique id
+            Page.setCurrentPageNumber(mainApp.getMaxIdNumber()); // important to get a unique id
             mainApp.insertBeforeInOrganizer(page.pageCreator());
             mainApp.newPage(); // shows an empty page and shows the template-overview on the right side
             mainApp.showPlanerView();
@@ -422,18 +399,18 @@ public class EditViewController extends AbstractController{
         }
     }
 
+
     /**
      * button-click initializes the check, if all areas are filled,
      * the page will be inserted after the current one with JDOM and saved in the FO-document
      * an empty page will be shown and
      * after the first page it will be possible, to click the PDF export button
-     * @throws Exception if error occurs
      */
-    public void insertNewAfter() throws Exception {
+    public void insertNewAfter() {
         pageDataService();
         Page fullPage = pageContentComposer();
         if (fullPage!=null) {
-            fullPage.setCurrentPageNumber(mainApp.getMaxIdNumber()); // important to get a unique id
+            Page.setCurrentPageNumber(mainApp.getMaxIdNumber()); // important to get a unique id
             mainApp.insertAfterInOrganizer(fullPage.pageCreator());
             mainApp.newPage(); // shows an empty page and shows the template-overview on the right side
             mainApp.showPlanerView();
@@ -444,10 +421,9 @@ public class EditViewController extends AbstractController{
     /**
      * leaves the editor mode and makes a superficial check, if unsaved content may be set
      * and gives a possibility to save from dialogue - depending on edit- or modification mode
-     * @throws Exception if error occurs
      */
     @FXML
-    protected void exitEditor() throws Exception {
+    public void exitEditor() {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Möglicher Datenverlust");
         ButtonType buttonTypeOne = new ButtonType("Speichern & weiter");
@@ -462,14 +438,14 @@ public class EditViewController extends AbstractController{
             a.getButtonTypes().setAll(buttonTypeOne, buttonTypeTwo, buttonTypeCancel);
         }
             Optional<ButtonType> result = a.showAndWait();
-            if (result.get() == buttonTypeOne) {
+            if (result.isPresent() && result.get() == buttonTypeOne) { // checks if result != null and which kind of button in pressed
                 if (takeChangeButton.isVisible()) saveChanges();
                 else if (insertBeforeButton.isVisible()) insertNewBefore();
                 else if (insertAfterButton.isVisible()) insertNewAfter();
-                else if (addNewPageButton.isVisible()) saveNewPages();
+                else if (addNewPageButton.isVisible()) savePage();
                 else savePage();
                 showPlanerViewFirstPage();
-            } else if (result.get() == buttonTypeTwo) {
+            } else if (result.isPresent() && result.get()== buttonTypeTwo) { // checks if result != null and which kind of button in pressed
                 showPlanerViewFirstPage();
             }
     }
@@ -494,9 +470,8 @@ public class EditViewController extends AbstractController{
 
     /**
      * service to get to page 1 at the flipping through mode
-     * @throws Exception if error occurs
      */
-    private void showPlanerViewFirstPage() throws Exception {
+    public void showPlanerViewFirstPage() {
         mainApp.showPlanerView();//
         mainApp.loadedOrganizer();
         mainApp.goToPageIndex(0);
@@ -511,10 +486,9 @@ public class EditViewController extends AbstractController{
      * @param content2 for half2, quad2, halfquad2, quadhalf2
      * @param content3 for quad3, halfquad3, quadhalf3
      * @param content4 for quad4
-     * @throws Exception if error occurs
      */
     @FXML
-    public void loadPage(String template, String  content1, String content2, String content3, String content4) throws Exception {
+    public void loadPage(String template, String  content1, String content2, String content3, String content4) {
         this.content1 = (content1);
         this.content2 = (content2);
         this.content3 = (content3);
@@ -584,7 +558,7 @@ public class EditViewController extends AbstractController{
            halfQuadButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
            // sets the content in the left bottom quarter
            halfQuadButton2.setGraphic(imageView2);
-           imageView2.fitWidthProperty().bind(halfQuadButton2.widthProperty());;
+           imageView2.fitWidthProperty().bind(halfQuadButton2.widthProperty());
            imageView2.setPreserveRatio(true);
            halfQuadButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
            // sets the content in the right bottom quarter
@@ -599,17 +573,17 @@ public class EditViewController extends AbstractController{
            ImageView imageView3 = new ImageView(HALFPATH + content3);
            // sets the content in the left top quarter
            quadHalfButton1.setGraphic(imageView1);
-           imageView1.fitWidthProperty().bind(quadHalfButton1.widthProperty());;
+           imageView1.fitWidthProperty().bind(quadHalfButton1.widthProperty());
            imageView1.setPreserveRatio(true);
            quadHalfButton1.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
            // sets the content in the right top quarter
            quadHalfButton2.setGraphic(imageView2);
-           imageView2.fitWidthProperty().bind(quadHalfButton2.widthProperty());;
+           imageView2.fitWidthProperty().bind(quadHalfButton2.widthProperty());
            imageView2.setPreserveRatio(true);
            quadHalfButton2.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
            // sets the content in the bottom half
            quadHalfButton3.setGraphic(imageView3);
-           imageView3.fitWidthProperty().bind(quadHalfButton3.widthProperty());;
+           imageView3.fitWidthProperty().bind(quadHalfButton3.widthProperty());
            imageView3.setPreserveRatio(true);
            quadHalfButton3.setContentDisplay(ContentDisplay.GRAPHIC_ONLY);
        }
@@ -618,10 +592,9 @@ public class EditViewController extends AbstractController{
     /**
      * method displays the chosen content in the active button (handled in mainApp)
      * @param contentName - in the right view chosen content
-     * @throws Exception if error occurs
      */
     @FXML
-    public void addContent(String contentName) throws Exception{
+    public void addContent(String contentName) {
         this.contentName = contentName;
         ImageView imageView;
         activeButton = mainApp.getActiveButton(); // identifies the active page area button
@@ -643,14 +616,14 @@ public class EditViewController extends AbstractController{
      * service to show the template overview at the right view
      */
     @FXML
-    private void templateView(){
+    private void templateView() {
         mainApp.showRightView();
     }
 
     /**
      * Assignment of the content linked to the buttons
      */
-    public void sendContent(){
+    public void sendContent() {
        buttonId = activeButton.getId();
        if (buttonId.matches("^.*.1")){ // if button has identifier 1
            mainApp.setContent1(contentName); // ... its content is Content1
@@ -664,64 +637,10 @@ public class EditViewController extends AbstractController{
     }
 
     /**
-     * service to able/disable the button "Organizer durchblättern"
-     * @param bool true = disable, false = able
+     * service to enable/disable the button "Organizer durchblättern"
+     * @param bool true = disable, false = enable
      */
     public void goToOrganizerDisable(Boolean bool){
         goToOrganizer.setDisable(bool);
-    }
-
-    // getter and setter
-
-    public Button getButton1() {
-        return button1;
-    }
-
-    public Button getHalfButton1() {
-        return halfButton1;
-    }
-
-    public Button getHalfButton2() {
-        return halfButton2;
-    }
-
-    public Button getQuadButton1() {
-        return quadButton1;
-    }
-
-    public Button getQuadButton2() {
-        return quadButton2;
-    }
-
-    public Button getQuadButton3() {
-        return quadButton3;
-    }
-
-    public Button getQuadButton4() {
-        return quadButton4;
-    }
-
-    public Button getHalfQuadButton1() {
-        return halfQuadButton1;
-    }
-
-    public Button getHalfQuadButton2() {
-        return halfQuadButton2;
-    }
-
-    public Button getHalfQuadButton3() {
-        return halfQuadButton3;
-    }
-
-    public Button getQuadHalfButton1() {
-        return quadHalfButton1;
-    }
-
-    public Button getQuadHalfButton2() {
-        return quadHalfButton2;
-    }
-
-    public Button getQuadHalfButton3() {
-        return quadHalfButton3;
     }
 }

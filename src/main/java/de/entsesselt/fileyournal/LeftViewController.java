@@ -14,6 +14,14 @@ import javafx.stage.Window;
 import java.io.File;
 import java.util.Optional;
 
+/**
+ * Controller of the LeftView:
+ * contains some buttons like pdf export and the modification-manager
+ * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
+ * @version 1.0
+ *
+ */
+
 public class LeftViewController extends AbstractController {
 
     @FXML
@@ -44,13 +52,13 @@ public class LeftViewController extends AbstractController {
         Node source = (Node) event.getSource();
         Window theStage = source.getScene().getWindow();
         FileChooser fileChooser = new FileChooser();
-        if (mainApp.getFilePath() == null) { // if no user given file directory
+        /*if (mainApp.getFilePath() == null) { // if no user given file directory
             fileChooser.setInitialDirectory(new File(mainApp.getFilePath()));// user given path from the app directory
-        } else {//  goto user given file directory
+        } else {*///  goto user given file directory
             String directoryPath = mainApp.getFilePath().substring(0,mainApp.getFilePath().lastIndexOf("/")); // only path without filename
             fileChooser.setInitialDirectory(new File(directoryPath) );
             fileChooser.setInitialFileName(mainApp.getFileName());
-        }
+       /* }*/
         fileChooser.getExtensionFilters().addAll(
                 new FileChooser.ExtensionFilter(".pdf-Files", "*.pdf"));
         File filename = fileChooser.showSaveDialog(theStage);
@@ -71,17 +79,14 @@ public class LeftViewController extends AbstractController {
 
     /**
      *shows the start view, if Button clicked "zurück zum Programmstart"
-     * @throws Exception iff error occurs
      */
     @FXML
-    protected void backToStart() throws Exception{
+    protected void backToStart() {
         Alert a = new Alert(Alert.AlertType.CONFIRMATION);
         a.setTitle("Zur Startseite zurückkehren");
         a.setContentText("Bist Du sicher, dass Du diese Ansicht verlassen möchtest?");
         Optional<ButtonType> result = a.showAndWait();
-        if (result.get() == ButtonType.OK) {
-            mainApp.showStartView();
-        }
+        if (result.isPresent() && result.get() == ButtonType.OK) mainApp.showStartView();
     }
 
     // button-delegation
@@ -125,10 +130,9 @@ public class LeftViewController extends AbstractController {
     /**
      * click on "aktuelle Seite ändern"
      * change to editView, loads current page in editmode, shows the appropriate save button
-     * @throws Exception if error occurs
      */
     @FXML
-    private void modifyCurrentPage() throws Exception {
+    private void modifyCurrentPage() {
         mainApp.showEditView();
         mainApp.goToFoPage(mainApp.getPageIndex());
         mainApp.setNamePane();
@@ -139,10 +143,9 @@ public class LeftViewController extends AbstractController {
     /**
      * click on "Seite einfügen (vor dieser)"
      * change to editView, loads current page in editmode, shows the appropriate save button
-     * @throws Exception if error occurs
      */
     @FXML
-    private void insertBeforeCurrent() throws Exception{
+    private void insertBeforeCurrent() {
         mainApp.showEditView();//
         mainApp.newPage();
         mainApp.changePageInsertBeforeButton(); // shows the appropriate save button with another onAction-method
@@ -152,10 +155,9 @@ public class LeftViewController extends AbstractController {
     /**
      * click on "Seite einfügen (nach dieser)"
      * change to editView, loads current page in editmode, shows the appropriate save button
-     * @throws Exception if error occurs
      */
     @FXML
-    private void insertAfterCurrent() throws Exception{
+    private void insertAfterCurrent() {
         mainApp.showEditView();
         mainApp.newPage();
         mainApp.changePageInsertAfterButton(); // shows the appropriate save button with another onAction-method
@@ -165,10 +167,9 @@ public class LeftViewController extends AbstractController {
     /**
      * click on "hinten Seite(n) hinzufügen"
      * change to editView, loads current page in editmode, shows the appropriate save button
-     * @throws Exception if error occurs
      */
     @FXML
-    private void addAtEnd() throws Exception{
+    private void addAtEnd() {
         mainApp.showEditView();
         mainApp.newPage();
         mainApp.setAddNewPageButtonVisible(); // shows the appropriate save button with another onAction-method
@@ -178,10 +179,9 @@ public class LeftViewController extends AbstractController {
     /**
      * click on "aktuelle Seite löschen"
      * deletes current page
-     * @throws Exception if error occurs
      */
     @FXML
-    private void deleteCurrentPage() throws Exception{
+    private void deleteCurrentPage() {
     mainApp.deleteFromOrganizer(); // deletes the current page
     }
 }

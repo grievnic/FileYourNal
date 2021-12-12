@@ -43,6 +43,11 @@
                   <Image url="@../../../assets/QuadQuad.png" />
                </image>
             </ImageView>
+            <ImageView fx:id="month" fitWidth="130.0" layoutX="40.0" layoutY="558.0" onMouseClicked="#createQuartCal" pickOnBounds="true" preserveRatio="true">
+               <image>
+                  <Image url="@../../../assets/quartCal.png" />
+               </image>
+            </ImageView>
          </children>
       </AnchorPane>
    </children>

@@ -17,7 +17,7 @@ class OrganizerTest {
     }
 
     @Test
-    void testDeletePage(){
+    void testDeletePage() throws Exception{
         org = null;
         this.org = (Organizer.getInstance());
         org.readFO("/Users/nicolegrieve/Desktop/testing_Del2.fo");
@@ -28,7 +28,7 @@ class OrganizerTest {
         assertEquals(2,(org.fetchPageParent().getChildren().size()));
     }
     @Test
-    void testAddPage() {
+    void testAddPage() throws Exception{
         org = null;
         Page.setCurrentPageNumber(0);
         this.org = (Organizer.getInstance());
@@ -44,7 +44,7 @@ class OrganizerTest {
     }
 
     @Test
-    void addModifiedContent() {
+    void addModifiedContent() throws Exception {
         org = null;
         Page.setCurrentPageNumber(0);
         this.org = (Organizer.getInstance());
@@ -56,7 +56,7 @@ class OrganizerTest {
     }
 
     @Test
-    void insertContent() {
+    void insertContent() throws Exception{
         org = null;
         Page.setCurrentPageNumber(0);
         this.org = (Organizer.getInstance());

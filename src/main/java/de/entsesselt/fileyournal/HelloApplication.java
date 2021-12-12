@@ -7,19 +7,23 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 import org.jdom.Element;
 import org.jdom.filter.ElementFilter;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 
-
+/**
+ * The mainApp is the central control unit
+ */
 public class HelloApplication extends Application {
 
     private Stage primaryStage;
@@ -46,7 +50,7 @@ public class HelloApplication extends Application {
      * @param primaryStage first stage
      */
     @Override
-    public void start(Stage primaryStage) throws Exception {
+    public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("FileYOURnal");
 
@@ -59,7 +63,7 @@ public class HelloApplication extends Application {
     /**
      * Initializes the root layout.
      */
-    public void initRootLayout() throws Exception{
+    public void initRootLayout(){
         try {
             // Load root layout from fxml file.
             FXMLLoader loader = new FXMLLoader();
@@ -77,7 +81,7 @@ public class HelloApplication extends Application {
     /**
      * shows the first view center of the root
      */
-    public void showStartView() throws Exception { // shows the page-view with the organizer-picture
+    public void showStartView() { // shows the page-view with the organizer-picture
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -93,7 +97,7 @@ public class HelloApplication extends Application {
             leftViewController.setModifyPaneVisible(false);
             leftViewController.showPdfExportButton();
 
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -102,7 +106,7 @@ public class HelloApplication extends Application {
      * shows the edit view at center of the root
      */
     @FXML
-    public void showEditView() throws Exception{ // shows the empty page-view
+    public void showEditView() { // shows the empty page-view
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -125,7 +129,7 @@ public class HelloApplication extends Application {
      * shows the flipping through view to show saved pages
      */
     @FXML
-    public void showPlanerView() throws Exception {
+    public void showPlanerView() {
         try {
             // Load person overview.
             FXMLLoader loader = new FXMLLoader();
@@ -162,6 +166,8 @@ public class HelloApplication extends Application {
             maxIdNumber = 0;
             currentPage = null;
         }
+        this.fileName = fileName;
+        this.filePath = foFilePath;
         this.org = (Organizer.getInstance());
         org.readFO(foFilePath);
     }
@@ -173,9 +179,9 @@ public class HelloApplication extends Application {
      * @param template the user selected template
      */
     @FXML
-    public void showPageTemplate(String controller, String template) throws Exception{
+    public void showPageTemplate(String controller, String template) {
         currentTemplate = template;
-        if (controller.equals("pageViewController")) {
+        if (controller.equals("editViewController")) {
             // to prevent the current view from being overlaid by other panes
             editViewController.setFullVisible(false);
             editViewController.setHalfVisible(false);
@@ -250,12 +256,16 @@ public class HelloApplication extends Application {
         }
     }
 
+    public void showRightInfo(){
+
+    }
+
     /**
      * changes the template overview on the right side of the gui
      * according to the submitted template
       * @param templateFxml is the template according content overview as fxml
      */
-    public void changeRightView(String templateFxml) throws Exception { // changes the view according to the page template
+    public void changeRightView(String templateFxml) { // changes the view according to the page template
         try {
             FXMLLoader loader = new FXMLLoader(HelloApplication.class.getResource(templateFxml));
             Node node = loader.load();
@@ -284,7 +294,7 @@ public class HelloApplication extends Application {
     /**
      * cleans the side view as preparation for the new template and content selection
      */
-    public void newPage() throws Exception { //to get a new empty pageview
+    public void newPage() { //to get a new empty pageview
         showRightView(); // template overview
         showEditView();
         editViewController.namePaneUnvisible();
@@ -295,6 +305,7 @@ public class HelloApplication extends Application {
     /**
      * hands over the modified page to organizer to save it
      * @param modifiedPage the <fo:block> page element from modified page
+     *
      */
     public void modifyInOrganizer(Element modifiedPage) {
         org.addModifiedContent(currentPage.getParent().indexOf(currentPage), modifiedPage);
@@ -306,8 +317,47 @@ public class HelloApplication extends Application {
      * @param newPage the <fo:block> page element from new page
      */
     public void insertBeforeInOrganizer(Element newPage) {
-        org.insertContent(currentPage.getParent().indexOf(currentPage) - 1, newPage);
+        org.insertContent(currentPage.getParent().indexOf(currentPage), newPage);
         org.writeFO(filePath);
+    }
+
+    /**
+     * method checks if all areas are filled with content
+     * if not: shows an alert
+     * if it's ok...
+     * @return a new page
+     */
+    public void calComposer(String preName) {
+        switch (preName) {
+            case "Quart" -> {
+                for (int i = 0; i < 4; i++) {
+                    String content1 = preName + (i + 1) + ".png";
+                    System.out.println(content1);
+                    // new page will be created an added to the XSL-FO-document
+                    Page fullPage = new Page("fullpage", content1, "", "", ""); //new page
+                    addToOrganizer(fullPage.pageCreator());
+                    // shows an empty page and shows the template-overview on the right side
+                    setPdfButtonVisible(); // after the first storage of a page, it will be able to export it as pdf
+                }
+                Alert a = new Alert(Alert.AlertType.NONE);
+                a.setAlertType(Alert.AlertType.INFORMATION);
+                a.setContentText("Deine Quartalsplanung wurde erstellt!");
+                a.show();
+                newPage();
+                editViewController.showPlanerViewFirstPage();
+            }
+            default -> {
+                for (int j = 0; j < 12; j++) {
+                    String content1 = preName + j + 1 + ".png";
+                    System.out.println(content1);
+                    // new page will be created an added to the XSL-FO-document
+                    Page fullPage = new Page("fullpage", content1, "", "", ""); //new page
+                    addToOrganizer(fullPage.pageCreator());
+                    newPage(); // shows an empty page and shows the template-overview on the right side
+                    setPdfButtonVisible(); // after the first storage of a page, it will be able to export it as pdf
+                }
+            }
+        }
     }
 
     /**
@@ -326,7 +376,6 @@ public class HelloApplication extends Application {
     public void addToOrganizer(Element newPage) {
         Organizer.addPage(newPage);
         currentPage = newPage;
-        
         org.writeFO(filePath); // writes the XST-FO-Document in Organizer Class
     }
 
@@ -334,15 +383,14 @@ public class HelloApplication extends Application {
      * service method to get the List of <fo: flow> children from current organizer
      * @return the list of children representing all page elements
      */
-    private List getChildren(){
+    private List <Element> getChildren(){
         return Organizer.fetchPageParent().getChildren();
     }
 
     /**
      * delegates the delete-instruction to organizer
-     * @throws Exception if error occurs
      */
-    public void deleteFromOrganizer() throws Exception{
+    public void deleteFromOrganizer() {
         int index = currentPage.getParent().indexOf(currentPage);
     org.deletePage(index);
     goToPageIndex(0);
@@ -353,12 +401,11 @@ public class HelloApplication extends Application {
      * enables to go to user given page by searching the page in document
      * and sending the read-out page data to the flick through view
      * @param indexnumber to jump to desired page <fo:block> element
-     * @throws Exception if error occurs
      */
-    public void goToPageIndex(int indexnumber) throws Exception { // if user wants to scroll back to older pages
+    public void goToPageIndex(int indexnumber) { // if user wants to scroll back to older pages
         /*List children = Organizer.fetchPageParent().getChildren();*/
         pageIndex = indexnumber;
-        currentPage = (Element) getChildren().get(pageIndex);
+        currentPage = getChildren().get(pageIndex);
         currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", ""); // delete pagecounter to get only template-name
         maxIndex = getChildren().size() - 1;
         getFoData(currentTemplate);
@@ -368,11 +415,10 @@ public class HelloApplication extends Application {
 
     /**
      * Getting the first Page and the information, to show it in flick through view
-     * @throws Exception if error occurs
      */
-    public void loadedOrganizer() throws Exception {
+    public void loadedOrganizer() {
         /*List children = Organizer.fetchPageParent().getChildren();*/
-        currentPage = (Element) getChildren().get(0);
+        currentPage = getChildren().get(0);
         // filters the template type out of the id
         currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", "");
         maxIndex = getChildren().size() - 1;// important value for controlling the buttons "Seite zurück" and "Seite vor"
@@ -386,28 +432,12 @@ public class HelloApplication extends Application {
     }
 
     /**
-     * getting the next page and show it in flick through view
-     * @throws Exception if error occurs
-     */
-    public void nextPage() throws Exception { //User klickt auf nächste Seite
-        pageIndex = getChildren().indexOf(currentPage);
-        maxIndex = getChildren().size() - 1;
-        currentPage = (Element) getChildren().get(pageIndex + 1);
-        pageIndex = getChildren().indexOf(currentPage);
-        currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", "");
-        getFoData(currentTemplate);
-        checkButtons(pageIndex, maxIndex);
-        planerViewController.loadPage(currentTemplate, content1, content2, content3, content4, pageIndex);
-    }
-
-    /**
      * getting the user requested page and shows in flick through view
      * @param pageIndex to jump to desired page <fo:block> element
-     * @throws Exception if error occurs
      */
-    public void goToFoPage(int pageIndex) throws Exception {
+    public void goToFoPage(int pageIndex) {
         /*List children = Organizer.fetchPageParent().getChildren();*/
-        currentPage = (Element) getChildren().get(pageIndex);
+        currentPage = getChildren().get(pageIndex);
         this.pageIndex = pageIndex;
         currentTemplate = currentPage.getAttributeValue("id").replaceAll("[0-9]", "");
         maxIndex = getChildren().size() - 1;
@@ -582,10 +612,6 @@ public class HelloApplication extends Application {
 
     public int getPageIndex() {
         return pageIndex;
-    }
-
-    public void setPageIndex(int pageIndex) {
-        this.pageIndex = pageIndex;
     }
 
     public int getMaxIdNumber() {

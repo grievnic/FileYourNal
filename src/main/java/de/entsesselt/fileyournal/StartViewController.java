@@ -13,7 +13,7 @@ import java.nio.file.Paths;
 
 /**
  * Controller of the StartView
- *
+ * Here the user can decide whether he wants to create a new planner or load a planner that has already been created.
  * @author Nicole Grieve (nicole.grieve@stud.th-luebeck.de)
  * @version 1.0
  *
@@ -31,20 +31,18 @@ public class StartViewController extends AbstractController {
 
     /**
      * button click on "Organizer erstellen" to start a new organizer
-     * @throws Exception if error occurs
      */
     @FXML
-    protected void startNewPlanerClick() throws Exception {
+    protected void startNewPlanerClick() {
         mainApp.showEditView();
     }
 
     /**
      * Method loads an organizer .fo-File from directory, to represent it in the
      * @param event clickEvent: Button "Organizer laden"
-     * @throws Exception if error occurs
      */
     @FXML
-    public void loadFoFromFile(ActionEvent event) throws Exception{
+    public void loadFoFromFile(ActionEvent event) {
         //gets the stage from the node that triggered the event
         Node source = (Node) event.getSource();
         Window theStage = source.getScene().getWindow();
@@ -56,9 +54,6 @@ public class StartViewController extends AbstractController {
         //starts a new organizer-instance, gets file information and loads page content to show in flick through view
         if (selectedFile != null) {
             mainApp.startNewOrganizer(selectedFile.getName(), selectedFile.getAbsolutePath());
-            mainApp.setFilePath(selectedFile.getPath());
-            mainApp.setFileName(selectedFile.getName());
-            System.out.println(mainApp.getFilePath());
             mainApp.showPlanerView();
             mainApp.loadedOrganizer();
         }

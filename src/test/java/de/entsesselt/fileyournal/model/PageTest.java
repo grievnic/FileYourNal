@@ -32,7 +32,7 @@ class PageTest {
         }
 
         @Test
-        public void testPageCreator(){
+        public void testPageCreator() throws Exception{
             assertNotNull(fullpage.pageCreator());
             assertEquals(1, Page.getCurrentPageNumber());
         }
@@ -49,7 +49,7 @@ class PageTest {
         }
 
         @Test
-        public void testPageCreator(){
+        public void testPageCreator() throws Exception{
             assertNotNull(halfpage.pageCreator());
             assertEquals(1, Page.getCurrentPageNumber());
         }
@@ -68,7 +68,7 @@ class PageTest {
         }
 
         @Test
-        public void testPageCreator(){
+        public void testPageCreator() throws Exception{
             assertNotNull(quadpage.pageCreator());
             assertEquals(1, Page.getCurrentPageNumber());
         }
@@ -86,7 +86,7 @@ class PageTest {
         }
 
         @Test
-        public void testPageCreator(){
+        public void testPageCreator() throws Exception{
             assertNotNull(quadhalfpage.pageCreator());
             assertEquals(1, Page.getCurrentPageNumber());
         }
@@ -104,7 +104,7 @@ class PageTest {
         }
 
         @Test
-        public void testPageCreator(){
+        public void testPageCreator() throws Exception{
             assertNotNull(halfquadpage.pageCreator());
             assertEquals(1, Page.getCurrentPageNumber());
         }
@@ -121,7 +121,7 @@ class PageTest {
         }
 
         @Test
-        public void testPageCreator(){
+        public void testPageCreator() throws Exception{
             assertNotNull(overload.pageCreator());
             assertEquals(1, Page.getCurrentPageNumber());
         }

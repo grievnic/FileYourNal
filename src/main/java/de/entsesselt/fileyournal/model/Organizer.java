@@ -10,11 +10,9 @@ import org.jdom.Namespace;
 import org.jdom.input.SAXBuilder;
 import org.jdom.output.Format;
 import org.jdom.output.XMLOutputter;
+import org.xml.sax.SAXException;
 
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.*;
 import javax.xml.transform.sax.SAXResult;
 import javax.xml.transform.stream.StreamSource;
 import java.io.*;
@@ -78,7 +76,7 @@ public class Organizer {
      * @param pageIndex current page
      * @param modifiedPage the new page
      */
-    public void addModifiedContent(int pageIndex, Element modifiedPage){
+    public void addModifiedContent(int pageIndex, Element modifiedPage) {
         fetchPageParent().setContent(pageIndex, modifiedPage);
     }
 
@@ -87,7 +85,7 @@ public class Organizer {
      * @param pageIndex place to insert
      * @param newPage the new page
      */
-    public void insertContent(int pageIndex, Element newPage){
+    public void insertContent(int pageIndex, Element newPage) {
         fetchPageParent().addContent(pageIndex, newPage);
     }
 
@@ -116,7 +114,6 @@ public class Organizer {
     public void writeFO(String filePath){
         Format format = Format.getPrettyFormat();
         format.setIndent("    ");
-        System.out.println(filePath);
         try (FileOutputStream fos = new FileOutputStream(filePath)) {
             XMLOutputter op = new XMLOutputter(format);
             op.output(currentOrganizer, fos);
@@ -129,9 +126,9 @@ public class Organizer {
      * exports the XSL-FO document to pdf
      * @param filePath the path to XSL-FO document
      * @param targetPath given from user at the start - as offer for the save dialogue
-     * @throws Exception if error occurs
+     * @throws IOException if error occurs
      */
-    public void foToPdf(String filePath, String targetPath) throws Exception {
+    public void foToPdf(String filePath, String targetPath) throws IOException, SAXException {
         // Construct a FopFactory
         FopFactory fopFactory = FopFactory.newInstance(new File("/Users/nicolegrieve/Documents/GitHub/Bachelorarbeit/fop.xconf"));
         // Set up output stream.
@@ -149,7 +146,7 @@ public class Organizer {
             Result res = new SAXResult(fop.getDefaultHandler());
             // Start XSLT transformation and FOP processing
             transformer.transform(foIn, res);
-        } catch (FOPException e) {
+        } catch (FOPException | TransformerException e) {
             e.printStackTrace();
         }
         //Clean-up
