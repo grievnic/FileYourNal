@@ -49,6 +49,12 @@ public class Organizer {
     }
 
     /**
+     * private constructor to prevent the creation of organizer objects outside of the class
+     */
+    private Organizer(){
+    }
+
+    /**
      * This method reads the XSL-FO-File (from path) and saves a JDOM-tree in variable currentOrganizer
      * @param foPath path to XSL-FO file
      */

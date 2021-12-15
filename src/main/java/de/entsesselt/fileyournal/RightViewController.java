@@ -38,7 +38,6 @@ public class RightViewController extends AbstractController {
         mainApp.showPageTemplate("editViewController", "quad");
         template = "quad";
         sendTemplate();
-        emptyRightView();
     }
 
     /**
@@ -49,7 +48,6 @@ public class RightViewController extends AbstractController {
         mainApp.showPageTemplate("editViewController", "fullpage");
         template = "full";
         sendTemplate();
-        emptyRightView();
     }
 
     /**
@@ -60,7 +58,6 @@ public class RightViewController extends AbstractController {
         mainApp.showPageTemplate("editViewController", "half");
         template = "half";
         sendTemplate();
-        emptyRightView();
     }
 
 
@@ -72,7 +69,6 @@ public class RightViewController extends AbstractController {
         mainApp.showPageTemplate("editViewController", "quadHalf");
         template = "quadHalf";
         sendTemplate();
-        emptyRightView();
     }
 
     /**
@@ -83,7 +79,6 @@ public class RightViewController extends AbstractController {
         mainApp.showPageTemplate("editViewController", "halfQuad");
         template = "halfQuad";
         sendTemplate();
-        emptyRightView();
     }
 
     /**
@@ -120,6 +115,9 @@ public class RightViewController extends AbstractController {
 
     }
 
+    /**
+     * test to handle multi-page content
+     */
     @FXML
     private void createQuartCal(){
         startFullTemplate();

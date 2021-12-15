@@ -20,12 +20,12 @@ class OrganizerTest {
     void testDeletePage() throws Exception{
         org = null;
         this.org = (Organizer.getInstance());
-        org.readFO("/Users/nicolegrieve/Desktop/testing_Del2.fo");
+        org.readFO("/Users/nicolegrieve/Desktop/testing_Mod.fo");
         assertEquals("flow", org.fetchPageParent().getName());
 
         org.deletePage(1);
         org.writeFO("/Users/nicolegrieve/Desktop/testing_Del3.fo");
-        assertEquals(2,(org.fetchPageParent().getChildren().size()));
+        assertEquals(1,(org.fetchPageParent().getChildren().size()));
     }
     @Test
     void testAddPage() throws Exception{

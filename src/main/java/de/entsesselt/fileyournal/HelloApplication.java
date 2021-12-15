@@ -181,6 +181,7 @@ public class HelloApplication extends Application {
     @FXML
     public void showPageTemplate(String controller, String template) {
         currentTemplate = template;
+        changeRightView("InfoRightView.fxml");
         if (controller.equals("editViewController")) {
             // to prevent the current view from being overlaid by other panes
             editViewController.setFullVisible(false);
@@ -211,7 +212,6 @@ public class HelloApplication extends Application {
                 case "quadHalf" -> planerViewController.setQuadHalfVisible(true);
                 default -> planerViewController.setHalfQuadVisible(true);
             }
-            changeRightView("EmptyRightView.fxml");
         }
     }
 
@@ -254,10 +254,6 @@ public class HelloApplication extends Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
-    }
-
-    public void showRightInfo(){
-
     }
 
     /**
@@ -322,9 +318,7 @@ public class HelloApplication extends Application {
     }
 
     /**
-     * method checks if all areas are filled with content
-     * if not: shows an alert
-     * if it's ok...
+     * test method to handle multi-page content
      * @return a new page
      */
     public void calComposer(String preName) {
